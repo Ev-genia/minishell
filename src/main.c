@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
+fgfg
 
 void    ft_shell()
 {
@@ -19,7 +19,7 @@ void    ft_shell()
 
     i = 0;
     gchgh
-
+    FTUT
 
 }
 
