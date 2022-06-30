@@ -15,7 +15,7 @@
 
 void    ft_shell()
 {
-    
+    printf("hello");
 }
 
 int main(int argc, char **argv, char **env)
