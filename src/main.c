@@ -18,6 +18,7 @@ void    ft_shell()
     int i;
 
     i = 0;
+    gchgh
 }
 
 int main(int argc, char **argv, char **env)
