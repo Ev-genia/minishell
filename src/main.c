@@ -15,6 +15,9 @@
 
 void    ft_shell()
 {
+    int i;
+
+    i = 0;
     printf("hello");
 }
 
