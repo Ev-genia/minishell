@@ -11,17 +11,6 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-fgfg
-
-void    ft_shell()
-{
-    int i;
-
-    i = 0;
-    gchgh
-    FTUT
-
-}
 
 int main(int argc, char **argv, char **env)
 {
