@@ -1,30 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/11 16:06:03 by mlarra           ###   ########.fr       */
+/*   Created: 2022/07/11 15:32:35 by mlarra            #+#    #+#             */
+/*   Updated: 2022/07/11 16:17:33 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-// # include "libft/libft.h"
-# include "../src/libft/libft.h"
-# include <unistd.h>
-# include <dirent.h>
-# include <stdio.h>
-# include <string.h>
+// #include <minishell.h>
+#include "../../../includes/minishell.h"
 
-typedef struct s_env //связный список для парсинга переменной окружения
+int	ft_pwd(void)
 {
-	char			*name;
-	char			*value;
-	struct s_env	*next;
-	
-}t_env;
+	char	*pwd;
 
-#endif
+	pwd = getcwd(NULL, 1024);
+	if (!pwd)
+	{
+		perror("pwd error");
+		return (1);
+	}
+	ft_putstr_fd(pwd, 1);
+	write(1, "\n", 1);
+	free(pwd);
+	return (0);
+}
+
+// int main()
+// {
+// 	ft_pwd();
+// 	return (0);
+// }
