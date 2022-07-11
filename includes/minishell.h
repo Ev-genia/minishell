@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/11 16:06:03 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/11 16:44:16 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,11 @@ typedef struct s_env //связный список для парсинга пе�
 	struct s_env	*next;
 	
 }t_env;
+
+//ft_env.c
+void	ft_env(t_env *env);
+
+//ft_pwd.c
+int		ft_pwd(void);
 
 #endif
