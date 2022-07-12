@@ -13,5 +13,5 @@
 // #include <minishell.h>
 #include "../../../includes/minishell.h"
 
-void	ft_echo()
+void	ft_echo(char **av)
 {}
