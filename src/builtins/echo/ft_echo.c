@@ -1,37 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/11 16:26:41 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/12 10:10:34 by mlarra           ###   ########.fr       */
+/*   Created: 2022/07/12 10:16:58 by mlarra            #+#    #+#             */
+/*   Updated: 2022/07/12 10:21:29 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // #include <minishell.h>
 #include "../../../includes/minishell.h"
 
-void	ft_env(t_env *env)
-{
-	t_env	*e;
-
-	e = env;
-	if (e)
-	{
-		printf("%s=%s\n", e->name, e->value);
-		e = e->next;
-	}
-}
-
-// int main()
-// {
-// 	t_env test;
-
-// 	test.name = "test1";
-// 	test.value = "TEST1";
-// 	test.next = NULL;
-// 	ft_env(&test);
-// 	return (0);
-// }
+void	ft_echo()
+{}
