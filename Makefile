@@ -6,11 +6,15 @@
 #    By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/30 13:01:49 by mlarra            #+#    #+#              #
-#    Updated: 2022/07/12 12:01:52 by mlarra           ###   ########.fr        #
+#    Updated: 2022/07/12 16:58:42 by mlarra           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	minishell
+
+LIBFT	=	libft.a
+LIB_DIR	=	./src/libft/
+LIB_NAME	=	./src/libft/libft.a
 
 DIR		=	./src/
 DIR_BUILTINS	=	./src/builtins/
@@ -43,8 +47,13 @@ RM		=	rm -f
 	${CC} ${CFLAGS} -c $< -o $@
 
 ${NAME}	:	${OBJ}
-	${CC} ${CFLAGS} -I${HEADER} $^ -o $@
+	make -C ${LIB_DIR}
+	${CC} ${CFLAGS} -I${HEADER} $^ -L ${LIB_DIR} -lft -o $@
 
+# ${LIB_NAME}	:
+# 	${MAKE} -C ${LIB_DIR}
+
+# all		:	${LIB_NAME} ${NAME}
 all		:	${NAME}
 
 clean	:

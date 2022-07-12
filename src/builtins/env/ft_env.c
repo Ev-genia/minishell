@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 16:26:41 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/12 15:51:12 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/12 16:51:55 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ temp1 = env_list;
 printf("\n");
 while (temp1)
 {
-	printf("temp->name: %s\n", temp1->name);
+	printf("temp1->name: %s\n", temp1->name);
 	temp1 = temp1->next;
 }
 printf("\n");
@@ -77,17 +77,18 @@ printf("\n");
 		free(value);
 	}
 
-t_env	*temp;
+// t_env	*temp;
 
-// temp = begin;
-temp = env_list;
-printf("\n");
-while (temp)
-{
-	printf("temp->name: %s\n", temp->name);
-	temp = temp->next;
-}
-printf("\n");
+// // temp = begin;
+// temp = env_list;
+// printf("\n");
+// while (temp)
+// {
+// 	printf("temp->name: %s\n", temp->name);
+// 	temp = temp->next;
+// }
+// printf("\n");
+
 	return (env_list);
 	// return (begin);
 }
@@ -104,20 +105,20 @@ void	ft_env(t_env *env)
 	}
 }
 
-int main(int ac, char **av, char **enpv)
-{
-// 	t_env test;
+// int main(int ac, char **av, char **enpv)
+// {
+// // 	t_env test;
 
-// 	test.name = "test1";
-// 	test.value = "TEST1";
-// 	test.next = NULL;
-// 	ft_env(&test);
+// // 	test.name = "test1";
+// // 	test.value = "TEST1";
+// // 	test.next = NULL;
+// // 	ft_env(&test);
 
-	t_env	*test_env;
+// 	t_env	*test_env;
 
-	(void)ac;
-	(void)av;
-	test_env = ft_env_struct(enpv);
-	ft_env(test_env);
-	return (0);
-}
+// 	(void)ac;
+// 	(void)av;
+// 	test_env = ft_env_struct(enpv);
+// 	ft_env(test_env);
+// 	return (0);
+// }

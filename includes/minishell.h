@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/12 11:52:16 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/12 16:53:14 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	ft_lstadd_back_env(t_env **lst, t_env *new);
 
 //ft_env.c
 void	ft_env(t_env *env);
+t_env 	*ft_env_struct(char **ev);
 
 //ft_pwd.c
 int		ft_pwd(void);
