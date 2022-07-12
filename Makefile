@@ -6,15 +6,15 @@
 #    By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/30 13:01:49 by mlarra            #+#    #+#              #
-#    Updated: 2022/07/12 16:58:42 by mlarra           ###   ########.fr        #
+#    Updated: 2022/07/12 17:09:15 by mlarra           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	minishell
 
-LIBFT	=	libft.a
+# LIBFT	=	libft.a
 LIB_DIR	=	./src/libft/
-LIB_NAME	=	./src/libft/libft.a
+# LIB_NAME	=	./src/libft/libft.a
 
 DIR		=	./src/
 DIR_BUILTINS	=	./src/builtins/
@@ -58,9 +58,12 @@ all		:	${NAME}
 
 clean	:
 	${RM} ${OBJ}
+	make -C ${LIB_DIR} clean
 
 fclean	:	clean
 	${RM} ${NAME}
+#	cd ./src/libft/ && ${MAKE} fclean 
+	make -C ${LIB_DIR} fclean
 
 re		:	fclean all
 
