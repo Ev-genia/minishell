@@ -6,40 +6,37 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 16:26:41 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/13 11:04:45 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/13 11:17:49 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // #include <minishell.h>
 #include "../../../includes/minishell.h"
 
-char	*ft_find_key_env(char *env)
+char	*ft_find_env(char *env, char c)
 {
 	int		i;
 	char	*key;
-
-	i = 0;
-	while (env[i] != '=')
-		++i;
-	key = malloc(sizeof(char) * (i + 1));
-	i = -1;
-	while (env[++i] != '=')
-		key[i] = env[i];
-	key[i] = '\0';
-	return (key);
-}
-
-char	*ft_find_value_env(char *env)
-{
-	int		i;
 	char	*val;
 
 	i = 0;
 	while (env[i] != '=')
 		++i;
-	i++;
-	val = ft_strdup(&env[i]);
-	return (val);
+	if (c == 'k')
+	{
+		key = malloc(sizeof(char) * (i + 1));
+		i = -1;
+		while (env[++i] != '=')
+			key[i] = env[i];
+		key[i] = '\0';
+		return (key);
+	}
+	else
+	{
+		i++;
+		val = ft_strdup(&env[i]);
+		return (val);
+	}
 }
 
 t_env	*ft_env_struct(char **ev)
@@ -54,8 +51,8 @@ t_env	*ft_env_struct(char **ev)
 	i = -1;
 	while (ev[++i])
 	{
-		key = ft_find_key_env(ev[i]);
-		value = ft_find_value_env(ev[i]);
+		key = ft_find_env(ev[i], 'k');
+		value = ft_find_env(ev[i], 'v');
 		env_new = ft_lstnew_env(key, value);
 		ft_lstadd_back_env(&env_list, env_new);
 		free(key);
