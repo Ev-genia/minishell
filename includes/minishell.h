@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/13 11:01:31 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/13 13:05:53 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,8 @@ t_env	*ft_env_struct(char **ev);
 
 //ft_pwd.c
 int		ft_pwd(void);
+
+//ft_echo.c
+void	ft_echo(char **arg);
 
 #endif
