@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 16:26:41 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/13 11:17:49 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/13 15:33:46 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,10 @@ void	ft_env(t_env *env)
 	e = env;
 	while (e)
 	{
-		printf("%s=%s\n", e->key, e->value);
+		ft_putstr_fd(e->key, 1);
+		ft_putchar_fd('=', 1);
+		ft_putstr_fd(e->value, 1);
+		ft_putchar_fd('\n', 1);
 		e = e->next;
 	}
 }

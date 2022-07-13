@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/13 15:06:11 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/13 15:37:12 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(int argc, char **argv, char **env)
 	test_env = ft_env_struct(env);
 	ft_env(test_env);
 */
-// /*
+/*
 	//для тестирования echo
 	char	*test1[3];
 	char	*test2[4];
@@ -48,6 +48,6 @@ int	main(int argc, char **argv, char **env)
 	test2[3] = NULL;
 	ft_echo(test2);
 	ft_echo(test1);
-// */
+*/
 	return (0);
 }

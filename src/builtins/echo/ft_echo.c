@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 10:16:58 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/13 15:06:44 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/13 15:36:05 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ void	ft_echo(char **arg)
 
 	i = 1;
 	if (ft_strncmp(arg[i], "-n", 2) == 0)
-		printf("%s", arg[++i]);
+		ft_putstr_fd(arg[++i], 1);
 	else
-		printf("%s\n", arg[i]);
+	{
+		ft_putstr_fd(arg[i], 1);
+		ft_putchar_fd('\n', 1);
+	}
 }
