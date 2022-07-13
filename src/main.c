@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/13 15:37:12 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/13 17:10:40 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int argc, char **argv, char **env)
 	ft_shell();
 	*/
 /*
-	//для тестирования env:
+//для тестирования env:
 	t_env	*test_env;
 
 	(void)argc;
@@ -32,7 +32,7 @@ int	main(int argc, char **argv, char **env)
 	ft_env(test_env);
 */
 /*
-	//для тестирования echo
+//для тестирования echo
 	char	*test1[3];
 	char	*test2[4];
 
@@ -49,5 +49,21 @@ int	main(int argc, char **argv, char **env)
 	ft_echo(test2);
 	ft_echo(test1);
 */
+// /*
+// 	для тестирования export
+	t_env	*enpv;
+	t_env	*sort_env;
+	char	*arg_export[6];
+
+	arg_export[0] = "export";
+	arg_export[1] = "test1";
+	arg_export[2] = "TEST2";
+	arg_export[3] = "Test3=";
+	arg_export[4] = "tEST4=HI";
+	arg_export[5] = NULL;
+	enpv = ft_env_struct(env);
+	sort_env = ft_sorted_export(enpv);
+	ft_export(arg_export, sort_env);
+// */
 	return (0);
 }
