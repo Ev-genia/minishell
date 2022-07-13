@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/13 13:25:36 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/13 14:56:41 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ int	main(int argc, char **argv, char **env)
 	(void)env;
 	test1[0] = "abracadabra\n";
 	test1[1] = NULL;
-	ft_echo(test1);
 	test2[0] = "-n";
-	test2[1] = "testTESTtest";
+	test2[1] = "testTESTtest|";
 	test2[2] = NULL;
 	ft_echo(test2);
+	ft_echo(test1);
 */
 	return (0);
 }
