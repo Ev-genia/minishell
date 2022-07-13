@@ -3,22 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/13 17:10:40 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/13 17:33:03 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+void	ft_parse(int argc, char **argv)
+{
+	
+}
+
+
 int	main(int argc, char **argv, char **env)
 {
-	/*
+	
 	//основной main:
 	if (ft_parse(argc, argv))
 		return (ft_error());
-	if (ft_init(argc, argv))
+	/*if (ft_init(argc, argv))
 	    return (ft_error());
 	ft_shell();
 	*/
