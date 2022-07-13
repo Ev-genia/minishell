@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/12 16:53:14 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/13 11:01:31 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,9 @@
 
 typedef struct s_env //связный список для парсинга переменной окружения
 {
-	char			*name;
+	char			*key;
 	char			*value;
 	struct s_env	*next;
-	
 }	t_env;
 
 //lst_env.c
@@ -34,7 +33,7 @@ void	ft_lstadd_back_env(t_env **lst, t_env *new);
 
 //ft_env.c
 void	ft_env(t_env *env);
-t_env 	*ft_env_struct(char **ev);
+t_env	*ft_env_struct(char **ev);
 
 //ft_pwd.c
 int		ft_pwd(void);

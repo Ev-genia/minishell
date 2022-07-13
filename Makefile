@@ -6,7 +6,7 @@
 #    By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/30 13:01:49 by mlarra            #+#    #+#              #
-#    Updated: 2022/07/12 17:09:15 by mlarra           ###   ########.fr        #
+#    Updated: 2022/07/12 17:16:15 by mlarra           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ HEADER	=	${addprefix ${DIR_HEADER}/,minishell.h}
 
 OBJ		=	${SRC:%.c=%.o}
 
-CFLAGS	=	-Wall -Wextra -Werror
+CFLAGS	=	-Wall -Wextra -Werror -g
 
 CC		=	cc
 
@@ -62,7 +62,6 @@ clean	:
 
 fclean	:	clean
 	${RM} ${NAME}
-#	cd ./src/libft/ && ${MAKE} fclean 
 	make -C ${LIB_DIR} fclean
 
 re		:	fclean all
