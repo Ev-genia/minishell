@@ -3,18 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+         #
+#    By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/30 13:01:49 by mlarra            #+#    #+#              #
-#    Updated: 2022/07/14 10:33:49 by wcollen          ###   ########.fr        #
+#    Updated: 2022/07/14 17:44:05 by mlarra           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	minishell
 
-# LIBFT	=	libft.a
 LIB_DIR	=	./src/libft/
-# LIB_NAME	=	./src/libft/libft.a
 
 DIR				=	./src/
 DIR_BUILTINS	=	./src/builtins/

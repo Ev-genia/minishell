@@ -6,13 +6,14 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:11:39 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/14 13:10:16 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/14 17:40:13 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // #include <minishell.h>
 #include "../../../includes/minishell.h"
 
+/*
 void	ft_swap(t_env **l)
 {
 	t_env	*temp;
@@ -22,18 +23,19 @@ void	ft_swap(t_env **l)
 	temp->next = (*l);
 	(*l) = temp;
 }
+*/
 
-void  swap_lst(t_env **elem)
+void	ft_swap_content(t_env **l)
 {
-  t_env  *tmp;
+	void	*temp_key;
+	void	*temp_value;
 
-  if ((*elem) && (*elem)->next)
-  {
-    tmp = (*elem)->next;
-    (*elem)->next = (*elem)->next->next;
-    tmp->next = (*elem);
-    *elem = tmp;
-  }
+	temp_key = (*l)->key;
+	(*l)->key = (*l)->next->key;
+	(*l)->next->key = temp_key;
+	temp_value = (*l)->value;
+	(*l)->value = (*l)->next->value;
+	(*l)->next->value = temp_value;
 }
 
 int	ft_lstsize_t_env(t_env *lst)
@@ -61,43 +63,28 @@ int	ft_max_len(char *s1, char *s2)
 	return (len2);
 }
 
-t_env	*ft_sorted_export(t_env **ev)
+t_env	*ft_sorted_export(t_env *list)
 {
-	// t_env	*sorted;
 	t_env	*begin;
 	int		len_list;
 	int		i;
 	int		max_len;
-	int		flag_head;
-// t_env	*temp;
 
-	flag_head = 0;
-	begin = *ev;
-	len_list = ft_lstsize_t_env(*ev);
+	begin = list;
+	len_list = ft_lstsize_t_env(list);
 	i = 0;
 	while (i < len_list)
 	{
-		*ev = begin;
-		flag_head = 0;
-		while ((*ev)->next != NULL)
+		list = begin;
+		while (list->next != NULL)
 		{
-printf("1 %s, %s\n", (*ev)->key, (*ev)->next->key);
-			max_len = ft_max_len((*ev)->key, (*ev)->next->key);
-			if (ft_strncmp((*ev)->key, (*ev)->next->key, max_len) > 0)
-				ft_swap(ev);
-			if (flag_head == 0)
-			{
-				begin = *ev;
-				flag_head = 1;
-			}
-printf("2 %s, %s\n", (*ev)->key, (*ev)->next->key);		
-			*ev = (*ev)->next;
-printf("\n");
+			max_len = ft_max_len(list->key, list->next->key);
+			if (ft_strncmp(list->key, list->next->key, max_len) > 0)
+				ft_swap_content(&list);
+			list = list->next;
 		}
-printf("---\n");
 		i++;
 	}
-	// return (sorted);
 	return (begin);
 }
 
@@ -120,8 +107,13 @@ void	ft_print_export(t_env *export)
 	{
 		ft_putstr_fd("declare -x ", 1);
 		ft_putstr_fd(e->key, 1);
-		// ft_putchar_fd('=', 1);
-		// ft_putstr_fd(e->value, 1);
+		if (e->flag_key == 1)
+		{
+			ft_putchar_fd('=', 1);
+			ft_putchar_fd('\"', 1);
+			ft_putstr_fd(e->value, 1);
+			ft_putchar_fd('\"', 1);
+		}
 		ft_putchar_fd('\n', 1);
 		e = e->next;
 	}
@@ -138,6 +130,6 @@ void	ft_export(char **arg, t_env *export)
 	{
 		// while (arg[++i] != NULL)
 		// 	ft_add_to_export(&export, arg[i]);
-		export = ft_sorted_export(&export);
+		export = ft_sorted_export(export);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 11:51:02 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/13 11:04:01 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/14 17:41:04 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_env	*ft_lstnew_env(char *content1, char *content2)
 	{
 		new->key = ft_strdup(content1);
 		new->value = ft_strdup(content2);
+		new->flag_key = 1;
 		new->next = NULL;
 	}
 	return (new);

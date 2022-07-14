@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/14 12:39:23 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/14 17:37:52 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct s_env //связный список для парсинга пе�
 {
 	char			*key;
 	char			*value;
+	int				flag_key;
 	struct s_env	*next;
 }	t_env;
 
@@ -42,7 +43,7 @@ int		ft_pwd(void);
 void	ft_echo(char **arg);
 
 //ft_export.c
-t_env	*ft_sorted_export(t_env **ev);
+t_env	*ft_sorted_export(t_env *ev);
 void	ft_export(char **arg, t_env *export);
 
 //=================parser.c========================//

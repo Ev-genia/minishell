@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/14 12:39:27 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/14 17:45:06 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	test_env = ft_env_struct(env);
 
-	//основной main:
+	// основной main:
 	if (ft_parse(argv, test_env))
 		return (ft_error());
 	/*if (ft_init(argc, argv))
@@ -58,8 +58,8 @@ int	main(int argc, char **argv, char **env)
 	t_env	*enpv;
 	t_env	*sort_env;
 	// char	*arg_export5[6];
-	// char	*arg_export1[2];
-t_env	*temp;
+	char	*arg_export1[2];
+// t_env	*temp;
 
 	(void)argc;
 	(void)argv;
@@ -80,20 +80,20 @@ t_env	*temp;
 // }
 // printf("----\n");
 
-	sort_env = ft_sorted_export(&enpv);
+	sort_env = ft_sorted_export(enpv);
 
-temp = sort_env;
-while (temp)
-{
-	printf("%s=%s\n", temp->key, temp->value);
-	temp = temp->next;
-}
+// temp = sort_env;
+// while (temp)
+// {
+// 	printf("%s=%s\n", temp->key, temp->value);
+// 	temp = temp->next;
+// }
 
 	// ft_export(arg_export5, sort_env);
-	// printf("-----------------\n");
-	// arg_export1[0] = "export";
-	// arg_export1[1] = NULL;
-	// ft_export(arg_export1, sort_env);
+	printf("-----------------\n");
+	arg_export1[0] = "export";
+	arg_export1[1] = NULL;
+	ft_export(arg_export1, sort_env);
 // */
 	return (0);
 }
