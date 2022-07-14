@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+         #
+#    By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/30 13:01:49 by mlarra            #+#    #+#              #
-#    Updated: 2022/07/13 16:57:33 by mlarra           ###   ########.fr        #
+#    Updated: 2022/07/14 10:33:49 by wcollen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,9 @@ NAME	=	minishell
 LIB_DIR	=	./src/libft/
 # LIB_NAME	=	./src/libft/libft.a
 
-DIR		=	./src/
+DIR				=	./src/
 DIR_BUILTINS	=	./src/builtins/
+DIR_PARSER		=	./src/parser/
 
 DIR_HEADER	=	./includes
 
@@ -37,7 +38,8 @@ SRC		=	${DIR}main.c\
 			${SRC_PWD}\
 			${SRC_ENV}\
 			${SRC_ECHO}\
-			${SRC_EXPORT}
+			${SRC_EXPORT}\
+			${DIR_PARSER}parser.c
 
 HEADER	=	${addprefix ${DIR_HEADER}/,minishell.h}
 

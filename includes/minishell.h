@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/13 17:10:54 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/14 10:24:45 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,26 @@ typedef struct s_env //связный список для парсинга пе�
 	struct s_env	*next;
 }	t_env;
 
-//lst_env.c
+//=================lst_env.c=======================//
 t_env	*ft_lstnew_env(char *content1, char *content2);
 t_env	*ft_lstlast_env(t_env *lst);
 void	ft_lstadd_back_env(t_env **lst, t_env *new);
 
-//ft_env.c
+//==================ft_env.c=======================//
 void	ft_env(t_env *env);
 t_env	*ft_env_struct(char **ev);
 
-//ft_pwd.c
+//=================ft_pwd.c========================//
 int		ft_pwd(void);
 
-//ft_echo.c
+//==================ft_echo.c======================//
 void	ft_echo(char **arg);
 
-//ft_export.c
+//=================ft_export.c=====================//
 t_env	*ft_sorted_export(t_env *ev);
 void	ft_export(char **arg, t_env *export);
+
+//=================parser.c========================//
+int		ft_parse(char **av, t_env *env_list);
 
 #endif
