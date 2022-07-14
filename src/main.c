@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/13 17:10:40 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/14 12:39:27 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,43 @@ int	main(int argc, char **argv, char **env)
 // 	для тестирования export
 	t_env	*enpv;
 	t_env	*sort_env;
-	char	*arg_export[6];
+	// char	*arg_export5[6];
+	// char	*arg_export1[2];
+t_env	*temp;
 
-	arg_export[0] = "export";
-	arg_export[1] = "test1";
-	arg_export[2] = "TEST2";
-	arg_export[3] = "Test3=";
-	arg_export[4] = "tEST4=HI";
-	arg_export[5] = NULL;
+	(void)argc;
+	(void)argv;
+	// arg_export5[0] = "export";
+	// arg_export5[1] = "test1";
+	// arg_export5[2] = "TEST2";
+	// arg_export5[3] = "Test3=";
+	// arg_export5[4] = "tEST4=HI";
+	// arg_export5[5] = NULL;
 	enpv = ft_env_struct(env);
-	sort_env = ft_sorted_export(enpv);
-	ft_export(arg_export, sort_env);
+
+// temp = enpv;
+// printf("\n");
+// while (temp)
+// {
+// 	printf("%s=%s\n", temp->key, temp->value);
+// 	temp = temp->next;
+// }
+// printf("----\n");
+
+	sort_env = ft_sorted_export(&enpv);
+
+temp = sort_env;
+while (temp)
+{
+	printf("%s=%s\n", temp->key, temp->value);
+	temp = temp->next;
+}
+
+	// ft_export(arg_export5, sort_env);
+	// printf("-----------------\n");
+	// arg_export1[0] = "export";
+	// arg_export1[1] = NULL;
+	// ft_export(arg_export1, sort_env);
 // */
 	return (0);
 }

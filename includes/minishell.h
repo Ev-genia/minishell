@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/13 17:10:54 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/14 12:39:23 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int		ft_pwd(void);
 void	ft_echo(char **arg);
 
 //ft_export.c
-t_env	*ft_sorted_export(t_env *ev);
+t_env	*ft_sorted_export(t_env **ev);
 void	ft_export(char **arg, t_env *export);
 
 #endif
