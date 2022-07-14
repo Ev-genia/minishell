@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:11:39 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/14 17:40:13 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/14 23:14:16 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	ft_swap_content(t_env **l)
 {
 	void	*temp_key;
 	void	*temp_value;
+	int		temp_flag;
 
 	temp_key = (*l)->key;
 	(*l)->key = (*l)->next->key;
@@ -36,6 +37,9 @@ void	ft_swap_content(t_env **l)
 	temp_value = (*l)->value;
 	(*l)->value = (*l)->next->value;
 	(*l)->next->value = temp_value;
+	temp_flag = (*l)->flag_key;
+	(*l)->flag_key = (*l)->next->flag_key;
+	(*l)->next->flag_key = temp_flag;
 }
 
 int	ft_lstsize_t_env(t_env *lst)
