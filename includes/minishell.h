@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
 /*   Updated: 2022/07/14 12:39:23 by mlarra           ###   ########.fr       */
@@ -44,5 +44,8 @@ void	ft_echo(char **arg);
 //ft_export.c
 t_env	*ft_sorted_export(t_env **ev);
 void	ft_export(char **arg, t_env *export);
+
+//=================parser.c========================//
+int		ft_parse(char **av, t_env *env_list);
 
 #endif

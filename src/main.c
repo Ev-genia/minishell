@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
 /*   Updated: 2022/07/14 12:39:27 by mlarra           ###   ########.fr       */
@@ -14,16 +14,20 @@
 
 int	main(int argc, char **argv, char **env)
 {
-	/*
+	t_env	*test_env;
+
+	(void)argc;
+	test_env = ft_env_struct(env);
+
 	//основной main:
-	if (ft_parse(argc, argv))
+	if (ft_parse(argv, test_env))
 		return (ft_error());
-	if (ft_init(argc, argv))
+	/*if (ft_init(argc, argv))
 	    return (ft_error());
 	ft_shell();
 	*/
 /*
-//для тестирования env:
+	//для тестирования env:
 	t_env	*test_env;
 
 	(void)argc;
@@ -32,7 +36,7 @@ int	main(int argc, char **argv, char **env)
 	ft_env(test_env);
 */
 /*
-//для тестирования echo
+	//для тестирования echo
 	char	*test1[3];
 	char	*test2[4];
 
