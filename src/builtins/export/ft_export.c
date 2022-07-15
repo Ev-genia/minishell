@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:11:39 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/15 14:41:38 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/15 15:02:03 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,23 +60,36 @@ void	ft_no_valid_export(char *str)
 {
 	ft_putstr_fd("export: `", 2);
 	ft_putstr_fd(str, 2);
-	ft_putstr_fd(": not a valid identifier\n", 2);
+	ft_putstr_fd("`: not a valid identifier\n", 2);
+}
+
+int	ft_check_arg_export(char *s)
+{
+	int	i;
+	int	len;
+
+	i = -1;
+	len = (int)ft_strlen(s);
+	while (++i < len)
+	{
+		if (i == 0 && (ft_isdigit(s[i]) || !ft_isalpha(s[i])))
+			return (1);
+		if (!ft_isdigit(s[i]) && !ft_isalpha(s[i]))
+			return (1);
+	}
+	return (0);
 }
 
 void	ft_export(char **arg, t_env *export)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 0;
 	if (ft_arr_len(arg) != 1)
 	{
 		while (arg[++i] != NULL)
 		{
-			if (j == 0 && (ft_isdigit(arg[i][j]) || !ft_isalpha(arg[i][j])))
-				return (ft_no_valid_export(arg[i]));
-			if (!ft_isdigit(arg[i][j]) && !ft_isalpha(arg[i][j]))
+			if (ft_check_arg_export(arg[i]))
 				return (ft_no_valid_export(arg[i]));
 			ft_add_to_export(&export, arg[i]);
 		}
