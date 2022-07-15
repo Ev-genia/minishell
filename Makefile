@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+         #
+#    By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/30 13:01:49 by mlarra            #+#    #+#              #
-#    Updated: 2022/07/15 15:26:18 by mlarra           ###   ########.fr        #
+#    Updated: 2022/07/15 23:39:45 by wcollen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ SRC		=	${DIR}main.c\
 			${SRC_ENV}\
 			${SRC_ECHO}\
 			${SRC_EXPORT}\
-			${SRC_UNSET}#\
+			${SRC_UNSET}\
 			${DIR_PARSER}parser.c
 
 HEADER	=	${addprefix ${DIR_HEADER}/,minishell.h}

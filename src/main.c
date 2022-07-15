@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/15 16:48:09 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/15 23:45:02 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,21 @@ int	main(int argc, char **argv, char **env)
 
 	t_env	*enpv;
 	t_env	*sort_env;
-	t_env	*export;
+	//t_env	*export;
 
 	(void)argc;
 	enpv = ft_env_struct(env);
 	sort_env = ft_sorted_export(enpv);
 
-	/*	// основной main:
-	if (ft_parse(argv, test_env))
+		// основной main:
+	ft_parse(&argv[1], enpv);
+	/*if (ft_parse(argv, enpv))
 		return (ft_error());
 	if (ft_init(argc, argv))
 	    return (ft_error());
 	ft_shell();
 	*/
-// /*
+ /*
 //for test unset
 
 	char	*arg_unset1[2];
