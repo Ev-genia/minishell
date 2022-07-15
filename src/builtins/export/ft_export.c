@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:11:39 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/15 15:10:19 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/15 16:27:59 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,10 @@ void	ft_print_export(t_env *export)
 	}
 }
 
-void	ft_no_valid_export(char *str)
+void	ft_no_valid_command(char *str, char *name_command)
 {
-	ft_putstr_fd("export: `", 2);
+	ft_putstr_fd(name_command, 2);
+	ft_putstr_fd(": `", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd("`: not a valid identifier\n", 2);
 }
@@ -80,7 +81,7 @@ int	ft_check_arg_export(char *s)
 	return (0);
 }
 
-void	ft_export(char **arg, t_env *export)
+t_env	*ft_export(char **arg, t_env *export)
 {
 	int	i;
 
@@ -90,10 +91,14 @@ void	ft_export(char **arg, t_env *export)
 		while (arg[++i] != NULL)
 		{
 			if (ft_check_arg_export(arg[i]))
-				return (ft_no_valid_export(arg[i]));
+			{
+				ft_no_valid_command(arg[i], arg[0]);
+				return (export);
+			}
 			ft_add_to_export(&export, arg[i]);
 		}
 		export = ft_sorted_export(export);
 	}
 	ft_print_export(export);
+	return (export);
 }

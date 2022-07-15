@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/15 12:33:33 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/15 16:50:28 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ void	ft_echo(char **arg);
 
 //ft_export.c
 t_env	*ft_sorted_export(t_env *ev);
-void	ft_export(char **arg, t_env *export);
+t_env	*ft_export(char **arg, t_env *export);
+int		ft_arr_len(char **arr);
+void	ft_no_valid_command(char *str, char *name_command);
+int		ft_check_arg_export(char *s);
 
 //ft_sort_export.c
 t_env	*ft_sorted_export(t_env *list);
@@ -53,6 +56,9 @@ int		ft_max_len(char *s1, char *s2);
 
 //ft_add_to_export.c
 void	ft_add_to_export(t_env **export, char *s);
+
+//ft_unset.c
+int		ft_unset(char **arg, t_env **env, t_env **export);
 
 //=================parser.c========================//
 int		ft_parse(char **av, t_env *env_list);
