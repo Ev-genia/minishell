@@ -6,7 +6,7 @@
 #    By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/30 13:01:49 by mlarra            #+#    #+#              #
-#    Updated: 2022/07/14 23:25:09 by mlarra           ###   ########.fr        #
+#    Updated: 2022/07/15 11:20:34 by mlarra           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,13 +30,13 @@ DIR_ECHO	=	${addprefix ${DIR_BUILTINS},echo/}
 SRC_ECHO	=	${addprefix ${DIR_ECHO}, ft_echo.c}
 
 DIR_EXPORT	=	${addprefix ${DIR_BUILTINS},export/}
-SRC_EXPORT	=	${addprefix ${DIR_EXPORT}, ft_export.c ft_sort_export.c}
+SRC_EXPORT	=	${addprefix ${DIR_EXPORT}, ft_export.c ft_sort_export.c ft_add_to_export.c}
 
 SRC		=	${DIR}main.c\
 			${SRC_PWD}\
 			${SRC_ENV}\
 			${SRC_ECHO}\
-			${SRC_EXPORT}\
+			${SRC_EXPORT}#\
 			${DIR_PARSER}parser.c
 
 HEADER	=	${addprefix ${DIR_HEADER}/,minishell.h}

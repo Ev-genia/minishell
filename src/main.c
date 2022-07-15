@@ -6,14 +6,15 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/14 23:24:42 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/15 13:49:09 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 int	main(int argc, char **argv, char **env)
-{/*
+{
+	// /*
 	t_env	*test_env;
 
 	(void)argc;
@@ -25,7 +26,7 @@ int	main(int argc, char **argv, char **env)
 	if (ft_init(argc, argv))
 	    return (ft_error());
 	ft_shell();
-	*/
+	// */
 /*
 	//для тестирования env:
 	t_env	*test_env;
@@ -53,47 +54,29 @@ int	main(int argc, char **argv, char **env)
 	ft_echo(test2);
 	ft_echo(test1);
 */
-// /*
+/*
 // 	для тестирования export
 	t_env	*enpv;
 	t_env	*sort_env;
-	// char	*arg_export5[6];
+	char	*arg_export5[7];
 	char	*arg_export1[2];
-// t_env	*temp;
 
 	(void)argc;
 	(void)argv;
-	// arg_export5[0] = "export";
-	// arg_export5[1] = "test1";
-	// arg_export5[2] = "TEST2";
-	// arg_export5[3] = "Test3=";
-	// arg_export5[4] = "tEST4=HI";
-	// arg_export5[5] = NULL;
 	enpv = ft_env_struct(env);
-
-// temp = enpv;
-// printf("\n");
-// while (temp)
-// {
-// 	printf("%s=%s\n", temp->key, temp->value);
-// 	temp = temp->next;
-// }
-// printf("----\n");
-
 	sort_env = ft_sorted_export(enpv);
-
-// temp = sort_env;
-// while (temp)
-// {
-// 	printf("%s=%s\n", temp->key, temp->value);
-// 	temp = temp->next;
-// }
-
-	// ft_export(arg_export5, sort_env);
-	printf("-----------------\n");
 	arg_export1[0] = "export";
 	arg_export1[1] = NULL;
 	ft_export(arg_export1, sort_env);
-// */
+	printf("-----------------\n");
+	arg_export5[0] = "export";
+	arg_export5[1] = "test1";
+	arg_export5[2] = "TEST2";
+	arg_export5[3] = "Test3=";
+	arg_export5[4] = "tEST4=HI";
+	arg_export5[5] = "Test5=   ";
+	arg_export5[6] = NULL;
+	ft_export(arg_export5, sort_env);
+*/
 	return (0);
 }

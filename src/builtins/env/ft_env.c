@@ -6,12 +6,22 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 16:26:41 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/13 15:33:46 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/15 11:53:08 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // #include <minishell.h>
 #include "../../../includes/minishell.h"
+
+int	ft_check_space(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (is_space(str[i]))
+		i++;
+	return (i);
+}
 
 char	*ft_find_env(char *env, char c)
 {
@@ -34,6 +44,8 @@ char	*ft_find_env(char *env, char c)
 	else
 	{
 		i++;
+		if (c == 'e')
+			i = i + ft_check_space(&env[i]);
 		val = ft_strdup(&env[i]);
 		return (val);
 	}
@@ -53,7 +65,7 @@ t_env	*ft_env_struct(char **ev)
 	{
 		key = ft_find_env(ev[i], 'k');
 		value = ft_find_env(ev[i], 'v');
-		env_new = ft_lstnew_env(key, value);
+		env_new = ft_lstnew_env(key, value, 1);
 		ft_lstadd_back_env(&env_list, env_new);
 		free(key);
 		free(value);

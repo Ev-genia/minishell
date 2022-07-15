@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcollen <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 17:13:27 by wcollen           #+#    #+#             */
-/*   Updated: 2021/10/24 19:56:33 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/07/15 12:41:45 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #ifndef LIBFT_H
 # define LIBFT_H
 # include <unistd.h>
@@ -39,6 +40,7 @@ char	*ft_strrchr(const char *str, int symb);
 int		ft_strncmp(const char *str1, const char *str2, size_t num);
 void	*ft_memchr(const void *str, int symb, size_t n);
 char	*ft_strnstr(const char *str, const char *pattern, size_t count);
+int		is_space(char s);
 int		ft_atoi(const char *str);
 int		ft_memcmp(const void *str1, const void *str2, size_t count);
 void	*ft_calloc(size_t num, size_t size);
@@ -63,4 +65,5 @@ void	ft_lstdelone(t_list *lst, void (*del)(void*));
 void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+
 #endif
