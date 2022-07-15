@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/15 15:02:22 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/15 15:09:11 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	main(int argc, char **argv, char **env)
 	// arg_export5[7] = NULL;
 	// ft_export(arg_export5, sort_env);
 	arg_export3[0] = "export";
-	arg_export3[1] = "pi*per";
+	arg_export3[1] = "___piper";
 	arg_export3[2] = NULL;
 	ft_export(arg_export3, sort_env);
 // */

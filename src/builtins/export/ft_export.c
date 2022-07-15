@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:11:39 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/15 15:02:03 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/15 15:10:19 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ int	ft_check_arg_export(char *s)
 	len = (int)ft_strlen(s);
 	while (++i < len)
 	{
-		if (i == 0 && (ft_isdigit(s[i]) || !ft_isalpha(s[i])))
+		if (i == 0 && s[i] != '_' && (ft_isdigit(s[i]) || !ft_isalpha(s[i])))
 			return (1);
-		if (!ft_isdigit(s[i]) && !ft_isalpha(s[i]))
+		if (!ft_isdigit(s[i]) && !ft_isalpha(s[i]) && s[i] != '_')
 			return (1);
 	}
 	return (0);
