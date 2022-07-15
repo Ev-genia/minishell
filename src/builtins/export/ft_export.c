@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:11:39 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/14 13:10:16 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/14 15:44:50 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ t_env	*ft_sorted_export(t_env **ev)
 		flag_head = 0;
 		while ((*ev)->next != NULL)
 		{
-printf("1 %s, %s\n", (*ev)->key, (*ev)->next->key);
+//printf("1 %s, %s\n", (*ev)->key, (*ev)->next->key);
 			max_len = ft_max_len((*ev)->key, (*ev)->next->key);
 			if (ft_strncmp((*ev)->key, (*ev)->next->key, max_len) > 0)
 				ft_swap(ev);
@@ -90,12 +90,17 @@ printf("1 %s, %s\n", (*ev)->key, (*ev)->next->key);
 				begin = *ev;
 				flag_head = 1;
 			}
-printf("2 %s, %s\n", (*ev)->key, (*ev)->next->key);		
+	
 			*ev = (*ev)->next;
-printf("\n");
+//printf("\n");
 		}
-printf("---\n");
+//printf("---\n");
 		i++;
+	}
+	while(begin != NULL)
+	{
+		printf("%s\n", begin->key);	
+		begin = begin->next;
 	}
 	// return (sorted);
 	return (begin);

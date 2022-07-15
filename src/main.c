@@ -6,7 +6,7 @@
 /*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/14 12:39:27 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/15 10:55:11 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ int	main(int argc, char **argv, char **env)
 	test_env = ft_env_struct(env);
 
 	//основной main:
-	if (ft_parse(argv, test_env))
-		return (ft_error());
+	ft_parse(&argv[1], test_env);
+	printf("THE END\n");
+	//if (ft_parse(argv, test_env))
+	//	return (1);//(ft_error());
 	/*if (ft_init(argc, argv))
 	    return (ft_error());
 	ft_shell();
@@ -56,10 +58,10 @@ int	main(int argc, char **argv, char **env)
 // /*
 // 	для тестирования export
 	t_env	*enpv;
-	t_env	*sort_env;
+	//t_env	*sort_env;
 	// char	*arg_export5[6];
 	// char	*arg_export1[2];
-t_env	*temp;
+//t_env	*temp;
 
 	(void)argc;
 	(void)argv;
@@ -80,14 +82,21 @@ t_env	*temp;
 // }
 // printf("----\n");
 
-	sort_env = ft_sorted_export(&enpv);
 
-temp = sort_env;
-while (temp)
-{
-	printf("%s=%s\n", temp->key, temp->value);
-	temp = temp->next;
-}
+
+//=================================================
+// 	sort_env = ft_sorted_export(&enpv);
+
+// temp = sort_env;
+// while (temp)
+// {
+// 	printf("%s=%s\n", temp->key, temp->value);
+// 	temp = temp->next;
+// }
+//===================================================
+
+
+
 
 	// ft_export(arg_export5, sort_env);
 	// printf("-----------------\n");
