@@ -6,14 +6,14 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 11:51:02 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/13 11:04:01 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/15 09:58:31 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // #include <minishell.h>
 #include "../../../includes/minishell.h"
 
-t_env	*ft_lstnew_env(char *content1, char *content2)
+t_env	*ft_lstnew_env(char *content1, char *content2, int flag)
 {
 	t_env	*new;
 
@@ -22,6 +22,10 @@ t_env	*ft_lstnew_env(char *content1, char *content2)
 	{
 		new->key = ft_strdup(content1);
 		new->value = ft_strdup(content2);
+		if (flag == 1)
+			new->flag_key = 1;
+		else
+			new->flag_key = 0;
 		new->next = NULL;
 	}
 	return (new);
