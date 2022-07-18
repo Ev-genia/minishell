@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/15 16:50:28 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/18 11:01:42 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int		ft_max_len(char *s1, char *s2);
 void	ft_add_to_export(t_env **export, char *s);
 
 //ft_unset.c
-int		ft_unset(char **arg, t_env **env, t_env **export);
+void	ft_unset(char **arg, t_env **env, t_env **export);
 
 //=================parser.c========================//
 int		ft_parse(char **av, t_env *env_list);
