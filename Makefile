@@ -6,7 +6,7 @@
 #    By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/30 13:01:49 by mlarra            #+#    #+#              #
-#    Updated: 2022/07/15 23:39:45 by wcollen          ###   ########.fr        #
+#    Updated: 2022/07/16 10:51:13 by wcollen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,7 @@ RM		=	rm -f
 
 ${NAME}	:	${OBJ}
 	make -C ${LIB_DIR}
-	${CC} ${CFLAGS} -I${HEADER} $^ -L ${LIB_DIR} -lft -o $@
+	${CC} ${CFLAGS} -I${HEADER} $^ -L ${LIB_DIR} -lft -ltermcap -o $@
 
 # ${LIB_NAME}	:
 # 	${MAKE} -C ${LIB_DIR}
