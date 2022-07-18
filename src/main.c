@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/15 23:45:02 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/07/18 11:55:15 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,11 @@ int	main(int argc, char **argv, char **env)
 {
 
 	t_env	*enpv;
-	t_env	*sort_env;
-	//t_env	*export;
+	t_env	*export;
 
 	(void)argc;
 	enpv = ft_env_struct(env);
-	sort_env = ft_sorted_export(enpv);
+	export = ft_sorted_export(enpv);
 
 		// основной main:
 	ft_parse(&argv[1], enpv);
@@ -31,27 +30,23 @@ int	main(int argc, char **argv, char **env)
 	    return (ft_error());
 	ft_shell();
 	*/
- /*
+// /*
 //for test unset
 
-	char	*arg_unset1[2];
-	char	*arg_export1[2];
-	// char	*arg_unset2[3];
-	
-	// (void)argc;
+	// char	*arg_unset1[2];
+	char	*arg_unset2[3];
+
 	(void)argv;
-	// enpv = ft_env_struct(env);
-	// sort_env = ft_sorted_export(enpv);
-	arg_export1[0] = "export";
-	arg_export1[1] = NULL;
-	export = ft_export(arg_export1, sort_env);
-	arg_unset1[0] = "unset";
-	arg_unset1[1] = NULL;
-	ft_unset(arg_unset1, &enpv, &export);
-	// arg_unset2[0] = "unset";
-	// arg_unset2[1] = "USER";
-	// arg_unset2[2] = NULL;
-	// ft_unset(arg_unset2, &enpv, &export);
+	// arg_unset1[0] = "unset";
+	// arg_unset1[1] = NULL;
+	// ft_unset(arg_unset1, &enpv, &export);
+	arg_unset2[0] = "unset";
+	arg_unset2[1] = "USER";
+	arg_unset2[2] = NULL;
+	ft_env(enpv);
+	ft_unset(arg_unset2, &enpv, &export);
+ft_putstr_fd("-----------------\n", 1);
+	ft_env(enpv);
 // */
 
 	return (0);
