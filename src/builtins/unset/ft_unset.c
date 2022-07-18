@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:24:11 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/18 16:24:16 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/18 16:39:21 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,10 @@ void	ft_unset_env_export(char *key, t_env **list)
 void	ft_unset(char **arg, t_env **env, t_env **export)
 {
 	int	i;
-	
+
 	i = 0;
 	if (ft_arr_len(arg) == 1)
 		return ;
-	// (void)export;
 	while (arg[++i] != NULL)
 	{
 		if (ft_check_arg_export(arg[i]))
