@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:24:11 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/18 11:52:47 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/18 14:30:40 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,6 @@ int	ft_find_key_id(char *key, t_env *list)
 	return (-1);
 }
 
-// void	del(void *cont)
-// {
-// 	char	*str;
-
-// 	str = cont;
-
-// }
-
 // void	ft_lstdelone(t_list *lst, void (*del)(void*))
 // {
 // 	if (!lst || !del || !lst->content)
@@ -51,18 +43,54 @@ int	ft_find_key_id(char *key, t_env *list)
 // 	free(lst);
 // }
 
+// void	ft_lstclear(t_list **lst, void (*del)(void*))
+// {
+// 	t_list	*temp;
+// 	t_list	*list;
+
+// 	list = *lst;
+// 	while (list)
+// 	{
+// 		temp = list->next;
+// 		if (list->content)
+// 			del(list->content);
+// 		free(list);
+// 		list = temp;
+// 	}
+// 	*lst = (void *)0;
+// }
+
 void	ft_del_elem(t_env **list)
 {
 	t_env	*tmp;
 
-	if ((*list)->next != NULL)
+	// if ((*list)->next != NULL)
 		tmp = (*list)->next;
-	else
-		tmp = NULL;
+	// else
+	// 	tmp = NULL;
 	free((*list)->key);
 	if ((*list)->flag_key == 1)
+	{
 		free((*list)->value);
+		(*list)->flag_key = 0;
+	}
+	// free(*list);
 	*list = tmp;
+
+// 	tmp = *list;
+// 	*list = (*list)->next;
+// printf("*list: %s\n", (*list)->key);
+// ft_putstr_fd("*list:\n", 1);
+// ft_putstr_fd((*list)->key, 1);
+// 	free(tmp->key);
+// 	if (tmp->flag_key == 1)
+// 	{
+// 		free(tmp->value);
+// 		tmp->flag_key = 0;
+// 	}
+	// free(tmp);
+	
+
 }
 
 void	ft_unset_env_export(char *key, t_env **list)
