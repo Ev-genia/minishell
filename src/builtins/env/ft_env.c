@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 16:26:41 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/19 14:22:38 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/19 16:33:40 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void	ft_env(t_env *env)
 	while (e)
 	{
 		ft_putstr_fd(e->key, 1);
-// printf("e->key: %s, e->flag_key: %d\n", e->key, e->flag_key);
 		if (e->flag_key == 1)
 		{
 			ft_putchar_fd('=', 1);

@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 23:18:21 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/19 14:39:24 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/19 16:29:05 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ t_env	*ft_sorted_export(t_env *list)
 		}
 		i++;
 	}
-	// ft_lstclear_env(list);
 	return (begin);
 }
 

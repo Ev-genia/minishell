@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/19 14:56:21 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/19 16:32:50 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int argc, char **argv, char **env)
 	ft_shell();
 	*/
 
-// /*
+/*
 // 	для тестирования export
 	// t_env	*enpv;
 	// t_env	*sort_env;
@@ -60,18 +60,18 @@ int	main(int argc, char **argv, char **env)
 	ft_env(enpv);
 	ft_putstr_fd("5-----------------\n", 1);	
 	arg_export5[0] = "export";
-	arg_export5[1] = "test1\0";
-	arg_export5[2] = "TEST2\0";
-	arg_export5[3] = "Test3=\0";
-	arg_export5[4] = "tEST4=HI\0";
-	arg_export5[5] = "Test5=   \0";
-	arg_export5[6] = "te*rm\0";
+	arg_export5[1] = "test1";
+	arg_export5[2] = "TEST2";
+	arg_export5[3] = "Test3=";
+	arg_export5[4] = "tEST4=HI";
+	arg_export5[5] = "_Test5=";
+	arg_export5[6] = "te*rm";
 	arg_export5[7] = NULL;
 	ft_export(arg_export5, &export, &enpv);
 	ft_putstr_fd("6-----------------\n", 1);
 	ft_env(enpv);
 	ft_putstr_fd("7-----------------\n", 1);
-// */
+*/
 
 /*
 //for test cd

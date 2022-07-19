@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/19 14:38:01 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/19 16:30:40 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ int		ft_max_len(char *s1, char *s2);
 t_env	*ft_copy_env(t_env *list);
 
 //ft_add_to_export.c
-void	ft_add_to_export(t_env **export, char *s, t_env **env);
+void	ft_add_to_export(t_env **export, char *s);
 
 //lst_export.c
 void	ft_lstclear_env(t_env **lst);
 
-// //ft_add_to_env.c
-// void	ft_add_to_env(t_env ***list, char *s);
+//ft_add_to_env.c
+void	ft_add_to_env(t_env ***list, char *s);
 
 //ft_unset.c
 void	ft_unset(char **arg, t_env **env, t_env **export);
