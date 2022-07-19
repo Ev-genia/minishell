@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 11:51:02 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/15 09:58:31 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/19 14:20:08 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,5 @@ void	ft_lstadd_back_env(t_env **lst, t_env *new)
 		last_elem->next = new;
 	}
 	else
-	{
 		*lst = new;
-	}
 }

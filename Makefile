@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+         #
+#    By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/30 13:01:49 by mlarra            #+#    #+#              #
-#    Updated: 2022/07/16 10:51:13 by wcollen          ###   ########.fr        #
+#    Updated: 2022/07/19 14:28:04 by mlarra           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,10 +30,14 @@ DIR_ECHO	=	${addprefix ${DIR_BUILTINS},echo/}
 SRC_ECHO	=	${addprefix ${DIR_ECHO}, ft_echo.c}
 
 DIR_EXPORT	=	${addprefix ${DIR_BUILTINS},export/}
-SRC_EXPORT	=	${addprefix ${DIR_EXPORT}, ft_export.c ft_sort_export.c ft_add_to_export.c}
+SRC_EXPORT	=	${addprefix ${DIR_EXPORT}, ft_export.c ft_sort_export.c\
+		ft_add_to_export.c	ft_add_to_env.c	lst_export.c}
 
 DIR_UNSET	=	${addprefix ${DIR_BUILTINS},unset/}
 SRC_UNSET	=	${addprefix ${DIR_UNSET}, ft_unset.c}
+
+DIR_CD	=	${addprefix ${DIR_BUILTINS},cd/}
+SRC_CD	=	${addprefix ${DIR_CD}, ft_cd.c}
 
 SRC		=	${DIR}main.c\
 			${SRC_PWD}\
@@ -42,6 +46,8 @@ SRC		=	${DIR}main.c\
 			${SRC_EXPORT}\
 			${SRC_UNSET}\
 			${DIR_PARSER}parser.c
+#			${SRC_CD}\
+			
 
 HEADER	=	${addprefix ${DIR_HEADER}/,minishell.h}
 

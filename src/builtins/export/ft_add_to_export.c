@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 09:39:03 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/15 13:48:06 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/19 14:23:28 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,15 @@ void	ft_lstadd_middle(t_env **lst, t_env *elem, int i)
 	*lst = begin;
 }
 
-void	ft_add_to_export(t_env **list, char *s)
+void	ft_add_to_export(t_env **list, char *s, t_env **list2)
 {
 	t_env	*export_new;
 	int		i;
 
 	export_new = ft_export_new_elem(s);
+// printf("export_new->flag_key: %d\n", export_new->flag_key);
 	i = ft_find_position(*list, export_new);
 	ft_lstadd_middle(list, export_new, i);
+	if (export_new->flag_key == 1)
+		ft_lstadd_back_env(list2, export_new);
 }
