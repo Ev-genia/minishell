@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/20 16:20:15 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/20 16:57:10 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_env //связный список для парсинга пе�
 	struct s_env	*next;
 }	t_env;
 
-int	g_exit_cod;
+int	g_exit_code;
 
 //lst_env.c
 t_env	*ft_lstnew_env(char *content1, char *content2, int flag);
@@ -75,6 +75,9 @@ int		ft_cd(char **args, t_env **enpv, t_env **export);
 
 //ft_exit.c
 int		ft_exit(char **args);
+
+//ft_print_promt.c
+void	ft_print_promt(void);
 
 //=================parser.c========================//
 int		ft_parse(char **av, t_env *env_list);

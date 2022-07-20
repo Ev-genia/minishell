@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/20 16:26:13 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/20 16:57:28 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ int	main(int argc, char **argv, char **env)
 		return (ft_error());
 	ft_shell();
 	*/
+	ft_print_promt();
 	return (0);
 }
