@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/20 16:57:10 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/21 00:04:31 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <dirent.h>
 # include <stdio.h>
 # include <string.h>
+# include <fcntl.h>
+# include <readline/readline.h>
 
 typedef struct s_env //связный список для парсинга переменной окружения
 {
@@ -76,10 +78,13 @@ int		ft_cd(char **args, t_env **enpv, t_env **export);
 //ft_exit.c
 int		ft_exit(char **args);
 
-//ft_print_promt.c
-void	ft_print_promt(void);
+// //ft_print_promt.c
+//void	ft_print_promt(void);
 
 //=================parser.c========================//
-int		ft_parse(char **av, t_env *env_list);
+int		ft_parse(char *str, t_env *env_list);
+
+//=================parser.c========================//
+int		ft_parse(char *str, t_env *env_list);
 
 #endif

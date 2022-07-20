@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 10:17:58 by wcollen           #+#    #+#             */
-/*   Updated: 2022/07/18 14:03:13 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/21 00:21:26 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,34 +116,28 @@ char	*ft_quote(char *str, int *i)
 }
 
 
-int	ft_parse(char **av, t_env *env_list)
+int	ft_parse(char *str, t_env *env_list)
 {
 	int	i;
-	int	j;
 
 	i = 0;
 /*TODO: НАПИСАТЬ ПРЕПАРСЕР!!!!!!!!!!!!!!!!!!*/ 
 	// if (ft_preparse(av) == 1)
 	// 	return (1);
 
-	while (av[i])
+	while (str[i])
 	{
-		j = 0;
-		while (av[i][j])
-		{
-			if (av[i][j] == '\'')
-				av[i] = ft_quote(av[i], &j);
-			if (av[i][j] == '\\')
-				av[i] = ft_b_slash(av[i], &j);
-			if (av[i][j] == '\"')
-				av[i] = ft_db_quote(av[i], &j);
-			if (av[i][j] == '$')
-				av[i] = ft_dollar(av[i], &j, env_list);
-			j++;
-		}
-		printf("av[%d] = %s\n", i, av[i]);
+		if (str[i] == '\'')
+			str = ft_quote(str, &i);
+		if (str[i] == '\\')
+			str = ft_b_slash(str, &i);
+		if (str[i] == '\"')
+			str = ft_db_quote(str, &i);
+		if (str[i] == '$')
+			str = ft_dollar(str, &i, env_list);
 		i++;
 	}
+		printf("str = %s\n", str);
 	return (0);
 }
 
