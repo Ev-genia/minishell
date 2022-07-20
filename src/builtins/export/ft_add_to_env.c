@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 11:13:16 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/19 16:34:16 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/20 12:46:52 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ t_env	*ft_env_new_elem(char *s)
 	return (NULL);
 }
 
-void	ft_add_to_env(t_env ***list, char *s)
+void	ft_add_to_env(t_env **list, char *s)
 {
 	t_env	*env_new;
 
 	env_new = ft_env_new_elem(s);
 	if (env_new != NULL)
-		ft_lstadd_back_env(*list, env_new);
+		ft_lstadd_back_env(list, env_new);
 }

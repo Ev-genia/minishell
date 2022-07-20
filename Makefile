@@ -6,7 +6,7 @@
 #    By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/30 13:01:49 by mlarra            #+#    #+#              #
-#    Updated: 2022/07/19 14:28:04 by mlarra           ###   ########.fr        #
+#    Updated: 2022/07/19 17:31:55 by mlarra           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,8 +45,8 @@ SRC		=	${DIR}main.c\
 			${SRC_ECHO}\
 			${SRC_EXPORT}\
 			${SRC_UNSET}\
+			${SRC_CD}\
 			${DIR_PARSER}parser.c
-#			${SRC_CD}\
 			
 
 HEADER	=	${addprefix ${DIR_HEADER}/,minishell.h}

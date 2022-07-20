@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:24:11 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/19 11:29:59 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/20 11:11:59 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	ft_unset(char **arg, t_env **env, t_env **export)
 	{
 		if (ft_check_arg_export(arg[i]))
 		{
-			ft_no_valid_command(arg[i], arg[0]);
+			ft_no_valid_command(arg[i], arg[0], "': not a valid identifier\n");
 			return ;
 		}
 		ft_unset_env_export(arg[i], env);

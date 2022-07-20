@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/19 16:30:40 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/20 12:47:02 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_echo(char **arg);
 //ft_export.c
 void	ft_export(char **arg, t_env **export, t_env **env);
 int		ft_arr_len(char **arr);
-void	ft_no_valid_command(char *str, char *name_command);
+void	ft_no_valid_command(char *str, char *name_command, char *message);
 int		ft_check_arg_export(char *s);
 
 //ft_sort_export.c
@@ -56,18 +56,20 @@ t_env	*ft_copy_env(t_env *list);
 
 //ft_add_to_export.c
 void	ft_add_to_export(t_env **export, char *s);
+int		ft_find_position(t_env *list, char *key);
 
 //lst_export.c
 void	ft_lstclear_env(t_env **lst);
 
 //ft_add_to_env.c
-void	ft_add_to_env(t_env ***list, char *s);
+void	ft_add_to_env(t_env **list, char *s);
 
 //ft_unset.c
 void	ft_unset(char **arg, t_env **env, t_env **export);
+int		ft_find_key_id(char *key, t_env *list);
 
 //ft_cd.c
-void	ft_cd(char **args, t_env **enpv, t_env **export);
+int		ft_cd(char **args, t_env **enpv, t_env **export);
 
 //=================parser.c========================//
 int		ft_parse(char **av, t_env *env_list);

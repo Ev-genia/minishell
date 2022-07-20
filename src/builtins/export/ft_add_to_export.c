@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 09:39:03 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/19 16:35:14 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/20 12:50:58 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,27 +38,28 @@ t_env	*ft_export_new_elem(char *s)
 	return (export_new);
 }
 
-int	ft_find_position(t_env *list, t_env *elem)
+// int	ft_find_position(t_env *list, t_env *elem)
+int	ft_find_position(t_env *list, char *key)
 {
 	int	i;
 	int	len1;
 	int	len2;
 
 	i = 0;
-	len1 = ft_max_len(elem->key, list->key);
-	if (ft_strncmp(elem->key, list->key, len1) < 0)
+	len1 = ft_max_len(key, list->key);
+	if (ft_strncmp(key, list->key, len1) < 0)
 		return (i);
 	while (list->next != NULL)
 	{
 		i++;
-		len1 = ft_max_len(elem->key, list->key);
-		len2 = ft_max_len(elem->key, list->next->key);
-		if (ft_strncmp(elem->key, list->key, len1) > 0
-			&& ft_strncmp(elem->key, list->next->key, len2) < 0)
+		len1 = ft_max_len(key, list->key);
+		len2 = ft_max_len(key, list->next->key);
+		if (ft_strncmp(key, list->key, len1) > 0
+			&& ft_strncmp(key, list->next->key, len2) < 0)
 			return (i);
 		list = list->next;
 	}
-	return (i);
+	return (-1);
 }
 
 void	ft_lstadd_middle(t_env **lst, t_env *elem, int i)
@@ -83,6 +84,6 @@ void	ft_add_to_export(t_env **list, char *s)
 	int		i;
 
 	export_new = ft_export_new_elem(s);
-	i = ft_find_position(*list, export_new);
+	i = ft_find_position(*list, export_new->key);
 	ft_lstadd_middle(list, export_new, i);
 }
