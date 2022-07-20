@@ -6,14 +6,14 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 10:16:58 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/13 15:36:05 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/20 15:34:07 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // #include <minishell.h>
 #include "../../../includes/minishell.h"
 
-void	ft_echo(char **arg)
+int	ft_echo(char **arg)
 {
 	int	i;
 
@@ -25,4 +25,5 @@ void	ft_echo(char **arg)
 		ft_putstr_fd(arg[i], 1);
 		ft_putchar_fd('\n', 1);
 	}
+	return (0);
 }

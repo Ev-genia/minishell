@@ -6,11 +6,13 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/20 12:53:34 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/20 16:26:13 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+// minishell(→_→)$>
 
 int	main(int argc, char **argv, char **env)
 {
@@ -21,8 +23,6 @@ int	main(int argc, char **argv, char **env)
 	enpv = ft_env_struct(env);
 	export = ft_copy_env(enpv);
 	export = ft_sorted_export(export);
-
-	// основной main:
 	ft_parse(&argv[1], enpv);
 	/*if (ft_parse(argv, enpv))
 		return (ft_error());
@@ -30,7 +30,5 @@ int	main(int argc, char **argv, char **env)
 		return (ft_error());
 	ft_shell();
 	*/
-
-// minishell(→_→)$>
 	return (0);
 }

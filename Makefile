@@ -6,7 +6,7 @@
 #    By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/30 13:01:49 by mlarra            #+#    #+#              #
-#    Updated: 2022/07/19 17:31:55 by mlarra           ###   ########.fr        #
+#    Updated: 2022/07/20 13:19:21 by mlarra           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,9 @@ SRC_UNSET	=	${addprefix ${DIR_UNSET}, ft_unset.c}
 DIR_CD	=	${addprefix ${DIR_BUILTINS},cd/}
 SRC_CD	=	${addprefix ${DIR_CD}, ft_cd.c}
 
+DIR_EXIT	=	${addprefix ${DIR_BUILTINS},exit/}
+SRC_EXIT	=	${addprefix ${DIR_EXIT}, ft_exit.c}
+
 SRC		=	${DIR}main.c\
 			${SRC_PWD}\
 			${SRC_ENV}\
@@ -46,8 +49,8 @@ SRC		=	${DIR}main.c\
 			${SRC_EXPORT}\
 			${SRC_UNSET}\
 			${SRC_CD}\
+			${SRC_EXIT}\
 			${DIR_PARSER}parser.c
-			
 
 HEADER	=	${addprefix ${DIR_HEADER}/,minishell.h}
 

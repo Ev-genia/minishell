@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/20 12:47:02 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/20 16:20:15 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,15 @@ typedef struct s_env //связный список для парсинга пе�
 	struct s_env	*next;
 }	t_env;
 
+int	g_exit_cod;
+
 //lst_env.c
 t_env	*ft_lstnew_env(char *content1, char *content2, int flag);
 t_env	*ft_lstlast_env(t_env *lst);
 void	ft_lstadd_back_env(t_env **lst, t_env *new);
 
 //ft_env.c
-void	ft_env(t_env *env);
+int		ft_env(t_env *env);
 t_env	*ft_env_struct(char **ev);
 char	*ft_find_env(char *env, char c);
 
@@ -41,10 +43,10 @@ char	*ft_find_env(char *env, char c);
 int		ft_pwd(void);
 
 //ft_echo.c
-void	ft_echo(char **arg);
+int		ft_echo(char **arg);
 
 //ft_export.c
-void	ft_export(char **arg, t_env **export, t_env **env);
+int		ft_export(char **arg, t_env **export, t_env **env);
 int		ft_arr_len(char **arr);
 void	ft_no_valid_command(char *str, char *name_command, char *message);
 int		ft_check_arg_export(char *s);
@@ -65,11 +67,14 @@ void	ft_lstclear_env(t_env **lst);
 void	ft_add_to_env(t_env **list, char *s);
 
 //ft_unset.c
-void	ft_unset(char **arg, t_env **env, t_env **export);
+int		ft_unset(char **arg, t_env **env, t_env **export);
 int		ft_find_key_id(char *key, t_env *list);
 
 //ft_cd.c
 int		ft_cd(char **args, t_env **enpv, t_env **export);
+
+//ft_exit.c
+int		ft_exit(char **args);
 
 //=================parser.c========================//
 int		ft_parse(char **av, t_env *env_list);

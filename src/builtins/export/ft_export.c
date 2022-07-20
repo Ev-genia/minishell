@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:11:39 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/20 12:46:53 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/20 15:35:50 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	ft_check_arg_export(char *s)
 	return (0);
 }
 
-void	ft_export(char **arg, t_env **export, t_env **env)
+int	ft_export(char **arg, t_env **export, t_env **env)
 {
 	int	i;
 
@@ -95,7 +95,7 @@ void	ft_export(char **arg, t_env **export, t_env **env)
 			{
 				ft_no_valid_command(arg[i], arg[0],
 					"`: not a valid identifier\n");
-				return ;
+				return (1);
 			}
 			ft_add_to_export(export, arg[i]);
 			if (ft_strchr(arg[i], '=') != NULL)
@@ -104,4 +104,5 @@ void	ft_export(char **arg, t_env **export, t_env **env)
 		*export = ft_sorted_export(*export);
 	}
 	ft_print_export(*export);
+	return (0);
 }
