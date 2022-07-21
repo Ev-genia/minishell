@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/21 00:09:56 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/07/21 12:15:41 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-// minishell(→_→)$>
+// minishell(→_→)$ cat abrakadabra > f1 | pwd > f2;
 
 void	ft_add_history(char *str)
 {
@@ -40,23 +40,28 @@ char	*ft_readline(const char *prompt)
 
 int	main(int argc, char **argv, char **env)
 {
-	t_env	*enpv;
-	t_env	*export;
+	t_set	set;
+	
+	// t_env	*enpv;
+	// t_env	*export;
 	int		status;
 	char	*str;
+	// char	**args_cmd;
 
 	status = 0; //статус завершения команды при execve  или builtin-команде
 
 	(void)argc;
 	(void)argv;
-	enpv = ft_env_struct(env);
-	export = ft_copy_env(enpv);
-	export = ft_sorted_export(export);
+	set.enpv = ft_env_struct(env);
+	set.export = ft_copy_env(set.enpv);
+	set.export = ft_sorted_export(set.export);
 
 	while (!status)
 	{
 		str = ft_readline("minishell(→_→)$ ");
-		ft_parse(str, enpv);
+		ft_parse(str, set.enpv);
+		// args_cmd = ft_parse(str, set.enpv);
+		// status = ft_command(args_cmd, &set.enpv, &set.export);
 		/*if (ft_parse(argv, enpv))
 			return (ft_error());
 		if (ft_init(argc, argv))
@@ -65,5 +70,18 @@ int	main(int argc, char **argv, char **env)
 		*/
 		free(str);
 	}
+
+// /*
+	//for test command
+	t_cmd	command1;
+
+	command1.args_cmd[0] = "cat";
+	command1.args_cmd[1] = NULL;
+	command1.flag_pipe = 0;
+	ft_command(command1, &set.enpv, &set.export);
+// */
+
+	ft_lstclear_env(&set.enpv);
+	ft_lstclear_env(&set.export);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/21 00:04:31 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/07/21 12:11:25 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,20 @@ typedef struct s_env //связный список для парсинга пе�
 	int				flag_key;
 	struct s_env	*next;
 }	t_env;
+
+typedef struct s_cmd
+{
+	char	**args_cmd;
+	int		flag_pipe;
+	// struct s_cmd	*next;//?
+}	t_cmd;
+
+typedef struct s_set
+{
+	t_env	*enpv;
+	t_env	*export;
+	t_cmd	*cmds;//array of commands, may be we need list of commands?
+}	t_set;
 
 int	g_exit_code;
 
