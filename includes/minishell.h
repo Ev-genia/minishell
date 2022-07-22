@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/22 12:27:14 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/22 16:42:23 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,33 @@ typedef struct s_env //связный список для парсинга пе�
 	struct s_env	*next;
 }	t_env;
 
+// typedef struct s_args
+// {
+// 	char			*arg;
+// 	struct s_args	*next;
+// }	t_args;
+
 struct s_set;
 
 typedef struct s_cmd
 {
 	struct s_set	*sets;
-	char			**args_cmd;
+	// char			**args_cmd;//may be lst?
+	// t_args			*lst_args;
+	t_list			*lst_args;
 	int				flag_pipe;
-	int				flag_redir_start;
-	int				flag_redir_end;
-	// struct s_cmd	*next;//?
+	int				flag_redir_read;
+	int				flag_redir_write;
+	char			*file_read;
+	char			*file_write;
+	struct s_cmd	*next;//?
 }	t_cmd;
 
 typedef struct s_set
 {
 	t_env	*enpv;
 	t_env	*export;
-	t_cmd	*cmds;//array of commands, may be we need list of commands?
+	t_cmd	*lst_cmds;//array of commands, may be we need list of commands?
 }	t_set;
 
 int	g_exit_code;
@@ -116,7 +126,7 @@ int		ft_cd(char **args, t_env **export, t_env **env);
 int		ft_exit(char **args, t_env **export, t_env **env);
 
 //ft_command.c
-int		ft_command(t_cmd cmd, t_func *func, t_arr_f **choice_func);
+int		ft_command(t_cmd cmd, t_func *func, t_arr_f choice_func);
 
 //ft_dup_data.c
 void	ft_dup_child_data(int *fd_pipe, t_cmd cmd);

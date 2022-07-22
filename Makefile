@@ -6,7 +6,7 @@
 #    By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/30 13:01:49 by mlarra            #+#    #+#              #
-#    Updated: 2022/07/21 15:08:29 by mlarra           ###   ########.fr        #
+#    Updated: 2022/07/22 15:07:28 by mlarra           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ DIR				=	./src/
 DIR_BUILTINS	=	./src/builtins/
 DIR_PARSER		=	./src/parser/
 DIR_COMMAND		=	./src/commands/
+DIR_INIT		=	./src/init/
 
 DIR_HEADER	=	./includes
 
@@ -45,6 +46,8 @@ SRC_EXIT	=	${addprefix ${DIR_EXIT}, ft_exit.c}
 
 SRC_COMMAND	=	${addprefix ${DIR_COMMAND}, ft_command.c ft_dup_data.c}
 
+SRC_INIT	=	${addprefix ${DIR_INIT}, ft_init_arr_func.c}
+
 SRC		=	${DIR}main.c\
 			${SRC_PWD}\
 			${SRC_ENV}\
@@ -54,7 +57,8 @@ SRC		=	${DIR}main.c\
 			${SRC_CD}\
 			${SRC_EXIT}\
 			${DIR_PARSER}parser.c\
-			${SRC_COMMAND}
+			${SRC_COMMAND}\
+			${SRC_INIT}
 
 HEADER	=	${addprefix ${DIR_HEADER}/,minishell.h}
 
