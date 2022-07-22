@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/22 16:42:23 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/22 17:26:45 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_cmd
 	// t_args			*lst_args;
 	t_list			*lst_args;
 	int				flag_pipe;
+	int				flag_pipe_prev;//флаг пайпа предыдущей команды
 	int				flag_redir_read;
 	int				flag_redir_write;
 	char			*file_read;
