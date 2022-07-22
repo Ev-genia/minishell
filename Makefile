@@ -6,7 +6,7 @@
 #    By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/30 13:01:49 by mlarra            #+#    #+#              #
-#    Updated: 2022/07/21 10:13:46 by mlarra           ###   ########.fr        #
+#    Updated: 2022/07/21 15:08:29 by mlarra           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ LIB_DIR	=	./src/libft/
 DIR				=	./src/
 DIR_BUILTINS	=	./src/builtins/
 DIR_PARSER		=	./src/parser/
-DIR_PROMT		=	./src/promt/
+DIR_COMMAND		=	./src/commands/
 
 DIR_HEADER	=	./includes
 
@@ -43,6 +43,8 @@ SRC_CD	=	${addprefix ${DIR_CD}, ft_cd.c}
 DIR_EXIT	=	${addprefix ${DIR_BUILTINS},exit/}
 SRC_EXIT	=	${addprefix ${DIR_EXIT}, ft_exit.c}
 
+SRC_COMMAND	=	${addprefix ${DIR_COMMAND}, ft_command.c ft_dup_data.c}
+
 SRC		=	${DIR}main.c\
 			${SRC_PWD}\
 			${SRC_ENV}\
@@ -52,7 +54,7 @@ SRC		=	${DIR}main.c\
 			${SRC_CD}\
 			${SRC_EXIT}\
 			${DIR_PARSER}parser.c\
-			#${DIR_PROMT}ft_print_promt.c
+			${SRC_COMMAND}
 
 HEADER	=	${addprefix ${DIR_HEADER}/,minishell.h}
 

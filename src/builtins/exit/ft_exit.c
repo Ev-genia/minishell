@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 13:10:08 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/20 16:24:25 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/22 10:16:56 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,13 @@ int	ft_too_many_arg(void)
 	return (1);
 }
 
-int	ft_exit(char **args)
+int	ft_exit(char **args, t_env **export, t_env **env)
 {
 	int	len;
 	int	nbr;
 
+	(void)export;
+	(void)env;
 	len = ft_arr_len(args);
 	if (len == 1)
 		exit(0);

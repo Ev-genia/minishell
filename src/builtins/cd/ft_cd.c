@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 17:07:09 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/20 12:50:01 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/22 10:18:55 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ void	ft_new_pwd(t_env **env, t_env **export)
 	free(pwd);
 }
 
-int	ft_cd(char **args, t_env **enpv, t_env **export)
+int	ft_cd(char **args, t_env **export, t_env **env)
 {
 	char	*old_pwd;
 
-	(void)enpv;
+	(void)env;
 	(void)export;
 	if (ft_arr_len(args) == 1)
 		return (0);
@@ -71,8 +71,8 @@ int	ft_cd(char **args, t_env **enpv, t_env **export)
 		perror(args[1]);
 		return (1);
 	}
-	ft_old_pwd(old_pwd, enpv, export);
-	ft_new_pwd(enpv, export);
+	ft_old_pwd(old_pwd, env, export);
+	ft_new_pwd(env, export);
 	free(old_pwd);
 	return (0);
 }

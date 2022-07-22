@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/21 12:15:41 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/22 12:27:00 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,13 @@ char	*ft_readline(const char *prompt)
 int	main(int argc, char **argv, char **env)
 {
 	t_set	set;
-	
 	// t_env	*enpv;
 	// t_env	*export;
 	int		status;
 	char	*str;
 	// char	**args_cmd;
+	t_func	func[10];
+	t_arr_f	choice_func;
 
 	status = 0; //статус завершения команды при execve  или builtin-команде
 
@@ -55,7 +56,8 @@ int	main(int argc, char **argv, char **env)
 	set.enpv = ft_env_struct(env);
 	set.export = ft_copy_env(set.enpv);
 	set.export = ft_sorted_export(set.export);
-
+	ft_init_f(func);
+	ft_init_arr(choice_func);
 	while (!status)
 	{
 		str = ft_readline("minishell(→_→)$ ");
@@ -70,6 +72,8 @@ int	main(int argc, char **argv, char **env)
 		*/
 		free(str);
 	}
+	
+//< norm cat > test1 | cat test1 > test2
 
 // /*
 	//for test command
@@ -78,10 +82,12 @@ int	main(int argc, char **argv, char **env)
 	command1.args_cmd[0] = "cat";
 	command1.args_cmd[1] = NULL;
 	command1.flag_pipe = 0;
-	ft_command(command1, &set.enpv, &set.export);
+	command1.flag_redir_start = 0;
+	ft_command(command1, func, choice_func);
 // */
 
 	ft_lstclear_env(&set.enpv);
 	ft_lstclear_env(&set.export);
+	// rl_clear_history();
 	return (0);
 }

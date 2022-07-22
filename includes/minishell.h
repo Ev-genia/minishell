@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/21 12:11:25 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/22 12:27:14 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,15 @@ typedef struct s_env //связный список для парсинга пе�
 	struct s_env	*next;
 }	t_env;
 
+struct s_set;
+
 typedef struct s_cmd
 {
-	char	**args_cmd;
-	int		flag_pipe;
+	struct s_set	*sets;
+	char			**args_cmd;
+	int				flag_pipe;
+	int				flag_redir_start;
+	int				flag_redir_end;
 	// struct s_cmd	*next;//?
 }	t_cmd;
 
@@ -45,21 +50,39 @@ typedef struct s_set
 
 int	g_exit_code;
 
+enum e_func_name
+{
+	FT_ECHO,
+	FT_ENV,
+	FT_EXIT,
+	FT_EXPORT,
+	FT_CD,
+	FT_PWD
+};
+
+typedef struct s_func
+{
+	char				*name_func;
+	enum e_func_name	type;
+}	t_func;
+
+typedef int	(*t_arr_f[10])(char **args, t_env **export, t_env **env);
+
 //lst_env.c
 t_env	*ft_lstnew_env(char *content1, char *content2, int flag);
 t_env	*ft_lstlast_env(t_env *lst);
 void	ft_lstadd_back_env(t_env **lst, t_env *new);
 
 //ft_env.c
-int		ft_env(t_env *env);
+int		ft_env(char **args, t_env **export, t_env **env);
 t_env	*ft_env_struct(char **ev);
 char	*ft_find_env(char *env, char c);
 
 //ft_pwd.c
-int		ft_pwd(void);
+int		ft_pwd(char **args, t_env **export, t_env **env);
 
 //ft_echo.c
-int		ft_echo(char **arg);
+int		ft_echo(char **arg, t_env **export, t_env **env);
 
 //ft_export.c
 int		ft_export(char **arg, t_env **export, t_env **env);
@@ -87,13 +110,21 @@ int		ft_unset(char **arg, t_env **env, t_env **export);
 int		ft_find_key_id(char *key, t_env *list);
 
 //ft_cd.c
-int		ft_cd(char **args, t_env **enpv, t_env **export);
+int		ft_cd(char **args, t_env **export, t_env **env);
 
 //ft_exit.c
-int		ft_exit(char **args);
+int		ft_exit(char **args, t_env **export, t_env **env);
 
-// //ft_print_promt.c
-//void	ft_print_promt(void);
+//ft_command.c
+int		ft_command(t_cmd cmd, t_func *func, t_arr_f **choice_func);
+
+//ft_dup_data.c
+void	ft_dup_child_data(int *fd_pipe, t_cmd cmd);
+void	ft_dup_parent_data(int *fd_pipe);
+
+//ft_init_arr_func.c
+void	ft_init_f(t_func *func);
+void	ft_init_arr(t_arr_f ft_choice_func);
 
 //=================parser.c========================//
 int		ft_parse(char *str, t_env *env_list);

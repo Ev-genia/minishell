@@ -6,17 +6,20 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 15:32:35 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/13 15:17:55 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/22 10:19:34 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // #include <minishell.h>
 #include "../../../includes/minishell.h"
 
-int	ft_pwd(void)
+int	ft_pwd(char **args, t_env **export, t_env **env)
 {
 	char	*pwd;
 
+	(void)args;
+	(void)export;
+	(void)env;
 	pwd = getcwd(NULL, 1024);
 	if (!pwd)
 	{
