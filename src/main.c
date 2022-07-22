@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/22 12:27:00 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/22 12:51:00 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*ft_readline(const char *prompt)
 	 char * str;
 
 	 str = readline(prompt);
-	 if (str)
+	 if (str != NULL && str != '\0')
 	 {
 		ft_add_history(str);
 	 }
