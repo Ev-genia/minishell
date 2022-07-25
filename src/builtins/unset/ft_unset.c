@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:24:11 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/23 00:09:37 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/25 14:54:53 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ int	ft_unset(t_list *lst_args, t_env **env, t_env **export)
 {
 	t_list	*list;
 
+	list = lst_args;
 	if (ft_lstsize(list) == 1)
 		return (0);
 	list = list->next;

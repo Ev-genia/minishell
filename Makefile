@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+         #
+#    By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/30 13:01:49 by mlarra            #+#    #+#              #
-#    Updated: 2022/07/22 15:07:28 by mlarra           ###   ########.fr        #
+#    Updated: 2022/07/25 15:04:20 by wcollen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,8 +57,9 @@ SRC		=	${DIR}main.c\
 			${SRC_CD}\
 			${SRC_EXIT}\
 			${DIR_PARSER}parser.c\
-			${SRC_COMMAND}\
 			${SRC_INIT}
+#			${SRC_COMMAND}\
+			
 
 HEADER	=	${addprefix ${DIR_HEADER}/,minishell.h}
 
@@ -77,6 +78,7 @@ RM		=	rm -f
 
 ${NAME}	:	${OBJ}
 	make -C ${LIB_DIR}
+	make bonus -C ${LIB_DIR}
 	${CC} ${CFLAGS} -I${HEADER} $^ -L ${LIB_DIR} -lft -ltermcap -lreadline -o $@
 
 # ${LIB_NAME}	:
