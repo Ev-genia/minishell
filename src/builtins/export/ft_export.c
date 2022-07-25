@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:11:39 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/23 00:06:51 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/25 15:37:50 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ int	ft_export(t_list *lst_args, t_env **export, t_env **env)
 {
 	t_list	*list;
 
+	list = lst_args;
 	if (ft_lstsize(list) != 1)
 	{
 		list = list->next;
