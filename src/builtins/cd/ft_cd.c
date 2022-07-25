@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 17:07:09 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/22 10:18:55 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/22 23:49:21 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ void	ft_new_pwd(t_env **env, t_env **export)
 	free(pwd);
 }
 
-int	ft_cd(char **args, t_env **export, t_env **env)
+int	ft_cd(t_list *lst_args, t_env **export, t_env **env)
 {
 	char	*old_pwd;
 
 	(void)env;
 	(void)export;
-	if (ft_arr_len(args) == 1)
+	if (ft_lstsize(lst_args) == 1)
 		return (0);
 	old_pwd = getcwd(NULL, 1024);
 	if (!old_pwd)
@@ -65,10 +65,10 @@ int	ft_cd(char **args, t_env **export, t_env **env)
 		perror("old_pwd error");
 		return (1);
 	}
-	if (chdir(args[1]) == -1)
+	if (chdir((char *)lst_args->next->content) == -1)
 	{
 		ft_putstr_fd("minishell: cd: ", 2);
-		perror(args[1]);
+		perror((char *)lst_args->next->content);
 		return (1);
 	}
 	ft_old_pwd(old_pwd, env, export);

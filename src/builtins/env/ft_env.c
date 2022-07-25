@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 16:26:41 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/22 10:20:45 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/22 23:50:36 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,11 @@ t_env	*ft_env_struct(char **ev)
 	return (env_list);
 }
 
-int	ft_env(char **args, t_env **export, t_env **env)
+int	ft_env(t_list *lst_args, t_env **export, t_env **env)
 {
 	t_env	*e;
 
-	(void)args;
+	(void)lst_args;
 	(void)export;
 	e = *env;
 	while (e)

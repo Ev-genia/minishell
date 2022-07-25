@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:24:11 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/20 16:13:53 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/23 00:09:37 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,22 +87,24 @@ void	ft_unset_env_export(char *key, t_env **list)
 	*list = begin;
 }
 
-int	ft_unset(char **arg, t_env **env, t_env **export)
+int	ft_unset(t_list *lst_args, t_env **env, t_env **export)
 {
-	int	i;
+	t_list	*list;
 
-	i = 0;
-	if (ft_arr_len(arg) == 1)
+	if (ft_lstsize(list) == 1)
 		return (0);
-	while (arg[++i] != NULL)
+	list = list->next;
+	while (list)
 	{
-		if (ft_check_arg_export(arg[i]))
+		if (ft_check_arg_export((char *)list->content))
 		{
-			ft_no_valid_command(arg[i], arg[0], "': not a valid identifier\n");
+			ft_no_valid_command((char *)list->content, "unset",
+				"': not a valid identifier\n");
 			return (1);
 		}
-		ft_unset_env_export(arg[i], env);
-		ft_unset_env_export(arg[i], export);
+		ft_unset_env_export((char *)list->content, env);
+		ft_unset_env_export((char *)list->content, export);
+		list = list->next;
 	}
 	return (0);
 }

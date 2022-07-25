@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:11:39 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/20 15:35:50 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/23 00:06:51 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,24 +82,49 @@ int	ft_check_arg_export(char *s)
 	return (0);
 }
 
-int	ft_export(char **arg, t_env **export, t_env **env)
-{
-	int	i;
+// int	ft_export(char **arg, t_env **export, t_env **env)
+// {
+// 	int	i;
 
-	if (ft_arr_len(arg) != 1)
+// 	if (ft_arr_len(arg) != 1)
+// 	{
+// 		i = 0;
+// 		while (arg[++i] != NULL)
+// 		{
+// 			if (ft_check_arg_export(arg[i]))
+// 			{
+// 				ft_no_valid_command(arg[i], arg[0],
+// 					"`: not a valid identifier\n");
+// 				return (1);
+// 			}
+// 			ft_add_to_export(export, arg[i]);
+// 			if (ft_strchr(arg[i], '=') != NULL)
+// 				ft_add_to_env(env, arg[i]);
+// 		}
+// 		*export = ft_sorted_export(*export);
+// 	}
+// 	ft_print_export(*export);
+// 	return (0);
+// }
+
+int	ft_export(t_list *lst_args, t_env **export, t_env **env)
+{
+	t_list	*list;
+
+	if (ft_lstsize(list) != 1)
 	{
-		i = 0;
-		while (arg[++i] != NULL)
+		list = list->next;
+		while (list)
 		{
-			if (ft_check_arg_export(arg[i]))
+			if (ft_check_arg_export((char *)list->content))
 			{
-				ft_no_valid_command(arg[i], arg[0],
+				ft_no_valid_command((char *)list->content, "export",
 					"`: not a valid identifier\n");
 				return (1);
 			}
-			ft_add_to_export(export, arg[i]);
-			if (ft_strchr(arg[i], '=') != NULL)
-				ft_add_to_env(env, arg[i]);
+			ft_add_to_export(export, (char *)list->content);
+			if (ft_strchr((char *)list->content, '=') != NULL)
+				ft_add_to_env(env, (char *)list->content);
 		}
 		*export = ft_sorted_export(*export);
 	}

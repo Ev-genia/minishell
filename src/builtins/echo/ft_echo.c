@@ -6,26 +6,31 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 10:16:58 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/22 10:14:38 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/23 00:01:59 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // #include <minishell.h>
 #include "../../../includes/minishell.h"
 
-int	ft_echo(char **arg, t_env **export, t_env **env)
+int	ft_echo(t_list *lst_args, t_env **export, t_env **env)
 {
-	int	i;
+	int		enter;
+	t_list	*list;
 
 	(void)export;
 	(void)env;
-	i = 1;
-	if (ft_strncmp(arg[i], "-n", 2) == 0)
-		ft_putstr_fd(arg[++i], 1);
-	else
+	list = lst_args;
+	enter = 1;
+	list = list->next;
+	if (ft_strncmp((char *)list->content, "-n", 2) == 0)
+		enter = 0;
+	while (list)
 	{
-		ft_putstr_fd(arg[i], 1);
-		ft_putchar_fd('\n', 1);
+		ft_putstr_fd((char *)list->content, 1);
+		list = list->next;
 	}
+	if (enter == 1)
+		ft_putchar_fd('\n', 1);
 	return (0);
 }
