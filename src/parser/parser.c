@@ -6,7 +6,7 @@
 /*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 10:17:58 by wcollen           #+#    #+#             */
-/*   Updated: 2022/07/21 00:21:26 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/07/25 14:49:14 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*ft_dollar(char *str, int *i, t_env *env_list)
 	if (*i == j + 1)
 		return (str);
 	tmp = ft_substr(str, j + 1, *i - j - 1);
-	printf("KEY tmp$=%s\n", tmp);
+	//printf("KEY tmp$=%s\n", tmp);
 	
 	
 	//free(str); //ВЫДЕЛИТЬ ПАМЯТЬ ПОД СТРОКУ С АРГУМЕНТАМИ И ДЕЛАТЬ FREE
@@ -116,7 +116,7 @@ char	*ft_quote(char *str, int *i)
 }
 
 
-int	ft_parse(char *str, t_env *env_list)
+t_cmd	*ft_parse(char *str, t_env *env_list)
 {
 	int	i;
 
@@ -137,7 +137,7 @@ int	ft_parse(char *str, t_env *env_list)
 			str = ft_dollar(str, &i, env_list);
 		i++;
 	}
-		printf("str = %s\n", str);
-	return (0);
+		printf("%s\n", str);
+	return (NULL);
 }
 

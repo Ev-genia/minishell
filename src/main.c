@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/22 16:49:56 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/25 15:10:01 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,32 +47,28 @@ int	main(int argc, char **argv, char **env)
 	// char	**args_cmd;
 	t_func	func[10];
 	t_arr_f	choice_func;
-	// int		i;
-	// int		j;
-	// int		len_cmds;
+
 	
-	// status = 0; //статус завершения команды при execve  или builtin-команде
-	// (void)argc;
-	// (void)argv;
+	status = 0; //статус завершения команды при execve  или builtin-команде
+	(void)argc;
+	(void)argv;
 	set.enpv = ft_env_struct(env);
 	set.export = ft_copy_env(set.enpv);
-	set.export = ft_sorted_export(set.export);
+//set.export = ft_sorted_export(set.export);
 	ft_init_f(func);
 	ft_init_arr(choice_func);
-	// i = -1;
 	while (status == 0)
 	{
-		str = ft_readline("minishell(→_→)$ ");
+		str = ft_readline("\033[36mminishell(→_→)$\033[0m ");
 		// ft_pre_parse(str, set.enpv);
 		set.lst_cmds = ft_parse(str, set.enpv);
-		// len_cmds = ft_lstsize(set.lst_cmds);
-		// j = -1;
-		// while (++j < len_cmds && !status)//len_cmds - количество команд(токенов)
-		while (set.lst_cmds && status == 0)
-		{
-			status = ft_command(*set.lst_cmds, func, choice_func);
-			set.lst_cmds = set.lst_cmds->next;
-		}	
+	
+// while (set.lst_cmds && status == 0)
+// {
+// 	status = ft_command(*set.lst_cmds, func, choice_func);
+// 	ft_putstr_fd(set.lst_cmds->lst_args->content, 1);
+// 	set.lst_cmds = set.lst_cmds->next;
+// }	
 		// if (ft_parse(argv, set.enpv))
 		// 	return (ft_error());
 		// status = ft_shell();	

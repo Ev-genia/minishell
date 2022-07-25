@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/25 14:44:21 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/25 14:59:30 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int		ft_cd(t_list *lst_args, t_env **export, t_env **env);
 int		ft_exit(t_list *lst_args, t_env **export, t_env **env);
 
 //ft_command.c
-int		ft_command(t_cmd cmd, t_func *func, t_arr_f choice_func);
+//int		ft_command(t_cmd cmd, t_func *func, t_arr_f choice_func);
 
 //ft_dup_data.c
 void	ft_dup_child_data(t_cmd cmd, int *fd_pipe);//t_cmd cmd);
@@ -140,6 +140,6 @@ void	ft_init_f(t_func *func);
 void	ft_init_arr(t_arr_f ft_choice_func);
 
 //=================parser.c========================//
-int		ft_parse(char *str, t_env *env_list);
+t_cmd	*ft_parse(char *str, t_env *env_list);
 
 #endif
