@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/25 14:59:30 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/07/26 10:18:16 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <string.h>
 # include <fcntl.h>
 # include <readline/readline.h>
+# include "../src/get_next_line/get_next_line.h"
 
 typedef struct s_env //связный список для парсинга переменной окружения
 {
@@ -29,34 +30,27 @@ typedef struct s_env //связный список для парсинга пе�
 	struct s_env	*next;
 }	t_env;
 
-// typedef struct s_args
-// {
-// 	char			*arg;
-// 	struct s_args	*next;
-// }	t_args;
-
 struct s_set;
 
 typedef struct s_cmd
 {
 	struct s_set	*sets;
-	// char			**args_cmd;//may be lst?
-	// t_args			*lst_args;
 	t_list			*lst_args;
 	int				flag_pipe;
-	// int				flag_pipe_prev;//флаг пайпа предыдущей команды
 	int				flag_redir_read;
 	int				flag_heredoc_read;
 	int				flag_redir_write;
 	int				flag_heredoc_write;
 	char			*file_read;
 	char			*file_write;
+	char			*limiter;//стоп-слово для heredoc
 	struct s_cmd	*next;//?
 }	t_cmd;
 
 typedef struct s_set
 {
 	t_env	*enpv;
+	char	**env_arr;
 	t_env	*export;
 	t_cmd	*lst_cmds;//list of commands
 }	t_set;
@@ -129,7 +123,14 @@ int		ft_cd(t_list *lst_args, t_env **export, t_env **env);
 int		ft_exit(t_list *lst_args, t_env **export, t_env **env);
 
 //ft_command.c
-//int		ft_command(t_cmd cmd, t_func *func, t_arr_f choice_func);
+int		ft_command(t_cmd cmd, t_func *func, t_arr_f choice_func);
+
+//ft_execve.c
+void	ft_execve(char *command, t_env *env);
+
+//ft_herdoc.c
+void	ft_herdoc(t_cmd cmd);
+void	ft_perror(char *str);
 
 //ft_dup_data.c
 void	ft_dup_child_data(t_cmd cmd, int *fd_pipe);//t_cmd cmd);
