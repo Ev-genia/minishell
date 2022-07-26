@@ -6,7 +6,7 @@
 #    By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/30 13:01:49 by mlarra            #+#    #+#              #
-#    Updated: 2022/07/26 11:39:16 by mlarra           ###   ########.fr        #
+#    Updated: 2022/07/26 12:05:58 by mlarra           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ SRC_EXIT	=	${addprefix ${DIR_EXIT}, ft_exit.c}
 SRC_COMMAND	=	${addprefix ${DIR_COMMAND}, ft_command.c ft_dup_data.c\
 		ft_execve.c	ft_herdoc.c	ft_convert_to_arr.c}
 
-SRC_INIT	=	${addprefix ${DIR_INIT}, ft_init_arr_func.c}
+SRC_INIT	=	${addprefix ${DIR_INIT}, ft_init_arr_func.c ft_init_set.c}
 
 SRC_GNL	=	${addprefix ${DIR_GNL}, get_next_line.c get_next_line_utils.c}	
 

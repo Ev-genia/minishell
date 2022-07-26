@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/26 11:55:36 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/26 12:07:00 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,9 @@ char	**ft_convert_to_arr_list(t_list *list);
 //ft_init_arr_func.c
 void	ft_init_f(t_func *func);
 void	ft_init_arr(t_arr_f ft_choice_func);
+
+//ft_init_set.c
+void	ft_init_set(t_set *set, char **env);
 
 //=================parser.c========================//
 t_cmd	*ft_parse(char *str, t_env *env_list);
