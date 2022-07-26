@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 14:32:43 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/26 11:56:24 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/26 16:07:49 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,13 +100,37 @@ int	ft_open_outfile(t_cmd cmd)
 	return (fd);
 }
 
+
+int	ft_lstsize_cmd(t_cmd *lst)
+{
+	int	i;
+
+	i = 0;
+	while (lst)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (i);
+}
+
 void	ft_dup_parent_data(int *fd_pipe, t_cmd cmd, pid_t pid1)
 {
 	int	fd_out;
 
 	close(fd_pipe[1]);
+	if (ft_lstsize_cmd(cmd.sets->lst_cmds) == 1)
+	{	
+		if (waitpid(pid1, NULL, 0) == -1)
+		{
+			perror("wait pid error");
+			exit(1);
+		}
+		return ;
+	}
 	if (cmd.next == NULL)
 	{
+// ft_putstr_fd("ft_dup_parent_data\n", 1);
 		waitpid(pid1, NULL, 0);
 		if (cmd.flag_redir_write == 1 || cmd.flag_heredoc_write == 1)
 		{

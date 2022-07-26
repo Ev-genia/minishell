@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 10:16:58 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/23 00:01:59 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/26 17:23:06 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ int	ft_echo(t_list *lst_args, t_env **export, t_env **env)
 	enter = 1;
 	list = list->next;
 	if (ft_strncmp((char *)list->content, "-n", 2) == 0)
+	{
 		enter = 0;
+		list = list->next;
+	}
 	while (list)
 	{
 		ft_putstr_fd((char *)list->content, 1);

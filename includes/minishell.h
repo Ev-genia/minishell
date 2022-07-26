@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/26 12:07:00 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/26 15:13:51 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_cmd
 {
 	struct s_set	*sets;
 	t_list			*lst_args;
+	char			**cmd_arr;//in start cmd_arr = NULL
 	int				flag_pipe;
 	int				flag_redir_read;
 	int				flag_heredoc_read;
@@ -51,7 +52,7 @@ typedef struct s_cmd
 typedef struct s_set
 {
 	t_env	*enpv;
-	char	**env_arr;
+	char	**env_arr;//in start env_arr = NULL
 	t_env	*export;
 	t_cmd	*lst_cmds;//list of commands
 }	t_set;
@@ -76,7 +77,7 @@ typedef struct s_func
 	enum e_func_name	type;
 }	t_func;
 
-typedef int	(*t_arr_f[10])(t_list *lst_args, t_env **export, t_env **env);
+typedef int	(*t_arr_f[6])(t_list *lst_args, t_env **export, t_env **env);
 
 //lst_env.c
 t_env	*ft_lstnew_env(char *content1, char *content2, int flag);
@@ -147,6 +148,10 @@ char	**ft_convert_to_arr_list(t_list *list);
 //ft_init_arr_func.c
 void	ft_init_f(t_func *func);
 void	ft_init_arr(t_arr_f ft_choice_func);
+
+//ft_execve_utils.c
+void	ft_write(char *s);
+void	ft_free_arr(char **arr);
 
 //ft_init_set.c
 void	ft_init_set(t_set *set, char **env);
