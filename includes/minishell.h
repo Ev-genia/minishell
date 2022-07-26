@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/26 10:18:16 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/25 16:53:30 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <fcntl.h>
 # include <readline/readline.h>
 # include "../src/get_next_line/get_next_line.h"
+# include <readline/history.h>
 
 typedef struct s_env //связный список для парсинга переменной окружения
 {

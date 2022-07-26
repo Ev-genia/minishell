@@ -6,7 +6,7 @@
 /*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 10:17:58 by wcollen           #+#    #+#             */
-/*   Updated: 2022/07/25 14:49:14 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/07/26 10:42:32 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,10 @@ int	is_key(char c, int i)
 char	*ft_dollar(char *str, int *i, t_env *env_list)
 {
 	int		j;
-	char	*tmp = NULL;
-(void)env_list;
+	char	*tmp;
+	char	*tmp1;
+	char	*tmp2;
+
 	j = *i;
 	while (str[++*i])
 	{
@@ -41,11 +43,26 @@ char	*ft_dollar(char *str, int *i, t_env *env_list)
 	if (*i == j + 1)
 		return (str);
 	tmp = ft_substr(str, j + 1, *i - j - 1);
-	//printf("KEY tmp$=%s\n", tmp);
-	
-	
+	while (env_list)
+	{
+		if (ft_strncmp(tmp, env_list->key, ft_strlen(tmp)) == 0)
+		{
+			free(tmp);
+			tmp = ft_substr(str, 0, j);
+			tmp1 = strdup(env_list->value);
+			tmp2 = ft_strdup(str + *i + 1);
+			free(tmp);
+			tmp = ft_strjoin(tmp, tmp1);
+			free(tmp);
+			tmp = ft_strjoin(tmp, tmp2);
+			free(tmp1);
+			free(tmp2);
+			return (tmp);
+		}
+		env_list = env_list->next;
+	}
 	//free(str); //ВЫДЕЛИТЬ ПАМЯТЬ ПОД СТРОКУ С АРГУМЕНТАМИ И ДЕЛАТЬ FREE
-	return (tmp);
+	return (str);
 }
 
 char	*ft_b_slash(char *str, int *i)
@@ -65,7 +82,7 @@ char	*ft_b_slash(char *str, int *i)
 	return (tmp);
 }
 
-char	*ft_db_quote(char *str, int *i)
+char	*ft_db_quote(char *str, int *i, t_env *env_list)
 {
 	int		j;
 	char	*tmp = NULL;
@@ -77,6 +94,8 @@ char	*ft_db_quote(char *str, int *i)
 	{
 		if (str[*i] == '\\' && (str[*i + 1] == '\"' || str[*i + 1] == '$'))
 			str = ft_b_slash(str, i);
+		if (str[*i] == '$')
+			ft_dollar(str, i, env_list);
 		if (str[*i] == '\"')
 			break ;
 	}
@@ -118,7 +137,8 @@ char	*ft_quote(char *str, int *i)
 
 t_cmd	*ft_parse(char *str, t_env *env_list)
 {
-	int	i;
+	int		i;
+	t_cmd	*lst_cmds;
 
 	i = 0;
 /*TODO: НАПИСАТЬ ПРЕПАРСЕР!!!!!!!!!!!!!!!!!!*/ 
@@ -132,7 +152,7 @@ t_cmd	*ft_parse(char *str, t_env *env_list)
 		if (str[i] == '\\')
 			str = ft_b_slash(str, &i);
 		if (str[i] == '\"')
-			str = ft_db_quote(str, &i);
+			str = ft_db_quote(str, &i, env_list);
 		if (str[i] == '$')
 			str = ft_dollar(str, &i, env_list);
 		i++;

@@ -23,6 +23,7 @@ void	ft_add_history(char *str)
 	if (fd != -1)
 	{
 		ft_putstr_fd(str, fd);
+		ft_putstr_fd("\n", fd);
 	}
 	close(fd);//надо ли каждый раз закрывать?
 }
@@ -36,6 +37,7 @@ char	*ft_readline(const char *prompt)
 	 {
 		ft_add_history(str);
 	 }
+	 //rl_clear_history();??????????????????
 	 return (str);
 }
 
@@ -54,8 +56,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	set.enpv = ft_env_struct(env);
 	set.export = ft_copy_env(set.enpv);
-	set.export = ft_sorted_export(set.export);
-	set.env_arr = NULL;
+//set.export = ft_sorted_export(set.export);
 	ft_init_f(func);
 	ft_init_arr(choice_func);
 	while (status == 0)
@@ -63,12 +64,13 @@ int	main(int argc, char **argv, char **env)
 		str = ft_readline("\033[36mminishell(→_→)$\033[0m ");
 		// ft_pre_parse(str, set.enpv);
 		set.lst_cmds = ft_parse(str, set.enpv);
-		while (set.lst_cmds && status == 0)
-		{
-			status = ft_command(*set.lst_cmds, func, choice_func);
-ft_putstr_fd(set.lst_cmds->lst_args->content, 1);
-			set.lst_cmds = set.lst_cmds->next;
-		}	
+	
+// while (set.lst_cmds && status == 0)
+// {
+// 	status = ft_command(*set.lst_cmds, func, choice_func);
+// 	ft_putstr_fd(set.lst_cmds->lst_args->content, 1);
+// 	set.lst_cmds = set.lst_cmds->next;
+// }	
 		// if (ft_parse(argv, set.enpv))
 		// 	return (ft_error());
 		// status = ft_shell();	
