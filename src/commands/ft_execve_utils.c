@@ -1,39 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*   ft_execve_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/12 10:16:58 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/26 17:23:06 by mlarra           ###   ########.fr       */
+/*   Created: 2022/07/26 12:16:32 by mlarra            #+#    #+#             */
+/*   Updated: 2022/07/26 12:20:38 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // #include <minishell.h>
-#include "../../../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-int	ft_echo(t_list *lst_args, t_env **export, t_env **env)
+void	ft_write(char *s)
 {
-	int		enter;
-	t_list	*list;
+	int	i;
 
-	(void)export;
-	(void)env;
-	list = lst_args;
-	enter = 1;
-	list = list->next;
-	if (ft_strncmp((char *)list->content, "-n", 2) == 0)
-	{
-		enter = 0;
-		list = list->next;
-	}
-	while (list)
-	{
-		ft_putstr_fd((char *)list->content, 1);
-		list = list->next;
-	}
-	if (enter == 1)
-		ft_putchar_fd('\n', 1);
-	return (0);
+	write(2, "command not found: ", 19);
+	i = -1;
+	while (s[++i])
+		write(2, &s[i], 1);
+	write(2, "\n", 1);
+}
+
+void	ft_free_arr(char **arr)
+{
+	int	i;
+
+	i = -1;
+	while (arr[++i])
+		free(arr[i]);
+	free(arr);
 }

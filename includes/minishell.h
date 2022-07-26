@@ -6,7 +6,7 @@
 /*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/26 13:14:45 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/07/26 15:13:51 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <string.h>
 # include <fcntl.h>
 # include <readline/readline.h>
-# include "../src/get_next_line/get_next_line.h"
+// # include "../src/get_next_line/get_next_line.h"
 # include <readline/history.h>
 
 typedef struct s_env //связный список для парсинга переменной окружения
@@ -37,6 +37,7 @@ typedef struct s_cmd
 {
 	struct s_set	*sets;
 	t_list			*lst_args;
+	char			**cmd_arr;//in start cmd_arr = NULL
 	int				flag_pipe;
 	int				flag_redir_read;
 	int				flag_heredoc_read;
@@ -51,7 +52,7 @@ typedef struct s_cmd
 typedef struct s_set
 {
 	t_env	*enpv;
-	char	**env_arr;
+	char	**env_arr;//in start env_arr = NULL
 	t_env	*export;
 	t_cmd	*lst_cmds;//list of commands
 }	t_set;
@@ -68,18 +69,21 @@ enum e_func_name
 	FT_PWD
 };
 
+
+
 typedef struct s_func
 {
 	char				*name_func;
 	enum e_func_name	type;
 }	t_func;
 
-typedef int	(*t_arr_f[10])(t_list *lst_args, t_env **export, t_env **env);
+typedef int	(*t_arr_f[6])(t_list *lst_args, t_env **export, t_env **env);
 
 //lst_env.c
 t_env	*ft_lstnew_env(char *content1, char *content2, int flag);
 t_env	*ft_lstlast_env(t_env *lst);
 void	ft_lstadd_back_env(t_env **lst, t_env *new);
+int		ft_lstsize_env(t_env *lst);
 
 //ft_env.c
 int		ft_env(t_list *lst_args, t_env **export, t_env **env);
@@ -127,7 +131,7 @@ int		ft_exit(t_list *lst_args, t_env **export, t_env **env);
 int		ft_command(t_cmd cmd, t_func *func, t_arr_f choice_func);
 
 //ft_execve.c
-void	ft_execve(char *command, t_env *env);
+void	ft_execve(t_cmd cmd, t_env *env);
 
 //ft_herdoc.c
 void	ft_herdoc(t_cmd cmd);
@@ -137,9 +141,20 @@ void	ft_perror(char *str);
 void	ft_dup_child_data(t_cmd cmd, int *fd_pipe);//t_cmd cmd);
 void	ft_dup_parent_data(int *fd_pipe, t_cmd cmd, pid_t pid);
 
+//ft_convert_to_arr.c
+char	**ft_convert_to_arr_env(t_env *list);
+char	**ft_convert_to_arr_list(t_list *list);
+
 //ft_init_arr_func.c
 void	ft_init_f(t_func *func);
 void	ft_init_arr(t_arr_f ft_choice_func);
+
+//ft_execve_utils.c
+void	ft_write(char *s);
+void	ft_free_arr(char **arr);
+
+//ft_init_set.c
+void	ft_init_set(t_set *set, char **env);
 
 //=================parser.c========================//
 t_cmd	*ft_parse(char *str, t_env *env_list);

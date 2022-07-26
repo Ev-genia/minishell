@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 11:51:02 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/19 14:20:08 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/26 11:13:31 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,17 @@ void	ft_lstadd_back_env(t_env **lst, t_env *new)
 	}
 	else
 		*lst = new;
+}
+
+int	ft_lstsize_env(t_env *lst)
+{
+	int	i;
+
+	i = 0;
+	while (lst)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (i);
 }
