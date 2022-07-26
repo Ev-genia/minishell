@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/25 16:53:30 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/07/26 13:14:45 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_cmd
 	char			*file_read;
 	char			*file_write;
 	char			*limiter;//стоп-слово для heredoc
-	struct s_cmd	*next;//?
+	struct s_cmd	*next;
 }	t_cmd;
 
 typedef struct s_set

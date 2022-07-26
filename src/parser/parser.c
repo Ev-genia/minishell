@@ -6,16 +6,33 @@
 /*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 10:17:58 by wcollen           #+#    #+#             */
-/*   Updated: 2022/07/26 10:42:32 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/07/26 17:27:09 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// int	ft_preparse(char **av)
-// {
-// 	return (0);
-// }
+int	ft_preparse(char *str)
+{
+	int	quote;
+	int	dbl_quote;
+
+	quote = 0;
+	dbl_quote = 0;
+	while (*str)
+	{
+		if (*str == '\'')
+			quote++;
+		if (*str == '\"')
+			dbl_quote++;
+		str++;
+	}
+	if (str - 1 == '|')
+		return (1);
+	if (quote % 2 == 0 && dbl_quote % 2 == 0)
+		return (0);
+	return (1);
+}
 
 int	is_key(char c, int i)
 {
@@ -141,10 +158,8 @@ t_cmd	*ft_parse(char *str, t_env *env_list)
 	t_cmd	*lst_cmds;
 
 	i = 0;
-/*TODO: НАПИСАТЬ ПРЕПАРСЕР!!!!!!!!!!!!!!!!!!*/ 
-	// if (ft_preparse(av) == 1)
-	// 	return (1);
-
+	if (ft_preparse(str) == 1)
+		return (NULL);
 	while (str[i])
 	{
 		if (str[i] == '\'')

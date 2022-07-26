@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/25 17:29:22 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/26 12:17:21 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,12 @@ int	main(int argc, char **argv, char **env)
 	while (status == 0)
 	{
 		str = ft_readline("\033[36mminishell(→_→)$\033[0m ");
-		// ft_pre_parse(str, set.enpv);
 		set.lst_cmds = ft_parse(str, set.enpv);
+		if (!set.lst_cmds)
+		{
+			         //сначала функция очистки листов!!!!!!!
+		 	ft_putstr_fd("Arguments error", 2);
+		}
 	
 // while (set.lst_cmds && status == 0)
 // {
