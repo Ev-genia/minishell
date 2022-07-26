@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 10:27:07 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/26 09:40:21 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/26 11:56:05 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_child_process(t_cmd cmd, t_func *func, t_arr_f choice_func, int *fd_pipe
 		exit(rez);
 	}
 	else
-		ft_execve((char *)cmd.lst_args->content, cmd.sets->enpv);
+		ft_execve(cmd, cmd.sets->enpv);
 }
 
 int	ft_command(t_cmd cmd, t_func *func, t_arr_f choice_func)

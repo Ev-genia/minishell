@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/25 16:53:30 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/07/26 11:55:36 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <string.h>
 # include <fcntl.h>
 # include <readline/readline.h>
-# include "../src/get_next_line/get_next_line.h"
+// # include "../src/get_next_line/get_next_line.h"
 # include <readline/history.h>
 
 typedef struct s_env //связный список для парсинга переменной окружения
@@ -68,6 +68,8 @@ enum e_func_name
 	FT_PWD
 };
 
+
+
 typedef struct s_func
 {
 	char				*name_func;
@@ -80,6 +82,7 @@ typedef int	(*t_arr_f[10])(t_list *lst_args, t_env **export, t_env **env);
 t_env	*ft_lstnew_env(char *content1, char *content2, int flag);
 t_env	*ft_lstlast_env(t_env *lst);
 void	ft_lstadd_back_env(t_env **lst, t_env *new);
+int		ft_lstsize_env(t_env *lst);
 
 //ft_env.c
 int		ft_env(t_list *lst_args, t_env **export, t_env **env);
@@ -127,7 +130,7 @@ int		ft_exit(t_list *lst_args, t_env **export, t_env **env);
 int		ft_command(t_cmd cmd, t_func *func, t_arr_f choice_func);
 
 //ft_execve.c
-void	ft_execve(char *command, t_env *env);
+void	ft_execve(t_cmd cmd, t_env *env);
 
 //ft_herdoc.c
 void	ft_herdoc(t_cmd cmd);
@@ -136,6 +139,10 @@ void	ft_perror(char *str);
 //ft_dup_data.c
 void	ft_dup_child_data(t_cmd cmd, int *fd_pipe);//t_cmd cmd);
 void	ft_dup_parent_data(int *fd_pipe, t_cmd cmd, pid_t pid);
+
+//ft_convert_to_arr.c
+char	**ft_convert_to_arr_env(t_env *list);
+char	**ft_convert_to_arr_list(t_list *list);
 
 //ft_init_arr_func.c
 void	ft_init_f(t_func *func);

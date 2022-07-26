@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exeve.c                                         :+:      :+:    :+:   */
+/*   ft_execve.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 16:11:57 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/26 09:34:18 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/26 11:55:17 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,37 +80,24 @@ char	*ft_get_path(char *command, t_env *env)
 	return (str);
 }
 
-char	**ft_convert_to_arr(t_env *list)
-{
-	char	**arr;
-	int		size_lst;
-	int		i;
-
-	size_lst = ft_lstlast_env(list);
-	arr = malloc(sizeof(char *) * (size_lst + 1));
-	i = -1;
-	while (++i < size_lst)
-		arr[i] = malloc(sizeof(char) * ft_strlen(arr[i]));
-	arr[++i] = NULL;
-	return (arr);
-}
-
-void	ft_execve(char *command, t_env *env)
+void	ft_execve(t_cmd cmd, t_env *env)
 {
 	char	*path;
 	char	**env_arr;
+	char	**cmd_arr;
 
-	path = ft_get_path(command, env);
+	path = ft_get_path((char *)cmd.lst_args->content, env);
 	if (!path)
 	{
-		ft_write(command);
+		ft_write((char *)cmd.lst_args->content);
 		// free(lst?);
 		exit(1);
 	}
-	env_arr = ft_convert_to_arr(env);
-	if (execve(path, command, env_arr))
+	env_arr = ft_convert_to_arr_env(env);
+	cmd_arr = ft_convert_to_arr_list(cmd.lst_args);
+	if (execve(path, cmd_arr, env_arr))
 	{
-		perror(command);
+		perror(cmd_arr[0]);
 		perror(path);
 		exit(1);
 	}

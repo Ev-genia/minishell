@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 14:32:43 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/26 10:22:07 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/26 11:56:24 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,15 +111,15 @@ void	ft_dup_parent_data(int *fd_pipe, t_cmd cmd, pid_t pid1)
 		if (cmd.flag_redir_write == 1 || cmd.flag_heredoc_write == 1)
 		{
 			fd_out = ft_open_outfile(cmd);
-			dup2(cmd.file_write, 1);
+			dup2(fd_out, 1);
 		}
 		close(fd_pipe[0]);
-		ft_execve_parent();
+		ft_execve(cmd, cmd.sets->enpv);//_parent
 	}
 	if (cmd.flag_redir_write == 1 || cmd.flag_heredoc_write == 1)
 	{
 		fd_out = ft_open_outfile(cmd);
-		dup2(cmd.file_write, 1);
+		dup2(fd_out, 1);
 	}	
 	else if (cmd.flag_pipe == 1)
 	{
