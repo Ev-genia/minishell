@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/25 15:10:01 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/07/25 17:29:22 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	set.enpv = ft_env_struct(env);
 	set.export = ft_copy_env(set.enpv);
-//set.export = ft_sorted_export(set.export);
+	set.export = ft_sorted_export(set.export);
+	set.env_arr = NULL;
 	ft_init_f(func);
 	ft_init_arr(choice_func);
 	while (status == 0)
@@ -62,13 +63,12 @@ int	main(int argc, char **argv, char **env)
 		str = ft_readline("\033[36mminishell(→_→)$\033[0m ");
 		// ft_pre_parse(str, set.enpv);
 		set.lst_cmds = ft_parse(str, set.enpv);
-	
-// while (set.lst_cmds && status == 0)
-// {
-// 	status = ft_command(*set.lst_cmds, func, choice_func);
-// 	ft_putstr_fd(set.lst_cmds->lst_args->content, 1);
-// 	set.lst_cmds = set.lst_cmds->next;
-// }	
+		while (set.lst_cmds && status == 0)
+		{
+			status = ft_command(*set.lst_cmds, func, choice_func);
+ft_putstr_fd(set.lst_cmds->lst_args->content, 1);
+			set.lst_cmds = set.lst_cmds->next;
+		}	
 		// if (ft_parse(argv, set.enpv))
 		// 	return (ft_error());
 		// status = ft_shell();	

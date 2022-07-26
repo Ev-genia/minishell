@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 14:32:43 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/25 14:41:59 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/26 10:22:07 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	ft_dup_child_data(t_cmd cmd, int *fd_pipe)//t_cmd cmd)
 
 	close(fd_pipe[0]);
 	if (cmd.flag_heredoc_read == 1)
-		ft_herdoc();
-	else if (cmd.file_read == 1)
+		ft_herdoc(cmd);
+	else if (cmd.flag_redir_read == 1)
 	{
 		fd_in = open(cmd.file_read, O_RDONLY, 0644);
 		dup2(fd_in, 0);
@@ -51,12 +51,11 @@ void	ft_dup_child_data(t_cmd cmd, int *fd_pipe)//t_cmd cmd)
 		dup2(fd_pipe[1], 1);
 		// close(fd_pipe[1]);
 	}
-	if (cmd.file_write == 1)
+	if (cmd.flag_redir_write == 1)
 	{
 		fd_out = open(cmd.file_write, O_WRONLY + O_CREAT + O_APPEND, 0644);
 		dup2(fd_out, 1);
 	}
-
 	// dup2(fd_pipe[1], 1);
 	close(fd_pipe[1]);
 }
@@ -90,8 +89,16 @@ void	ft_dup_child_data(t_cmd cmd, int *fd_pipe)//t_cmd cmd)
 // 	return (fd);
 // }
 
-int	ft_open_outfile()
-{}
+int	ft_open_outfile(t_cmd cmd)
+{
+	int	fd;
+
+	if (cmd.flag_heredoc_write == 1)
+		fd = open(cmd.file_write, O_WRONLY + O_APPEND + O_CREAT, 0644);
+	else
+		fd = open(cmd.file_write, O_WRONLY + O_TRUNC + O_CREAT, 0644);
+	return (fd);
+}
 
 void	ft_dup_parent_data(int *fd_pipe, t_cmd cmd, pid_t pid1)
 {
@@ -101,7 +108,7 @@ void	ft_dup_parent_data(int *fd_pipe, t_cmd cmd, pid_t pid1)
 	if (cmd.next == NULL)
 	{
 		waitpid(pid1, NULL, 0);
-		if (cmd.file_write == 1 || cmd.flag_heredoc_write == 1)
+		if (cmd.flag_redir_write == 1 || cmd.flag_heredoc_write == 1)
 		{
 			fd_out = ft_open_outfile(cmd);
 			dup2(cmd.file_write, 1);
@@ -109,8 +116,12 @@ void	ft_dup_parent_data(int *fd_pipe, t_cmd cmd, pid_t pid1)
 		close(fd_pipe[0]);
 		ft_execve_parent();
 	}
-	if (cmd.file_write == 1)
-	if (cmd.flag_pipe == 1)
+	if (cmd.flag_redir_write == 1 || cmd.flag_heredoc_write == 1)
+	{
+		fd_out = ft_open_outfile(cmd);
+		dup2(cmd.file_write, 1);
+	}	
+	else if (cmd.flag_pipe == 1)
 	{
 		dup2(fd_pipe[0], 0);
 		close(fd_pipe[0]);

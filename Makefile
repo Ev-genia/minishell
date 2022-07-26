@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+         #
+#    By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/30 13:01:49 by mlarra            #+#    #+#              #
-#    Updated: 2022/07/25 15:04:20 by wcollen          ###   ########.fr        #
+#    Updated: 2022/07/26 10:10:52 by mlarra           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ DIR_BUILTINS	=	./src/builtins/
 DIR_PARSER		=	./src/parser/
 DIR_COMMAND		=	./src/commands/
 DIR_INIT		=	./src/init/
+DIR_GNL			=	./src/get_next_line/
 
 DIR_HEADER	=	./includes
 
@@ -44,9 +45,12 @@ SRC_CD	=	${addprefix ${DIR_CD}, ft_cd.c}
 DIR_EXIT	=	${addprefix ${DIR_BUILTINS},exit/}
 SRC_EXIT	=	${addprefix ${DIR_EXIT}, ft_exit.c}
 
-SRC_COMMAND	=	${addprefix ${DIR_COMMAND}, ft_command.c ft_dup_data.c}
+SRC_COMMAND	=	${addprefix ${DIR_COMMAND}, ft_command.c ft_dup_data.c\
+		ft_execve.c	ft_herdoc.c}
 
 SRC_INIT	=	${addprefix ${DIR_INIT}, ft_init_arr_func.c}
+
+SRC_GNL	=	${addprefix ${DIR_GNL}, get_next_line.c get_next_line_utils.c}	
 
 SRC		=	${DIR}main.c\
 			${SRC_PWD}\
@@ -57,8 +61,9 @@ SRC		=	${DIR}main.c\
 			${SRC_CD}\
 			${SRC_EXIT}\
 			${DIR_PARSER}parser.c\
-			${SRC_INIT}
-#			${SRC_COMMAND}\
+			${SRC_INIT}\
+			${SRC_COMMAND}\
+			${SRC_GNL}
 			
 
 HEADER	=	${addprefix ${DIR_HEADER}/,minishell.h}
