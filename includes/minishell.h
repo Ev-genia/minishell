@@ -6,7 +6,7 @@
 /*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/25 14:59:30 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/07/25 16:53:30 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <string.h>
 # include <fcntl.h>
 # include <readline/readline.h>
+# include <readline/history.h>
 
 typedef struct s_env //связный список для парсинга переменной окружения
 {
@@ -29,22 +30,14 @@ typedef struct s_env //связный список для парсинга пе�
 	struct s_env	*next;
 }	t_env;
 
-// typedef struct s_args
-// {
-// 	char			*arg;
-// 	struct s_args	*next;
-// }	t_args;
 
 struct s_set;
 
 typedef struct s_cmd
 {
 	struct s_set	*sets;
-	// char			**args_cmd;//may be lst?
-	// t_args			*lst_args;
 	t_list			*lst_args;
 	int				flag_pipe;
-	// int				flag_pipe_prev;//флаг пайпа предыдущей команды
 	int				flag_redir_read;
 	int				flag_heredoc_read;
 	int				flag_redir_write;

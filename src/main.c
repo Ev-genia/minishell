@@ -6,7 +6,7 @@
 /*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/25 15:10:01 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/07/25 16:56:40 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	ft_add_history(char *str)
 	if (fd != -1)
 	{
 		ft_putstr_fd(str, fd);
+		ft_putstr_fd("\n", fd);
 	}
 	close(fd);//надо ли каждый раз закрывать?
 }
@@ -36,6 +37,7 @@ char	*ft_readline(const char *prompt)
 	 {
 		ft_add_history(str);
 	 }
+	 //rl_clear_history();??????????????????
 	 return (str);
 }
 
