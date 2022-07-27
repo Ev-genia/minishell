@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_arr_func.c                                    :+:      :+:    :+:   */
+/*   ft_init_arr_func.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 10:31:32 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/22 11:19:46 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/27 16:06:22 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	ft_init_f(t_func *func)
 	func[4].type = FT_CD;
 	func[5].name_func = "pwd";
 	func[5].type = FT_PWD;
+	func[6].name_func = NULL;
 }
 
 void	ft_init_arr(t_arr_f ft_choice_func)

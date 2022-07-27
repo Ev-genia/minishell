@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 14:32:43 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/26 16:07:49 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/27 17:20:32 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,30 +33,42 @@
 // 	ft_execve(pipe_str.env, pipe_str.av[i]);
 // }
 
-void	ft_dup_child_data(t_cmd cmd, int *fd_pipe)//t_cmd cmd)
+int	ft_open_outfile(t_cmd cmd)
+{
+	int	fd;
+
+	if (cmd.flag_heredoc_write == 1)
+		fd = open(cmd.file_write, O_WRONLY + O_APPEND + O_CREAT, 0644);
+	else
+		fd = open(cmd.file_write, O_WRONLY + O_TRUNC + O_CREAT, 0644);
+	return (fd);
+}
+
+void	ft_dup_child_data(t_cmd cmd, int *fd_pipe)
 {
 	int	fd_in;
 	int	fd_out;
 
-	close(fd_pipe[0]);
 	if (cmd.flag_heredoc_read == 1)
+	{
+		// dup2(0, fd_pipe[0]);
+		// close(fd_pipe[0]);
 		ft_herdoc(cmd);
+	}
 	else if (cmd.flag_redir_read == 1)
 	{
 		fd_in = open(cmd.file_read, O_RDONLY, 0644);
 		dup2(fd_in, 0);
+		close(fd_in);
 	}
-	if (cmd.flag_pipe == 1)
+	if (cmd.flag_redir_write == 1 || cmd.flag_heredoc_write == 1)
 	{
-		dup2(fd_pipe[1], 1);
-		// close(fd_pipe[1]);
-	}
-	if (cmd.flag_redir_write == 1)
-	{
-		fd_out = open(cmd.file_write, O_WRONLY + O_CREAT + O_APPEND, 0644);
+		fd_out = ft_open_outfile(cmd);
 		dup2(fd_out, 1);
+		close(fd_out);
+		return ;
 	}
-	// dup2(fd_pipe[1], 1);
+	dup2(fd_pipe[1], 1);
 	close(fd_pipe[1]);
 }
 
@@ -89,65 +101,49 @@ void	ft_dup_child_data(t_cmd cmd, int *fd_pipe)//t_cmd cmd)
 // 	return (fd);
 // }
 
-int	ft_open_outfile(t_cmd cmd)
-{
-	int	fd;
-
-	if (cmd.flag_heredoc_write == 1)
-		fd = open(cmd.file_write, O_WRONLY + O_APPEND + O_CREAT, 0644);
-	else
-		fd = open(cmd.file_write, O_WRONLY + O_TRUNC + O_CREAT, 0644);
-	return (fd);
-}
 
 
-int	ft_lstsize_cmd(t_cmd *lst)
-{
-	int	i;
-
-	i = 0;
-	while (lst)
-	{
-		lst = lst->next;
-		i++;
-	}
-	return (i);
-}
-
-void	ft_dup_parent_data(int *fd_pipe, t_cmd cmd, pid_t pid1)
+void	ft_dup_parent_data(int *fd_pipe, t_cmd cmd, pid_t pid1, t_func *func, t_arr_f choice_func)
 {
 	int	fd_out;
+	int	fd_in;
+	int	poz;
+	int	rez;
 
 	close(fd_pipe[1]);
-	if (ft_lstsize_cmd(cmd.sets->lst_cmds) == 1)
-	{	
-		if (waitpid(pid1, NULL, 0) == -1)
-		{
-			perror("wait pid error");
-			exit(1);
-		}
-		return ;
-	}
-	if (cmd.next == NULL)
+	if (cmd.next == NULL || ft_lstsize_cmd(cmd.sets->lst_cmds) == 1)
 	{
-// ft_putstr_fd("ft_dup_parent_data\n", 1);
 		waitpid(pid1, NULL, 0);
+		if (cmd.flag_heredoc_read == 1)
+		{
+			// dup2(0, fd_pipe[0]);
+			// close(fd_pipe[0]);
+			ft_herdoc(cmd);
+		}
+		else if (cmd.flag_redir_read == 1)
+		{
+			fd_in = open(cmd.file_read, O_RDONLY, 0644);
+			dup2(fd_in, 0);
+			close(fd_in);
+		}
 		if (cmd.flag_redir_write == 1 || cmd.flag_heredoc_write == 1)
 		{
 			fd_out = ft_open_outfile(cmd);
 			dup2(fd_out, 1);
+			close(fd_out);
 		}
-		close(fd_pipe[0]);
-		ft_execve(cmd, cmd.sets->enpv);//_parent
+		poz = ft_find_buitins((char *)cmd.lst_args->content, func);
+		// poz = -1;
+		if (poz > -1)
+		{
+			rez = choice_func[func[poz].type](cmd.lst_args,
+				&cmd.sets->enpv, &cmd.sets->export);
+			exit(rez);
+		}
+		else
+			ft_execve(cmd, cmd.sets->enpv);
+		return ;
 	}
-	if (cmd.flag_redir_write == 1 || cmd.flag_heredoc_write == 1)
-	{
-		fd_out = ft_open_outfile(cmd);
-		dup2(fd_out, 1);
-	}	
-	else if (cmd.flag_pipe == 1)
-	{
-		dup2(fd_pipe[0], 0);
-		close(fd_pipe[0]);
-	}
+	// dup2(fd_pipe[0], 0);
+	// close(fd_pipe[0]);
 }

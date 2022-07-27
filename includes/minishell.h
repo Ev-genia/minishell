@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/26 15:13:51 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/27 15:52:06 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_cmd
 	t_list			*lst_args;
 	char			**cmd_arr;//in start cmd_arr = NULL
 	int				flag_pipe;
-	int				flag_redir_read;
+	int				flag_redir_read;//можно удалить
 	int				flag_heredoc_read;
 	int				flag_redir_write;
 	int				flag_heredoc_write;
@@ -77,7 +77,7 @@ typedef struct s_func
 	enum e_func_name	type;
 }	t_func;
 
-typedef int	(*t_arr_f[6])(t_list *lst_args, t_env **export, t_env **env);
+typedef int	(*t_arr_f[7])(t_list *lst_args, t_env **export, t_env **env);
 
 //lst_env.c
 t_env	*ft_lstnew_env(char *content1, char *content2, int flag);
@@ -129,6 +129,7 @@ int		ft_exit(t_list *lst_args, t_env **export, t_env **env);
 
 //ft_command.c
 int		ft_command(t_cmd cmd, t_func *func, t_arr_f choice_func);
+int		ft_find_buitins(char *command, t_func *func);
 
 //ft_execve.c
 void	ft_execve(t_cmd cmd, t_env *env);
@@ -139,7 +140,7 @@ void	ft_perror(char *str);
 
 //ft_dup_data.c
 void	ft_dup_child_data(t_cmd cmd, int *fd_pipe);//t_cmd cmd);
-void	ft_dup_parent_data(int *fd_pipe, t_cmd cmd, pid_t pid);
+void	ft_dup_parent_data(int *fd_pipe, t_cmd cmd, pid_t pid1, t_func *func, t_arr_f choice_func);
 
 //ft_convert_to_arr.c
 char	**ft_convert_to_arr_env(t_env *list);
@@ -152,6 +153,9 @@ void	ft_init_arr(t_arr_f ft_choice_func);
 //ft_execve_utils.c
 void	ft_write(char *s);
 void	ft_free_arr(char **arr);
+
+//ft_t_cmd_utils.c
+int		ft_lstsize_cmd(t_cmd *lst);
 
 //ft_init_set.c
 void	ft_init_set(t_set *set, char **env);

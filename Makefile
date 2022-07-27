@@ -6,7 +6,7 @@
 #    By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/30 13:01:49 by mlarra            #+#    #+#              #
-#    Updated: 2022/07/26 15:22:22 by mlarra           ###   ########.fr        #
+#    Updated: 2022/07/27 15:34:57 by mlarra           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,6 @@ DIR_BUILTINS	=	./src/builtins/
 DIR_PARSER		=	./src/parser/
 DIR_COMMAND		=	./src/commands/
 DIR_INIT		=	./src/init/
-DIR_GNL			=	./src/get_next_line/
 
 DIR_HEADER	=	./includes
 
@@ -46,11 +45,10 @@ DIR_EXIT	=	${addprefix ${DIR_BUILTINS},exit/}
 SRC_EXIT	=	${addprefix ${DIR_EXIT}, ft_exit.c}
 
 SRC_COMMAND	=	${addprefix ${DIR_COMMAND}, ft_command.c ft_dup_data.c\
-		ft_execve.c	ft_herdoc.c	ft_convert_to_arr.c	ft_execve_utils.c}
+		ft_execve.c	ft_herdoc.c	ft_convert_to_arr.c	ft_execve_utils.c\
+		ft_t_cmd_utils.c}
 
 SRC_INIT	=	${addprefix ${DIR_INIT}, ft_init_arr_func.c ft_init_set.c}
-
-SRC_GNL	=	${addprefix ${DIR_GNL}, get_next_line.c get_next_line_utils.c}	
 
 SRC		=	${DIR}main.c\
 			${SRC_PWD}\
@@ -60,11 +58,9 @@ SRC		=	${DIR}main.c\
 			${SRC_UNSET}\
 			${SRC_CD}\
 			${SRC_EXIT}\
-			${DIR_PARSER}parser.c\
 			${SRC_INIT}\
 			${SRC_COMMAND}\
-#			${SRC_GNL}
-			
+			# ${DIR_PARSER}parser.c\
 
 HEADER	=	${addprefix ${DIR_HEADER}/,minishell.h}
 

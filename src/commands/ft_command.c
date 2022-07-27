@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 10:27:07 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/26 17:23:23 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/27 16:54:30 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,33 @@ char	*ft_tolower_str(char *s)
 	return (str);
 }
 
-int	ft_find_buitins(char *command, t_func *func)
+int	ft_arr_func_len(t_func *arr)
 {
 	int	i;
 
 	i = 0;
-// ft_putstr_fd("command1:\n", 1);
-// ft_putstr_fd(command, 1);
-// ft_putstr_fd("\n", 1);
-	command = ft_tolower_str(command);
-// ft_putstr_fd("command2:\n", 1);
-// ft_putstr_fd(command, 1);
-// ft_putstr_fd("\n", 1);
-	while (ft_strncmp(command, func[i].name_func, ft_strlen(command)) != 0)
+	while (arr[i].name_func != NULL)
 		i++;
-	if (ft_strncmp(command, func[i].name_func, ft_strlen(command)) == 0)
-		return (i);
+	return (i);
+}
+
+int	ft_find_buitins(char *command, t_func *func)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	command = ft_tolower_str(command);
+	len = ft_arr_func_len(func);
+// ft_putstr_fd("len ", 1);
+// ft_putnbr_fd(len, 1);
+// ft_putstr_fd("\n", 1);
+	while (i < 6 && ft_strncmp(command, func[i].name_func, ft_strlen(command)) != 0)
+	{
+		if (ft_strncmp(command, func[i].name_func, ft_strlen(command)) == 0)
+			return (i);
+		i++;
+	}
 	return (-1);
 }
 
@@ -65,14 +76,17 @@ void	ft_child_process(t_cmd cmd, t_func *func, t_arr_f choice_func, int *fd_pipe
 {
 	int		poz;
 	int		rez;
-// ft_putstr_fd("ft_child_process\n", 1);
-	if (cmd.flag_pipe == 1)
-		ft_dup_child_data(cmd, fd_pipe);//cmd);
+
+	close(fd_pipe[0]);
+	if (cmd.next == NULL || ft_lstsize_cmd(cmd.sets->lst_cmds) == 1)
+		{
+ft_putstr_fd("before exit\n", 1);			
+			exit(0);}
+ft_putstr_fd("between\n", 1);
+	if (cmd.flag_pipe || cmd.flag_heredoc_read || cmd.flag_heredoc_write
+		|| cmd.flag_redir_read || cmd.flag_redir_write)
+		ft_dup_child_data(cmd, fd_pipe);
 	poz = ft_find_buitins((char *)cmd.lst_args->content, func);
-// printf("poz: %d\n", poz);
-// ft_putstr_fd("ft_child_process poz: \n", 1);
-// ft_putnbr_fd(poz, 1);
-// ft_putstr_fd("\n", 1);
 	if (poz > -1)
 	{
 		rez = choice_func[func[poz].type](cmd.lst_args,
@@ -80,12 +94,7 @@ void	ft_child_process(t_cmd cmd, t_func *func, t_arr_f choice_func, int *fd_pipe
 		exit(rez);
 	}
 	else
-		{
-// ft_putstr_fd("ft_child_process else \n", 1);
-// ft_putnbr_fd(poz, 1);
-// ft_putstr_fd("\n", 1);
-			ft_execve(cmd, cmd.sets->enpv);
-			}
+		ft_execve(cmd, cmd.sets->enpv);
 }
 
 
@@ -110,6 +119,6 @@ int	ft_command(t_cmd cmd, t_func *func, t_arr_f choice_func)
 		ft_child_process(cmd, func, choice_func, fd_pipe);
 	}
 	else 
-		ft_dup_parent_data(fd_pipe, cmd, pid1);
+		ft_dup_parent_data(fd_pipe, cmd, pid1, func, choice_func);
 	return (0);
 }

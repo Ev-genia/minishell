@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 09:42:25 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/26 11:40:54 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/27 16:48:49 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,13 @@ void	ft_child_h_d(int *fd_pipe, t_cmd cmd)
 	char	*str;
 
 	close(fd_pipe[0]);
-	write(0, "> ", 2);
-	// str = get_next_line(0);
 	str = readline("\033[36m>\033[0m ");
 	while (str != NULL
 		&& ft_strncmp(str, cmd.limiter, ft_strlen(cmd.limiter)) != 0)
 	{
 		ft_putstr_fd(str, fd_pipe[1]);
+		ft_putstr_fd("\n", fd_pipe[1]);
 		free(str);
-		write(0, "> 0", 2);
 		str = readline("\033[36m>\033[0m ");
 	}
 	if (str != NULL)
@@ -91,17 +89,19 @@ void	ft_herdoc(t_cmd cmd)
 
 	pipe(fd_pipe);
 	pid = fork();
+ft_putstr_fd("pid = ", 1);
+ft_putnbr_fd(pid, 1);
+ft_putstr_fd("\n", 1);
 	if (pid == 0)
 		ft_child_h_d(fd_pipe, cmd);
-	else 
-		if (pid > 0)
-		{
-			close(fd_pipe[1]);
-			dup2(fd_pipe[0], 0);
-			close(fd_pipe[0]);
-			if (waitpid(pid, NULL, 0) == -1)
-				ft_perror("error of terminated 1 child process");
-		}
+	else if (pid > 0)
+	{
+		close(fd_pipe[1]);
+		dup2(fd_pipe[0], 0);
+		close(fd_pipe[0]);
+		if (waitpid(pid, NULL, 0) == -1)
+			ft_perror("error of terminated 1 child process");
+	}
 	else 
 		ft_perror("pipe error");
 }
