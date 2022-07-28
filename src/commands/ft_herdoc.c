@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 09:42:25 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/27 16:48:49 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/28 12:15:33 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	ft_child_h_d(int *fd_pipe, t_cmd cmd)
 {
 	char	*str;
 
+	dup2(cmd.sets->start_fd_in, 0);
 	close(fd_pipe[0]);
 	str = readline("\033[36m>\033[0m ");
 	while (str != NULL

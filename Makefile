@@ -6,7 +6,7 @@
 #    By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/30 13:01:49 by mlarra            #+#    #+#              #
-#    Updated: 2022/07/27 15:34:57 by mlarra           ###   ########.fr        #
+#    Updated: 2022/07/28 11:45:16 by mlarra           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,7 @@ HEADER	=	${addprefix ${DIR_HEADER}/,minishell.h}
 
 OBJ		=	${SRC:%.c=%.o}
 
-CFLAGS	=	-g #-Wall -Wextra -Werror 
+CFLAGS	=	-g -Wall -Wextra -Werror 
 
 CC		=	cc
 

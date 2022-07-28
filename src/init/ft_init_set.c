@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 12:02:51 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/26 14:34:09 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/28 11:42:26 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,5 @@ void	ft_init_set(t_set *set, char **env)
 	set->export = ft_sorted_export(set->export);
 	set->env_arr = NULL;
 	set->lst_cmds = NULL;
+	set->start_fd_in = dup(STDIN_FILENO);
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: wcollen <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/23 16:07:46 by wcollen           #+#    #+#              #
-#    Updated: 2021/10/24 18:14:54 by wcollen          ###   ########.fr        #
+#    Updated: 2022/07/28 11:46:16 by mlarra           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ BONUS		=	ft_lstnew.c		ft_lstadd_front.c	ft_lstsize.c\
 
 BONUS_OBJS	=	$(BONUS:.c=.o)
 
-CC			=	gcc
+CC			=	cc
 
 RM			=	rm -f
 

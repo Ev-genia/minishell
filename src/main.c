@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/27 16:30:27 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/28 12:44:55 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,16 @@ int	main(int argc, char **argv, char **env)
 	t_set	set;
 	// int		status;
 	// char	*str;
-	t_func	func[10];
-	t_arr_f	choice_func;
+	// t_func	func[10];
+	// t_arr_f	choice_func;
 
 	
 	// status = 0; //статус завершения команды при execve  или builtin-команде
 	(void)argc;
 	(void)argv;
 	ft_init_set(&set, env);
-	ft_init_f(func);
-	ft_init_arr(choice_func);
+	ft_init_f(set.func);
+	ft_init_arr(set.choice_func);
 /*	
 	while (status == 0)
 	{
@@ -92,13 +92,15 @@ int	main(int argc, char **argv, char **env)
 	//cat > f2
 	//<< stop cat > f1
 	//pwd | << stop cat > f1
+	//pwd | < f1 cat > f2
 	//pwd | cat >> f1
+	//pwd | << stop cat >> f1
 	set.lst_cmds = malloc(sizeof(t_cmd));
 	set.lst_cmds->lst_args = ft_lstnew("pwd");
 	// set.lst_cmds->lst_args->next = ft_lstnew("Error");
 	// set.lst_cmds->lst_args->next->next = ft_lstnew("pirivet");
 	set.lst_cmds->file_read = NULL;
-	set.lst_cmds->file_write = "f1";
+	set.lst_cmds->file_write = NULL;
 	set.lst_cmds->flag_heredoc_read = 0;
 	set.lst_cmds->flag_heredoc_write = 0;
 	set.lst_cmds->flag_pipe = 1;
@@ -113,17 +115,17 @@ int	main(int argc, char **argv, char **env)
 	set.lst_cmds->next->file_read = NULL;
 	set.lst_cmds->next->file_write = "f1";
 	set.lst_cmds->next->flag_heredoc_read = 1;
-	set.lst_cmds->next->flag_heredoc_write = 0;
+	set.lst_cmds->next->flag_heredoc_write = 1;
 	set.lst_cmds->next->flag_pipe = 0;
 	set.lst_cmds->next->flag_redir_read = 0;
-	set.lst_cmds->next->flag_redir_write = 1;
-	set.lst_cmds->next->limiter = "stop";
+	set.lst_cmds->next->flag_redir_write = 0;
+	set.lst_cmds->next->limiter = "st";
 	set.lst_cmds->next->sets = &set;
 	set.lst_cmds->next->next = NULL;
 
 	while (set.lst_cmds)
 	{
-		ft_command(*(set.lst_cmds), func, choice_func);
+		ft_command(*(set.lst_cmds));//, set.func, set.choice_func);
 		set.lst_cmds = set.lst_cmds->next;
 	}
 	// ft_putnbr_fd(status, 1);

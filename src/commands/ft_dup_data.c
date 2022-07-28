@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 14:32:43 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/27 17:20:32 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/28 12:52:00 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	ft_dup_child_data(t_cmd cmd, int *fd_pipe)
 
 	if (cmd.flag_heredoc_read == 1)
 	{
-		// dup2(0, fd_pipe[0]);
+		// dup2(cmd.sets->start_fd_in, fd_pipe[0]);
 		// close(fd_pipe[0]);
 		ft_herdoc(cmd);
 	}
@@ -103,7 +103,7 @@ void	ft_dup_child_data(t_cmd cmd, int *fd_pipe)
 
 
 
-void	ft_dup_parent_data(int *fd_pipe, t_cmd cmd, pid_t pid1, t_func *func, t_arr_f choice_func)
+void	ft_dup_parent_data(int *fd_pipe, t_cmd cmd, pid_t pid1)//, t_func *func, t_arr_f choice_func)
 {
 	int	fd_out;
 	int	fd_in;
@@ -115,11 +115,7 @@ void	ft_dup_parent_data(int *fd_pipe, t_cmd cmd, pid_t pid1, t_func *func, t_arr
 	{
 		waitpid(pid1, NULL, 0);
 		if (cmd.flag_heredoc_read == 1)
-		{
-			// dup2(0, fd_pipe[0]);
-			// close(fd_pipe[0]);
 			ft_herdoc(cmd);
-		}
 		else if (cmd.flag_redir_read == 1)
 		{
 			fd_in = open(cmd.file_read, O_RDONLY, 0644);
@@ -132,11 +128,10 @@ void	ft_dup_parent_data(int *fd_pipe, t_cmd cmd, pid_t pid1, t_func *func, t_arr
 			dup2(fd_out, 1);
 			close(fd_out);
 		}
-		poz = ft_find_buitins((char *)cmd.lst_args->content, func);
-		// poz = -1;
+		poz = ft_find_buitins((char *)cmd.lst_args->content, cmd.sets->func);
 		if (poz > -1)
 		{
-			rez = choice_func[func[poz].type](cmd.lst_args,
+			rez = cmd.sets->choice_func[cmd.sets->func[poz].type](cmd.lst_args,
 				&cmd.sets->enpv, &cmd.sets->export);
 			exit(rez);
 		}
@@ -144,6 +139,6 @@ void	ft_dup_parent_data(int *fd_pipe, t_cmd cmd, pid_t pid1, t_func *func, t_arr
 			ft_execve(cmd, cmd.sets->enpv);
 		return ;
 	}
-	// dup2(fd_pipe[0], 0);
-	// close(fd_pipe[0]);
+	dup2(fd_pipe[0], 0);
+	close(fd_pipe[0]);
 }

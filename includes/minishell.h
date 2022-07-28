@@ -6,13 +6,12 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/27 15:52:06 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/28 16:50:22 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-// # include "libft/libft.h"
 # include "../src/libft/libft.h"
 # include <unistd.h>
 # include <dirent.h>
@@ -20,64 +19,64 @@
 # include <string.h>
 # include <fcntl.h>
 # include <readline/readline.h>
-// # include "../src/get_next_line/get_next_line.h"
 # include <readline/history.h>
 
-typedef struct s_env //связный список для парсинга переменной окружения
-{
-	char			*key;
-	char			*value;
-	int				flag_key;
-	struct s_env	*next;
-}	t_env;
+int			g_exit_code;
 
-struct s_set;
+typedef struct s_env
+{
+	char				*key;
+	char				*value;
+	int					flag_key;
+	struct s_env		*next;
+}	t_env;	
+
+struct		s_set;	
 
 typedef struct s_cmd
-{
-	struct s_set	*sets;
-	t_list			*lst_args;
-	char			**cmd_arr;//in start cmd_arr = NULL
-	int				flag_pipe;
-	int				flag_redir_read;//можно удалить
-	int				flag_heredoc_read;
-	int				flag_redir_write;
-	int				flag_heredoc_write;
-	char			*file_read;
-	char			*file_write;
-	char			*limiter;//стоп-слово для heredoc
-	struct s_cmd	*next;
-}	t_cmd;
+{	
+	struct s_set		*sets;
+	t_list				*lst_args;
+	char				**cmd_arr;
+	int					flag_pipe;
+	int					flag_redir_read;
+	int					flag_heredoc_read;
+	int					flag_redir_write;
+	int					flag_heredoc_write;
+	char				*file_read;
+	char				*file_write;
+	char				*limiter;
+	struct s_cmd		*next;
+}	t_cmd;	
 
-typedef struct s_set
-{
-	t_env	*enpv;
-	char	**env_arr;//in start env_arr = NULL
-	t_env	*export;
-	t_cmd	*lst_cmds;//list of commands
-}	t_set;
-
-int	g_exit_code;
-
-enum e_func_name
-{
-	FT_ECHO,
-	FT_ENV,
-	FT_EXIT,
-	FT_EXPORT,
-	FT_CD,
-	FT_PWD
-};
-
-
+enum e_func_name	
+{	
+	FT_ECHO,	
+	FT_ENV,	
+	FT_EXIT,	
+	FT_EXPORT,	
+	FT_CD,	
+	FT_PWD	
+};	
 
 typedef struct s_func
-{
+{	
 	char				*name_func;
 	enum e_func_name	type;
-}	t_func;
+}	t_func;	
 
 typedef int	(*t_arr_f[7])(t_list *lst_args, t_env **export, t_env **env);
+
+typedef struct s_set
+{	
+	t_env		*enpv;
+	char		**env_arr;
+	t_env		*export;
+	t_cmd		*lst_cmds;
+	int			start_fd_in;
+	t_func		func[7];
+	t_arr_f		choice_func;
+}	t_set;
 
 //lst_env.c
 t_env	*ft_lstnew_env(char *content1, char *content2, int flag);
@@ -128,7 +127,7 @@ int		ft_cd(t_list *lst_args, t_env **export, t_env **env);
 int		ft_exit(t_list *lst_args, t_env **export, t_env **env);
 
 //ft_command.c
-int		ft_command(t_cmd cmd, t_func *func, t_arr_f choice_func);
+int		ft_command(t_cmd cmd);
 int		ft_find_buitins(char *command, t_func *func);
 
 //ft_execve.c
@@ -139,8 +138,8 @@ void	ft_herdoc(t_cmd cmd);
 void	ft_perror(char *str);
 
 //ft_dup_data.c
-void	ft_dup_child_data(t_cmd cmd, int *fd_pipe);//t_cmd cmd);
-void	ft_dup_parent_data(int *fd_pipe, t_cmd cmd, pid_t pid1, t_func *func, t_arr_f choice_func);
+void	ft_dup_child_data(t_cmd cmd, int *fd_pipe);
+void	ft_dup_parent_data(int *fd_pipe, t_cmd cmd, pid_t pid1);
 
 //ft_convert_to_arr.c
 char	**ft_convert_to_arr_env(t_env *list);
