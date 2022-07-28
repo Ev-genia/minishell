@@ -6,15 +6,12 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 14:32:43 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/28 12:52:00 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/28 17:32:22 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // #include <minishell.h>
 #include "../../includes/minishell.h"
-
-// ./pipex[0] infile[1] "ls -l"[2] (|) cmd (|) cmd[n-2] (|) "wc -l"[n-1] outfile[n]
-// 			> infile	ls -l		|	cmd	|	cmd		|	wc -l 		> outfile 
 
 // void	ft_first_child(int i, int *fd_pipe, t_pipe pipe_str)
 // {
@@ -50,11 +47,7 @@ void	ft_dup_child_data(t_cmd cmd, int *fd_pipe)
 	int	fd_out;
 
 	if (cmd.flag_heredoc_read == 1)
-	{
-		// dup2(cmd.sets->start_fd_in, fd_pipe[0]);
-		// close(fd_pipe[0]);
 		ft_herdoc(cmd);
-	}
 	else if (cmd.flag_redir_read == 1)
 	{
 		fd_in = open(cmd.file_read, O_RDONLY, 0644);
@@ -101,12 +94,29 @@ void	ft_dup_child_data(t_cmd cmd, int *fd_pipe)
 // 	return (fd);
 // }
 
-
-
-void	ft_dup_parent_data(int *fd_pipe, t_cmd cmd, pid_t pid1)//, t_func *func, t_arr_f choice_func)
+void	ft_dup_read_write(t_cmd cmd)
 {
 	int	fd_out;
 	int	fd_in;
+
+	if (cmd.flag_heredoc_read == 1)
+		ft_herdoc(cmd);
+	else if (cmd.flag_redir_read == 1)
+	{
+		fd_in = open(cmd.file_read, O_RDONLY, 0644);
+		dup2(fd_in, 0);
+		close(fd_in);
+	}
+	if (cmd.flag_redir_write == 1 || cmd.flag_heredoc_write == 1)
+	{
+		fd_out = ft_open_outfile(cmd);
+		dup2(fd_out, 1);
+		close(fd_out);
+	}
+}
+
+void	ft_dup_parent_data(int *fd_pipe, t_cmd cmd, pid_t pid1)
+{
 	int	poz;
 	int	rez;
 
@@ -114,25 +124,12 @@ void	ft_dup_parent_data(int *fd_pipe, t_cmd cmd, pid_t pid1)//, t_func *func, t_
 	if (cmd.next == NULL || ft_lstsize_cmd(cmd.sets->lst_cmds) == 1)
 	{
 		waitpid(pid1, NULL, 0);
-		if (cmd.flag_heredoc_read == 1)
-			ft_herdoc(cmd);
-		else if (cmd.flag_redir_read == 1)
-		{
-			fd_in = open(cmd.file_read, O_RDONLY, 0644);
-			dup2(fd_in, 0);
-			close(fd_in);
-		}
-		if (cmd.flag_redir_write == 1 || cmd.flag_heredoc_write == 1)
-		{
-			fd_out = ft_open_outfile(cmd);
-			dup2(fd_out, 1);
-			close(fd_out);
-		}
+		ft_dup_read_write(cmd);
 		poz = ft_find_buitins((char *)cmd.lst_args->content, cmd.sets->func);
 		if (poz > -1)
 		{
 			rez = cmd.sets->choice_func[cmd.sets->func[poz].type](cmd.lst_args,
-				&cmd.sets->enpv, &cmd.sets->export);
+					&cmd.sets->enpv, &cmd.sets->export);
 			exit(rez);
 		}
 		else

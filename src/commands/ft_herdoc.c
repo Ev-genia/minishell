@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 09:42:25 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/28 12:15:33 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/28 17:36:12 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,6 @@ void	ft_herdoc(t_cmd cmd)
 
 	pipe(fd_pipe);
 	pid = fork();
-ft_putstr_fd("pid = ", 1);
-ft_putnbr_fd(pid, 1);
-ft_putstr_fd("\n", 1);
 	if (pid == 0)
 		ft_child_h_d(fd_pipe, cmd);
 	else if (pid > 0)
@@ -103,6 +100,6 @@ ft_putstr_fd("\n", 1);
 		if (waitpid(pid, NULL, 0) == -1)
 			ft_perror("error of terminated 1 child process");
 	}
-	else 
+	else
 		ft_perror("pipe error");
 }
