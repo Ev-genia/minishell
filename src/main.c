@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/28 12:44:55 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/28 18:18:25 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	main(int argc, char **argv, char **env)
 	//pwd | cat >> f1
 	//pwd | << stop cat >> f1
 	set.lst_cmds = malloc(sizeof(t_cmd));
-	set.lst_cmds->lst_args = ft_lstnew("pwd");
+	set.lst_cmds->lst_args = ft_lstnew("ls");
 	// set.lst_cmds->lst_args->next = ft_lstnew("Error");
 	// set.lst_cmds->lst_args->next->next = ft_lstnew("pirivet");
 	set.lst_cmds->file_read = NULL;
