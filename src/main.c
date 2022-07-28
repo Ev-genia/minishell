@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/26 16:52:05 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/07/27 16:30:27 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,21 +85,47 @@ int	main(int argc, char **argv, char **env)
 */	
 // /*
 	//for test ft_command with list
-	set.lst_cmds = malloc(sizeof(t_cmd) * 2);
-	set.lst_cmds->lst_args = ft_lstnew("ECHO");
-	set.lst_cmds->lst_args->next = ft_lstnew("-n");
-	set.lst_cmds->lst_args->next->next = ft_lstnew("pirivet");
-	set.lst_cmds->next = NULL;
+	//echo -n pirivet | pwd
+	//cat norm > f1
+	//<f1 cat > f2
+	//<norm grep "Error" | cat > f1
+	//cat > f2
+	//<< stop cat > f1
+	//pwd | << stop cat > f1
+	//pwd | cat >> f1
+	set.lst_cmds = malloc(sizeof(t_cmd));
+	set.lst_cmds->lst_args = ft_lstnew("pwd");
+	// set.lst_cmds->lst_args->next = ft_lstnew("Error");
+	// set.lst_cmds->lst_args->next->next = ft_lstnew("pirivet");
 	set.lst_cmds->file_read = NULL;
-	set.lst_cmds->file_write = NULL;
+	set.lst_cmds->file_write = "f1";
 	set.lst_cmds->flag_heredoc_read = 0;
 	set.lst_cmds->flag_heredoc_write = 0;
-	set.lst_cmds->flag_pipe = 0;
+	set.lst_cmds->flag_pipe = 1;
 	set.lst_cmds->flag_redir_read = 0;
 	set.lst_cmds->flag_redir_write = 0;
 	set.lst_cmds->limiter = NULL;
 	set.lst_cmds->sets = &set;
-	ft_command(*(set.lst_cmds), func, choice_func);
+	// set.lst_cmds->next = NULL;
+
+	set.lst_cmds->next = malloc(sizeof(t_cmd));
+	set.lst_cmds->next->lst_args = ft_lstnew("cat");
+	set.lst_cmds->next->file_read = NULL;
+	set.lst_cmds->next->file_write = "f1";
+	set.lst_cmds->next->flag_heredoc_read = 1;
+	set.lst_cmds->next->flag_heredoc_write = 0;
+	set.lst_cmds->next->flag_pipe = 0;
+	set.lst_cmds->next->flag_redir_read = 0;
+	set.lst_cmds->next->flag_redir_write = 1;
+	set.lst_cmds->next->limiter = "stop";
+	set.lst_cmds->next->sets = &set;
+	set.lst_cmds->next->next = NULL;
+
+	while (set.lst_cmds)
+	{
+		ft_command(*(set.lst_cmds), func, choice_func);
+		set.lst_cmds = set.lst_cmds->next;
+	}
 	// ft_putnbr_fd(status, 1);
 	// ft_putchar_fd('\n', 1);
 // */

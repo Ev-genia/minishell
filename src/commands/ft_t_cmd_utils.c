@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_t_cmd_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/09 22:51:07 by wcollen           #+#    #+#             */
-/*   Updated: 2022/07/27 15:40:38 by mlarra           ###   ########.fr       */
+/*   Created: 2022/07/27 10:09:04 by mlarra            #+#    #+#             */
+/*   Updated: 2022/07/27 10:11:18 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+// #include <minishell.h>
+#include "../../includes/minishell.h"
 
-int	ft_strncmp(const char *str1, const char *str2, size_t num)
+int	ft_lstsize_cmd(t_cmd *lst)
 {
-	if (num == 0)
-		return (0);
-	while (*str1 && *str2 && *str1 != '\0' && *str2 != '\0' && *str1 == *str2 && num > 1)
+	int	i;
+
+	i = 0;
+	while (lst)
 	{
-		str1++;
-		str2++;
-		num--;
+		lst = lst->next;
+		i++;
 	}
-	return ((unsigned char)*str1 - (unsigned char)*str2);
+	return (i);
 }
