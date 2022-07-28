@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 10:17:58 by wcollen           #+#    #+#             */
-/*   Updated: 2022/07/26 17:27:09 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/07/28 08:46:59 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	ft_preparse(char *str)
 
 	quote = 0;
 	dbl_quote = 0;
+	if (*str == '|')//не может быть пайпа в начале (чего еще не может быть в начале строки??)
+		return (1);
 	while (*str)
 	{
 		if (*str == '\'')
@@ -27,7 +29,7 @@ int	ft_preparse(char *str)
 			dbl_quote++;
 		str++;
 	}
-	if (str - 1 == '|')
+	if (*(str - 1) == '|')
 		return (1);
 	if (quote % 2 == 0 && dbl_quote % 2 == 0)
 		return (0);
@@ -162,6 +164,7 @@ t_cmd	*ft_parse(char *str, t_env *env_list)
 		return (NULL);
 	while (str[i])
 	{
+		if (str[i])
 		if (str[i] == '\'')
 			str = ft_quote(str, &i);
 		if (str[i] == '\\')
