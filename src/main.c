@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/28 18:18:25 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/08 14:30:14 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,28 +44,28 @@ char	*ft_readline(const char *prompt)
 int	main(int argc, char **argv, char **env)
 {
 	t_set	set;
-	// int		status;
-	// char	*str;
+	int		status;
+	char	*str;
 	// t_func	func[10];
 	// t_arr_f	choice_func;
 
 	
-	// status = 0; //статус завершения команды при execve  или builtin-команде
+	 status = 0; //статус завершения команды при execve  или builtin-команде
 	(void)argc;
 	(void)argv;
 	ft_init_set(&set, env);
 	ft_init_f(set.func);
 	ft_init_arr(set.choice_func);
-/*	
+	
 	while (status == 0)
 	{
 		str = ft_readline("\033[36mminishell(→_→)$\033[0m ");
-		set.lst_cmds = ft_parse(str, set.enpv);
-		if (!set.lst_cmds)
-		{
-			         //сначала функция очистки листов!!!!!!!
-		 	ft_putstr_fd("Arguments error", 2);
-		}
+		set.lst_cmds = ft_parse(str, &set);
+		// if (!set.lst_cmds)
+		// {
+		// 	         //сначала функция очистки листов!!!!!!!
+		//  	ft_putstr_fd("\nArguments error\n", 2);
+		// }
 	
 // while (set.lst_cmds && status == 0)
 // {
@@ -82,7 +82,7 @@ int	main(int argc, char **argv, char **env)
 	ft_lstclear_env(&set.enpv);
 	ft_lstclear_env(&set.export);
 	// rl_clear_history();
-*/	
+	
 // /*
 	//for test ft_command with list
 	//echo -n pirivet | pwd

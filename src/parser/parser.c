@@ -6,11 +6,22 @@
 /*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 10:17:58 by wcollen           #+#    #+#             */
-/*   Updated: 2022/07/28 08:46:59 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/08/08 14:51:03 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+char	*skip_spaces(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (*str[i] && is_space(*str[i]))
+		i++;
+	return (&(*str[i]));
+}
+
 
 int	ft_preparse(char *str)
 {
@@ -27,13 +38,27 @@ int	ft_preparse(char *str)
 			quote++;
 		if (*str == '\"')
 			dbl_quote++;
+		if (*str == '<')
+		{
+			str++;
+			skip_spaces(&str);
+			if (*str && (*str == '>' || *str == '|'))
+				return(1);
+		}
+		if (*str == '>')
+		{
+			str++;
+			skip_spaces(&str);
+			if (*str && (*str == '>' || *str == '|'))
+				return(1);
+		}
 		str++;
 	}
 	if (*(str - 1) == '|')
+		return (1);	
+	if (quote % 2 != 0 && dbl_quote % 2 != 0)
 		return (1);
-	if (quote % 2 == 0 && dbl_quote % 2 == 0)
-		return (0);
-	return (1);
+	return (0);
 }
 
 int	is_key(char c, int i)
@@ -154,14 +179,35 @@ char	*ft_quote(char *str, int *i)
 }
 
 
-t_cmd	*ft_parse(char *str, t_env *env_list)
+t_cmd	*ft_parse(char *str1,  t_set *sets)
 {
 	int		i;
-	// t_cmd	*lst_cmds;
+	char	*str;
+	t_cmd	*lst_cmds;
+
 
 	i = 0;
-	if (ft_preparse(str) == 1)
+	lst_cmds = ft_cmd_lst_new(sets);
+	if (ft_preparse(str1) == 1)
 		return (NULL);
+	str = ft_del_spaces(str1);
+	//free(str1); //почему-то ошибка маллока при освобождении строки
+
+	while (str[i] && str[i] != '|')
+	{
+		// сделать операцию добавить в конец листа
+		// if (str[i] == '<')
+		// {
+		// 	if (str[++i] != '<')
+			
+
+		// }
+		i++;
+	}
+
+
+
+	i = 0;
 	while (str[i])
 	{
 		if (str[i])
@@ -170,9 +216,9 @@ t_cmd	*ft_parse(char *str, t_env *env_list)
 		if (str[i] == '\\')
 			str = ft_b_slash(str, &i);
 		if (str[i] == '\"')
-			str = ft_db_quote(str, &i, env_list);
+			str = ft_db_quote(str, &i, sets->enpv);
 		if (str[i] == '$')
-			str = ft_dollar(str, &i, env_list);
+			str = ft_dollar(str, &i, sets->enpv);
 		i++;
 	}
 		printf("%s\n", str);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/28 16:50:22 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/08 13:58:18 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,11 @@ int		ft_lstsize_cmd(t_cmd *lst);
 void	ft_init_set(t_set *set, char **env);
 
 //=================parser.c========================//
-t_cmd	*ft_parse(char *str, t_env *env_list);
+t_cmd	*ft_parse(char *str, t_set *sets);
 
+//=================del_spaces.c====================//
+char	*ft_del_spaces(char *str);
+
+//=================lst_cmd_operations.c============//
+t_cmd	*ft_cmd_lst_new(t_set	*sets);
 #endif
