@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 10:16:58 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/26 17:23:06 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/10 11:33:14 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,11 @@ int	ft_echo(t_list *lst_args, t_env **export, t_env **env)
 	while (list)
 	{
 		ft_putstr_fd((char *)list->content, 1);
+		if (list->next != NULL)
+			ft_putchar_fd(' ', 1);
+		else if (enter == 1)
+			ft_putchar_fd('\n', 1);
 		list = list->next;
 	}
-	if (enter == 1)
-		ft_putchar_fd('\n', 1);
 	return (0);
 }
