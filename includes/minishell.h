@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/08 13:58:18 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/08/11 17:30:06 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <term.h>
+// # include <curses.h> ?
 
 int			g_exit_code;
 
@@ -77,6 +79,14 @@ typedef struct s_set
 	t_func		func[7];
 	t_arr_f		choice_func;
 }	t_set;
+
+typedef struct s_term
+{
+	char	buf[2048];
+	char	*term_name;
+	// int		iter;
+	// char	line[2048];
+}	t_term;
 
 //lst_env.c
 t_env	*ft_lstnew_env(char *content1, char *content2, int flag);
@@ -158,6 +168,12 @@ int		ft_lstsize_cmd(t_cmd *lst);
 
 //ft_init_set.c
 void	ft_init_set(t_set *set, char **env);
+
+//ft_term_caps.c
+void	ft_term_caps(void);
+
+//ft_signals.c
+void	ft_signal_parent_process(void);
 
 //=================parser.c========================//
 t_cmd	*ft_parse(char *str, t_set *sets);

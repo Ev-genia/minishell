@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+         #
+#    By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/30 13:01:49 by mlarra            #+#    #+#              #
-#    Updated: 2022/08/08 14:29:40 by wcollen          ###   ########.fr        #
+#    Updated: 2022/08/11 17:19:26 by mlarra           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,8 @@ DIR_BUILTINS	=	./src/builtins/
 DIR_PARSER		=	./src/parser/
 DIR_COMMAND		=	./src/commands/
 DIR_INIT		=	./src/init/
+DIR_TERM		=	./src/term_caps/
+DIR_SIGNALS		=	./src/signals/
 
 DIR_HEADER	=	./includes
 
@@ -52,6 +54,10 @@ SRC_INIT	=	${addprefix ${DIR_INIT}, ft_init_arr_func.c ft_init_set.c}
 
 SRC_PARSER	=	${addprefix ${DIR_PARSER}, parser.c lst_cmd_operations.c del_spaces.c}
 
+SRC_TERM	=	${addprefix ${DIR_TERM}, ft_term_caps.c}
+
+SRC_SIGNALS	=	${addprefix ${DIR_SIGNALS}, ft_signals.c}
+
 SRC		=	${DIR}main.c\
 			${SRC_PWD}\
 			${SRC_ENV}\
@@ -63,6 +69,8 @@ SRC		=	${DIR}main.c\
 			${SRC_INIT}\
 			${SRC_COMMAND}\
 			${SRC_PARSER}\
+			${SRC_TERM}\
+			${SRC_SIGNALS}
 
 HEADER	=	${addprefix ${DIR_HEADER}/,minishell.h}
 
