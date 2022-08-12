@@ -6,7 +6,7 @@
 #    By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/30 13:01:49 by mlarra            #+#    #+#              #
-#    Updated: 2022/08/11 17:19:26 by mlarra           ###   ########.fr        #
+#    Updated: 2022/08/12 16:03:11 by mlarra           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,9 @@ DIR_TERM		=	./src/term_caps/
 DIR_SIGNALS		=	./src/signals/
 
 DIR_HEADER	=	./includes
+
+READLINE_L		=	-L /usr/local/Cellar/readline/8.1.2/lib
+READLINE_I		=	-I /usr/local/Cellar/readline/8.1.2/include
 
 DIR_PWD	=	${addprefix ${DIR_BUILTINS},pwd/}
 SRC_PWD	=	${addprefix ${DIR_PWD}, ft_pwd.c}
@@ -56,7 +59,7 @@ SRC_PARSER	=	${addprefix ${DIR_PARSER}, parser.c lst_cmd_operations.c del_spaces
 
 SRC_TERM	=	${addprefix ${DIR_TERM}, ft_term_caps.c}
 
-SRC_SIGNALS	=	${addprefix ${DIR_SIGNALS}, ft_signals.c}
+SRC_SIGNALS	=	${addprefix ${DIR_SIGNALS}, ft_signal_parent_process.c ft_handler.c}
 
 SRC		=	${DIR}main.c\
 			${SRC_PWD}\
@@ -90,12 +93,8 @@ RM		=	rm -f
 ${NAME}	:	${OBJ}
 	make -C ${LIB_DIR}
 	make bonus -C ${LIB_DIR}
-	${CC} ${CFLAGS} -I${HEADER} $^ -L ${LIB_DIR} -lft -ltermcap -lreadline -o $@
+	${CC} ${CFLAGS} -I${HEADER} $^ -L ${LIB_DIR} -lft -ltermcap -lreadline ${READLINE_L} ${READLINE_I} -lncurses -o $@
 
-# ${LIB_NAME}	:
-# 	${MAKE} -C ${LIB_DIR}
-
-# all		:	${LIB_NAME} ${NAME}
 all		:	${NAME}
 
 clean	:

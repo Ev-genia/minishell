@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 10:17:58 by wcollen           #+#    #+#             */
-/*   Updated: 2022/08/08 14:51:03 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/08/09 14:55:43 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,11 +183,11 @@ t_cmd	*ft_parse(char *str1,  t_set *sets)
 {
 	int		i;
 	char	*str;
-	t_cmd	*lst_cmds;
+	// t_cmd	*lst_cmds;
 
 
 	i = 0;
-	lst_cmds = ft_cmd_lst_new(sets);
+	// lst_cmds = ft_cmd_lst_new(sets);
 	if (ft_preparse(str1) == 1)
 		return (NULL);
 	str = ft_del_spaces(str1);

@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/11 17:30:06 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/12 12:30:44 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,15 @@ typedef int	(*t_arr_f[7])(t_list *lst_args, t_env **export, t_env **env);
 
 typedef struct s_set
 {	
-	t_env		*enpv;
-	char		**env_arr;
-	t_env		*export;
-	t_cmd		*lst_cmds;
-	int			start_fd_in;
-	t_func		func[7];
-	t_arr_f		choice_func;
+	t_env			*enpv;
+	char			**env_arr;
+	t_env			*export;
+	t_cmd			*lst_cmds;
+	int				start_fd_in;
+	t_func			func[7];
+	t_arr_f			choice_func;
+	struct termios	new_term;
+	struct termios	orig_term;
 }	t_set;
 
 typedef struct s_term
@@ -170,10 +172,15 @@ int		ft_lstsize_cmd(t_cmd *lst);
 void	ft_init_set(t_set *set, char **env);
 
 //ft_term_caps.c
-void	ft_term_caps(void);
+void	ft_term_caps(t_set *set);
 
-//ft_signals.c
+//ft_signal_parent_process.c
 void	ft_signal_parent_process(void);
+void	ft_signal_quit(int sig);
+void	ft_signal_ctrl_c(int sig);
+
+// ft_handler.c
+void	ft_handler(int status);
 
 //=================parser.c========================//
 t_cmd	*ft_parse(char *str, t_set *sets);
