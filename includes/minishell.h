@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/12 12:30:44 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/15 14:52:37 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ typedef struct s_set
 	int				start_fd_in;
 	t_func			func[7];
 	t_arr_f			choice_func;
-	struct termios	new_term;
-	struct termios	orig_term;
+	// struct termios	new_term;
+	// struct termios	orig_term;
 }	t_set;
 
 typedef struct s_term
@@ -158,7 +158,7 @@ char	**ft_convert_to_arr_env(t_env *list);
 char	**ft_convert_to_arr_list(t_list *list);
 
 //ft_init_arr_func.c
-void	ft_init_f(t_func *func);
+void	ft_init_func(t_func *func);
 void	ft_init_arr(t_arr_f ft_choice_func);
 
 //ft_execve_utils.c
@@ -174,10 +174,11 @@ void	ft_init_set(t_set *set, char **env);
 //ft_term_caps.c
 void	ft_term_caps(t_set *set);
 
-//ft_signal_parent_process.c
-void	ft_signal_parent_process(void);
+//ft_signal_init.c
+void	ft_signal_init(void);
 void	ft_signal_quit(int sig);
 void	ft_signal_ctrl_c(int sig);
+void	ft_signal_handler(int sig);
 
 // ft_handler.c
 void	ft_handler(int status);

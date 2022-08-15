@@ -6,16 +6,18 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 11:47:33 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/12 16:06:42 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/15 15:02:40 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // #include <minishell.h>
 #include "../../includes/minishell.h"
 
+//not use file
+
 void	ft_replace_line(int exit_code)
 {
-	// rl_replace_line("", 0);
+	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
 	g_exit_code = exit_code;
@@ -30,7 +32,7 @@ void	ft_handler(int sign)
 	{
 		if (pid == -1)
 		{
-			write(1, "  \n", 3);
+			write(1, "\n", 1);
 			ft_replace_line(1);
 		}
 		else
