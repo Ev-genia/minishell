@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+         #
+#    By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/30 13:01:49 by mlarra            #+#    #+#              #
-#    Updated: 2022/08/08 14:29:40 by wcollen          ###   ########.fr        #
+#    Updated: 2022/08/15 14:51:22 by mlarra           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,13 @@ DIR_BUILTINS	=	./src/builtins/
 DIR_PARSER		=	./src/parser/
 DIR_COMMAND		=	./src/commands/
 DIR_INIT		=	./src/init/
+# DIR_TERM		=	./src/term_caps/
+DIR_SIGNALS		=	./src/signals/
 
 DIR_HEADER	=	./includes
+
+READLINE_L		=	-L /usr/local/Cellar/readline/8.1.2/lib
+READLINE_I		=	-I /usr/local/Cellar/readline/8.1.2/include
 
 DIR_PWD	=	${addprefix ${DIR_BUILTINS},pwd/}
 SRC_PWD	=	${addprefix ${DIR_PWD}, ft_pwd.c}
@@ -52,6 +57,10 @@ SRC_INIT	=	${addprefix ${DIR_INIT}, ft_init_arr_func.c ft_init_set.c}
 
 SRC_PARSER	=	${addprefix ${DIR_PARSER}, parser.c lst_cmd_operations.c del_spaces.c}
 
+# SRC_TERM	=	${addprefix ${DIR_TERM}, ft_term_caps.c}
+
+SRC_SIGNALS	=	${addprefix ${DIR_SIGNALS}, ft_signal_init.c ft_handler.c}
+
 SRC		=	${DIR}main.c\
 			${SRC_PWD}\
 			${SRC_ENV}\
@@ -63,6 +72,7 @@ SRC		=	${DIR}main.c\
 			${SRC_INIT}\
 			${SRC_COMMAND}\
 			${SRC_PARSER}\
+			${SRC_SIGNALS}
 
 HEADER	=	${addprefix ${DIR_HEADER}/,minishell.h}
 
@@ -82,12 +92,8 @@ RM		=	rm -f
 ${NAME}	:	${OBJ}
 	make -C ${LIB_DIR}
 	make bonus -C ${LIB_DIR}
-	${CC} ${CFLAGS} -I${HEADER} $^ -L ${LIB_DIR} -lft -ltermcap -lreadline -o $@
+	${CC} ${CFLAGS} -I${HEADER} $^ -L ${LIB_DIR} -lft -ltermcap -lreadline ${READLINE_L} ${READLINE_I} -lncurses -o $@
 
-# ${LIB_NAME}	:
-# 	${MAKE} -C ${LIB_DIR}
-
-# all		:	${LIB_NAME} ${NAME}
 all		:	${NAME}
 
 clean	:

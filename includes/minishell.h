@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/09 11:22:44 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/08/15 14:52:37 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <term.h>
+// # include <curses.h> ?
 
 int			g_exit_code;
 
@@ -69,14 +71,24 @@ typedef int	(*t_arr_f[7])(t_list *lst_args, t_env **export, t_env **env);
 
 typedef struct s_set
 {	
-	t_env		*enpv;
-	char		**env_arr;
-	t_env		*export;
-	t_cmd		*lst_cmds;
-	int			start_fd_in;
-	t_func		func[7];
-	t_arr_f		choice_func;
+	t_env			*enpv;
+	char			**env_arr;
+	t_env			*export;
+	t_cmd			*lst_cmds;
+	int				start_fd_in;
+	t_func			func[7];
+	t_arr_f			choice_func;
+	// struct termios	new_term;
+	// struct termios	orig_term;
 }	t_set;
+
+typedef struct s_term
+{
+	char	buf[2048];
+	char	*term_name;
+	// int		iter;
+	// char	line[2048];
+}	t_term;
 
 //lst_env.c
 t_env	*ft_lstnew_env(char *content1, char *content2, int flag);
@@ -146,7 +158,7 @@ char	**ft_convert_to_arr_env(t_env *list);
 char	**ft_convert_to_arr_list(t_list *list);
 
 //ft_init_arr_func.c
-void	ft_init_f(t_func *func);
+void	ft_init_func(t_func *func);
 void	ft_init_arr(t_arr_f ft_choice_func);
 
 //ft_execve_utils.c
@@ -158,6 +170,18 @@ int		ft_lstsize_cmd(t_cmd *lst);
 
 //ft_init_set.c
 void	ft_init_set(t_set *set, char **env);
+
+//ft_term_caps.c
+void	ft_term_caps(t_set *set);
+
+//ft_signal_init.c
+void	ft_signal_init(void);
+void	ft_signal_quit(int sig);
+void	ft_signal_ctrl_c(int sig);
+void	ft_signal_handler(int sig);
+
+// ft_handler.c
+void	ft_handler(int status);
 
 //=================parser.c========================//
 t_cmd	*ft_parse(char *str, t_set *sets);

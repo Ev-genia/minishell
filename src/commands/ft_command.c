@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 10:27:07 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/28 17:21:33 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/15 14:59:39 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,10 @@ void	ft_child_process(t_cmd cmd, t_func *func, t_arr_f choice_func,
 
 	close(fd_pipe[0]);
 	if (cmd.next == NULL || ft_lstsize_cmd(cmd.sets->lst_cmds) == 1)
+	{
+// ft_putstr_fd("\nft_child_process, exit\n", 1);		
 		exit(0);
+	}
 	if (cmd.flag_pipe || cmd.flag_heredoc_read || cmd.flag_heredoc_write
 		|| cmd.flag_redir_read || cmd.flag_redir_write)
 		ft_dup_child_data(cmd, fd_pipe);
@@ -98,12 +101,23 @@ int	ft_command(t_cmd cmd)
 	pid_t	pid1;
 	int		fd_pipe[2];
 
+// ft_putstr_fd("ft_command, command: ", 1);
+// ft_putstr_fd(cmd.lst_args->content, 1);
+// ft_putstr_fd("\n", 1);
+
 	if (cmd.flag_pipe == 1)
 		pipe(fd_pipe);
 	pid1 = fork();
+	// signal(SIGINT, SIG_DFL);
 	if (pid1 == 0)
+	{
+// ft_putstr_fd("\nft_command, pid1 == 0\n", 1);		
 		ft_child_process(cmd, cmd.sets->func, cmd.sets->choice_func, fd_pipe);
+	}
 	else
+	{
+// ft_putstr_fd("\nft_command, pid1 > 0\n", 1);		
 		ft_dup_parent_data(fd_pipe, cmd, pid1);
+	}
 	return (0);
 }

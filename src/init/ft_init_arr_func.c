@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init_arr_func.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 10:31:32 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/08 14:33:16 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/08/15 13:04:56 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // #include <minishell.h>
 #include "../../includes/minishell.h"
 
-void	ft_init_f(t_func *func)
+void	ft_init_func(t_func *func)
 {
 	func[0].name_func = "echo";
 	func[0].type = FT_ECHO;
