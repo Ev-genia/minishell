@@ -6,7 +6,7 @@
 /*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 17:00:53 by wcollen           #+#    #+#             */
-/*   Updated: 2022/08/08 14:41:14 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/08/12 12:12:58 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_cmd	*ft_cmd_lst_last(t_cmd *lst)
 void	ft_cmd_lst_add_back(t_cmd	**cmd_lst, t_cmd *new)
 {
 	t_cmd	*last_elem;
-
+	
 	if (*cmd_lst)
 	{
 		last_elem = ft_cmd_lst_last(*cmd_lst);

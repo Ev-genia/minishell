@@ -6,7 +6,7 @@
 /*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/08 14:30:14 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/08/12 19:01:39 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	main(int argc, char **argv, char **env)
 	// t_arr_f	choice_func;
 
 	
-	 status = 0; //статус завершения команды при execve  или builtin-команде
+	status = 0; //статус завершения команды при execve  или builtin-команде
 	(void)argc;
 	(void)argv;
 	ft_init_set(&set, env);
@@ -59,7 +59,8 @@ int	main(int argc, char **argv, char **env)
 	
 	while (status == 0)
 	{
-		str = ft_readline("\033[36mminishell(→_→)$\033[0m ");
+		str = //"<'d1      ' cat";
+		ft_readline("\033[36mminishell(→_→)$\033[0m ");
 		set.lst_cmds = ft_parse(str, &set);
 		// if (!set.lst_cmds)
 		// {
@@ -67,16 +68,16 @@ int	main(int argc, char **argv, char **env)
 		//  	ft_putstr_fd("\nArguments error\n", 2);
 		// }
 	
-// while (set.lst_cmds && status == 0)
-// {
-// 	status = ft_command(*set.lst_cmds, func, choice_func);
-// 	ft_putstr_fd(set.lst_cmds->lst_args->content, 1);
-// 	set.lst_cmds = set.lst_cmds->next;
-// }	
-		// if (ft_parse(argv, set.enpv))
-		// 	return (ft_error());
-		// status = ft_shell();	
-		free(str);
+							// while (set.lst_cmds && status == 0)
+							// {
+							// 	status = ft_command(*set.lst_cmds, func, choice_func);
+							// 	ft_putstr_fd(set.lst_cmds->lst_args->content, 1);
+							// 	set.lst_cmds = set.lst_cmds->next;
+							// }	
+									// if (ft_parse(argv, set.enpv))
+									// 	return (ft_error());
+									// status = ft_shell();	
+									//free(str);
 	}
 	//ft_wait();
 	ft_lstclear_env(&set.enpv);

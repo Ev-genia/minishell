@@ -6,7 +6,7 @@
 /*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/08 13:58:18 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/08/09 11:22:44 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,4 +167,5 @@ char	*ft_del_spaces(char *str);
 
 //=================lst_cmd_operations.c============//
 t_cmd	*ft_cmd_lst_new(t_set	*sets);
+void	ft_cmd_lst_add_back(t_cmd	**cmd_lst, t_cmd *new);
 #endif
