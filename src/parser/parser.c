@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 10:17:58 by wcollen           #+#    #+#             */
-/*   Updated: 2022/08/16 16:46:25 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/08/18 16:47:32 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	skip_spaces(char *str, int *i)
 	while (str[*i] && is_space(str[*i]))
 		(*i)++;
 }
-
 
 int	ft_preparse(char *str)
 {
@@ -194,6 +193,7 @@ char	*ft_word_after_quotes(t_cmd *cmd, char **str, int *i)
 	int		count;
 	char	*word;
 
+	count = 0;
 	j = *i; //j на позиции следующей на редиректом после всех пробелов
 	if (*str[*i] == '\'')		
 		*str = ft_quote(*str, i, &count);
@@ -210,7 +210,7 @@ char	*ft_word_after_quotes(t_cmd *cmd, char **str, int *i)
 char	*ft_word(char *str, int *i)
 {
 	int		j;
-	char	word;
+	char	*word;
 
 	j = *i;
 	while (str[*i] && !is_space(str[*i]))
@@ -222,10 +222,8 @@ char	*ft_word(char *str, int *i)
 	return (word);
 }
 
-char	*ft_redirect_out(t_cmd *cmd, char *str, int *i)
-{
-	int	count;
-	
+char	*ft_redirect_read(t_cmd *cmd, char *str, int *i)
+{	
 	(*i)++;
 	skip_spaces(str, i);
 	if (str[*i] == '\'' || str[*i] == '\"')
@@ -234,8 +232,7 @@ char	*ft_redirect_out(t_cmd *cmd, char *str, int *i)
 		if (!(cmd->file_read = ft_word_after_quotes(cmd, &str, i)))
 			return (NULL);//Освободить память всю!!!!!
 	}
-	//как не ограничивать только _ и буквами-цифрами??
-	else if (str[*i] && str[*i] != '<') //(str[*i] == '_' || ft_isalnum(str[*i]))
+	else if (str[*i] && str[*i] != '<')
 	{
 		cmd->flag_redir_read = 1;
 		if (!(cmd->file_read = ft_word(str, i)))
@@ -260,29 +257,29 @@ char	*ft_redirect_out(t_cmd *cmd, char *str, int *i)
 	return (str);
 }
 
-char	*ft_redirect_in(t_cmd *cmd, char *str, int *i)
+char	*ft_redirect_write(t_cmd *cmd, char *str, int *i)
 {
-	int j;
-	int	count;
-
-	while (str[++*i] && is_space(str[*i]))
-		;
-	if (str[i] != '>' && (str[i] == '_' || ft_isalnum(str[i])))
+	(*i)++;
+	skip_spaces(str, i);
+	if (str[*i] == '\'' || str[*i] == '\"')
+	{
 		cmd->flag_redir_write = 1;
-	else if (str[i] == '>' && (str[i] == '_' || ft_isalnum(str[i])))
-		cmd->flag_heredoc_write = 1;
-	j = i;
-	while (str[i] && !is_space(str[i]))
-		i++;
-	cmd->file_write = malloc(sizeof(char) * (i - j + 1));
-	if (!cmd->file_write)
-		return (NULL);
-	cmd->file_write	= ft_substr(str, j, i - j);
-
+		if (!(cmd->file_write = ft_word_after_quotes(cmd, &str, i)))
+			return (NULL);//Освободить память всю!!!!!
+	}
+	else if (str[*i])
+	{
+		if (str[*i] != '>')
+			cmd->flag_redir_write = 1;
+		else if (str[*i] == '>')
+			cmd->flag_heredoc_write = 1;
+		if (!(cmd->file_write = ft_word(str, i)))
+			return (NULL);
+	}
 ft_putstr_fd("file write name: |", 1);
 ft_putstr_fd(cmd->file_write, 1);
 ft_putstr_fd("|\n", 1);
-			
+		return (str);
 }
 
 t_cmd	*ft_parse(char *str1,  t_set *sets)
@@ -293,8 +290,7 @@ t_cmd	*ft_parse(char *str1,  t_set *sets)
 	t_cmd	*cmd;
 	char	*arg_name;
 	t_list	*lst;
-	int		j;
-
+	int		count;
 
 	i = 0;
 	lst_cmds = NULL;
@@ -310,80 +306,37 @@ t_cmd	*ft_parse(char *str1,  t_set *sets)
 				return (NULL);
 		while (str[i] && str[i] != '|')
 		{
-			
-			if (str[i] == '<')
-				str = ft_redirect_out(cmd, str, &i);
-			if (str[i] == '>')
+			if (str[i] && str[i] == '<')
+				str = ft_redirect_read(cmd, str, &i);
+			if (str[i] && str[i] == '>')
+				str = ft_redirect_write(cmd, str, &i);
+			if (str[i] && is_space(str[i]))
+				skip_spaces(str, &i);							
+			if (str[i] && !ft_strchr("<>|$\"\'", str[i]))
 			{
-				str = ft_redirect_in(cmd, str, &i);
-				i++;
-				while (str[i] && is_space(str[i]))
-					i++;
-				if (str[i] != '>' && (str[i] == '_' || ft_isalnum(str[i])))
-					cmd->flag_redir_write = 1;
-				else if (str[i] == '>' && (str[i] == '_' || ft_isalnum(str[i])))
-					cmd->flag_heredoc_write = 1;
-				j = i;
-				while (str[i] && !is_space(str[i]))
-					i++;
-				cmd->file_write = malloc(sizeof(char) * (i - j + 1));
-				if (!cmd->file_write)
+				if (!(arg_name = ft_word(str, &i)))
 					return (NULL);
-				cmd->file_write	= ft_substr(str, j, i - j);
-	ft_putstr_fd("file write name: |", 1);
-	ft_putstr_fd(cmd->file_write, 1);
-	ft_putstr_fd("|\n", 1);
-			}
-			while (str[i] && is_space(str[i]))
-				i++;							
-	//запись команды в список аргументов
-			if (str[i] && !is_space(str[i]))
-			{
-				j = i;
-				//??как понять, что это точно команда и почему она не может быть без ""?
-				while (str[i] && !is_space(str[i]) && !ft_strchr("$\"\'", str[i]))
-					i++;
-
-				arg_name = malloc(sizeof(char) * (i - j + 1));
-				if (!arg_name)
-					return (NULL);
-				arg_name = ft_substr(str, j, i - j);
 				lst = ft_lstnew(arg_name);
+				free(arg_name);
 				ft_lstadd_back(&(cmd->lst_args), lst);
-	ft_putstr_fd("cmd name: |", 1);
-	ft_putstr_fd((char *)cmd->lst_args->content, 1);
-	ft_putstr_fd("|\n", 1);
 			}
+			if (str[i] == '\'')
+				str = ft_quote(str, &i, &count);	
+			// if (str[i] == '\\')
+			// 	str = ft_b_slash(str, &i);
+			if (str[i] == '\"')
+				str = ft_db_quote(str, &i, sets->enpv, &count);
+			if (str[i] == '$')
+				str = ft_dollar(str, &i, sets->enpv);
 			i++;
 		}
 		ft_cmd_lst_add_back(&lst_cmds, cmd);
 		if (str[i] == '|')
 		{
 			lst_cmds->flag_pipe = 1;
-			lst_cmds
+			//lst_cmds
 		}
 	}
-
-
-/*
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i])
-		if (str[i] == '\'')
-			str = ft_quote(str, &i);	
-		if (str[i] == '\\')
-			str = ft_b_slash(str, &i);
-		if (str[i] == '\"')
-			str = ft_db_quote(str, &i, sets->enpv);
-		if (str[i] == '$')
-			str = ft_dollar(str, &i, sets->enpv);
-			
-		i++;
-	}
-		printf("%s|\n", str);
-*/
 	return (NULL);
 }
 
