@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/15 14:52:06 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/17 16:52:40 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,10 @@ set.lst_cmds->next = NULL;
 
 	while (status == 0)
 	{
-		str = readline("\033[36m(→_→)$\033[0m ");
-		add_history(str);
-		if (!str)
-			exit(0);
+		str = ft_readline("\033[36m(→_→)$\033[0m ");
+		// add_history(str);
+		// if (!str)
+		// 	exit(0);
 		// dup2(set.start_fd_in, 0);
 		while (set.lst_cmds)
 		{
