@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/15 14:52:37 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/19 17:25:18 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,13 @@ typedef struct s_cmd
 
 enum e_func_name	
 {	
-	FT_ECHO,	
-	FT_ENV,	
-	FT_EXIT,	
-	FT_EXPORT,	
-	FT_CD,	
-	FT_PWD	
+	FT_ECHO,
+	FT_ENV,
+	FT_EXIT,
+	FT_EXPORT,
+	FT_CD,
+	FT_PWD,
+	FT_D_Q
 };	
 
 typedef struct s_func
@@ -67,7 +68,7 @@ typedef struct s_func
 	enum e_func_name	type;
 }	t_func;	
 
-typedef int	(*t_arr_f[7])(t_list *lst_args, t_env **export, t_env **env);
+typedef int	(*t_arr_f[8])(t_list *lst_args, t_env **export, t_env **env);
 
 typedef struct s_set
 {	
@@ -76,7 +77,8 @@ typedef struct s_set
 	t_env			*export;
 	t_cmd			*lst_cmds;
 	int				start_fd_in;
-	t_func			func[7];
+	int				start_fd_out;
+	t_func			func[8];
 	t_arr_f			choice_func;
 	// struct termios	new_term;
 	// struct termios	orig_term;
@@ -138,6 +140,9 @@ int		ft_cd(t_list *lst_args, t_env **export, t_env **env);
 //ft_exit.c
 int		ft_exit(t_list *lst_args, t_env **export, t_env **env);
 
+//ft_dollar_question.c
+int		ft_dollar_question(t_list *lst_args, t_env **export, t_env **env);
+
 //ft_command.c
 int		ft_command(t_cmd cmd);
 int		ft_find_buitins(char *command, t_func *func);
@@ -151,7 +156,7 @@ void	ft_perror(char *str);
 
 //ft_dup_data.c
 void	ft_dup_child_data(t_cmd cmd, int *fd_pipe);
-void	ft_dup_parent_data(int *fd_pipe, t_cmd cmd, pid_t pid1);
+int		ft_dup_parent_data(int *fd_pipe, t_cmd cmd, pid_t pid1);
 
 //ft_convert_to_arr.c
 char	**ft_convert_to_arr_env(t_env *list);

@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 10:31:32 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/15 13:04:56 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/19 12:53:04 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ void	ft_init_func(t_func *func)
 	func[4].type = FT_CD;
 	func[5].name_func = "pwd";
 	func[5].type = FT_PWD;
-	func[6].name_func = NULL;
+	func[6].name_func = "$?";
+	func[6].type = FT_D_Q;
+	func[7].name_func = NULL;
 }
 
 void	ft_init_arr(t_arr_f ft_choice_func)
@@ -38,4 +40,5 @@ void	ft_init_arr(t_arr_f ft_choice_func)
 	ft_choice_func[3] = ft_export;
 	ft_choice_func[4] = ft_cd;
 	ft_choice_func[5] = ft_pwd;
+	ft_choice_func[6] = ft_dollar_question;
 }

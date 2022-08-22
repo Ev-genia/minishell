@@ -6,7 +6,7 @@
 #    By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/30 13:01:49 by mlarra            #+#    #+#              #
-#    Updated: 2022/08/15 14:51:22 by mlarra           ###   ########.fr        #
+#    Updated: 2022/08/19 12:44:39 by mlarra           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,9 @@ SRC_CD	=	${addprefix ${DIR_CD}, ft_cd.c}
 DIR_EXIT	=	${addprefix ${DIR_BUILTINS},exit/}
 SRC_EXIT	=	${addprefix ${DIR_EXIT}, ft_exit.c}
 
+DIR_DOLL_QUEST	=	${addprefix ${DIR_BUILTINS},dollar_question/}
+SRC_DOLL_QUEST	=	${addprefix ${DIR_DOLL_QUEST}, ft_dollar_question.c}
+
 SRC_COMMAND	=	${addprefix ${DIR_COMMAND}, ft_command.c ft_dup_data.c\
 		ft_execve.c	ft_herdoc.c	ft_convert_to_arr.c	ft_execve_utils.c\
 		ft_t_cmd_utils.c}
@@ -72,7 +75,8 @@ SRC		=	${DIR}main.c\
 			${SRC_INIT}\
 			${SRC_COMMAND}\
 			${SRC_PARSER}\
-			${SRC_SIGNALS}
+			${SRC_SIGNALS}\
+			${SRC_DOLL_QUEST}
 
 HEADER	=	${addprefix ${DIR_HEADER}/,minishell.h}
 
