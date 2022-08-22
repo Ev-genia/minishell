@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 15:48:57 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/15 15:02:47 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/19 16:01:14 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ void	ft_signal_handler(int sig)
 	rl_redisplay();
 	ft_putstr_fd("  \n", 2);
 	rl_on_new_line();
-	rl_replace_line("", 0);
+	// rl_replace_line("", 0);
 	rl_redisplay();
 }
 
 void	ft_signal_init(void)
 {
-	signal(SIGINT, ft_signal_handler);
-	// signal(SIGINT, ft_handler);
-	signal(SIGTSTP, SIG_IGN);
+	// signal(SIGINT, ft_signal_handler);
+	signal(SIGINT, ft_handler);
+	// signal(SIGTSTP, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 }

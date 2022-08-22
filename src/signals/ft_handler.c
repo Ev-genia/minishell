@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 11:47:33 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/15 15:02:40 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/19 10:31:33 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 void	ft_replace_line(int exit_code)
 {
-	rl_replace_line("", 0);
+	// rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
 	g_exit_code = exit_code;
