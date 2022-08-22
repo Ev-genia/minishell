@@ -6,7 +6,7 @@
 /*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 10:17:58 by wcollen           #+#    #+#             */
-/*   Updated: 2022/08/18 16:47:32 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/08/19 18:08:31 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,23 @@ int	is_key(char c, int i)
 
 }
 
-char	*ft_dollar(char *str, int *i, t_env *env_list)
+char	*ft_word(char *str, int *i)
+{
+	int		j;
+	char	*word;
+
+	j = *i;
+	while (str[*i] && !is_space(str[*i]))
+		(*i)++;
+	word = malloc(sizeof(char) * (*i - j + 1));
+	if (!word)
+		return (NULL);////Сделат освобождение памяти!!!!!!!!
+	word = ft_substr(str, j, *i - j);
+	return (word);
+}
+
+
+char	*ft_dollar(char *str, int *i, t_env *env_list, t_cmd *cmd)
 {
 	int		j;
 	char	*tmp;
@@ -76,13 +92,28 @@ char	*ft_dollar(char *str, int *i, t_env *env_list)
 	char	*tmp2;
 
 	j = *i;
+	if (str[*i + 1] == '?')
+	{
+		if (!(tmp = ft_word(str, i)))
+				return (NULL);
+		ft_lstadd_back(&(cmd->lst_args), ft_lstnew(tmp));
+		free(tmp);
+		return (str);
+	}
 	while (str[++*i])
 	{
 		if (!is_key(str[*i], *i))
 			break;
 	}
 	if (*i == j + 1)
+	{
+
+		if (!(tmp = ft_word(str, i)))
+				return (NULL);
+		ft_lstadd_back(&(cmd->lst_args), ft_lstnew(tmp));
+		free(tmp);
 		return (str);
+	}
 	tmp = ft_substr(str, j + 1, *i - j - 1);
 	while (env_list)
 	{
@@ -90,12 +121,14 @@ char	*ft_dollar(char *str, int *i, t_env *env_list)
 		{
 			free(tmp);
 			tmp = ft_substr(str, 0, j);
-			tmp1 = strdup(env_list->value);
-			tmp2 = ft_strdup(str + *i);
+			tmp1 = strdup(env_list->value);			
+			tmp2 = ft_strjoin(tmp, tmp1);
 			free(tmp);
-			tmp = ft_strjoin(tmp, tmp1);
-			free(tmp);
-			tmp = ft_strjoin(tmp, tmp2);
+			free(tmp1);
+			tmp1 = ft_strdup(str + *i);
+			tmp = ft_strjoin(tmp2, tmp1);
+		 ft_lstadd_back(&(cmd->lst_args), ft_lstnew(tmp));
+
 			free(tmp1);
 			free(tmp2);
 			return (tmp);
@@ -106,7 +139,7 @@ char	*ft_dollar(char *str, int *i, t_env *env_list)
 	return (str);
 }
 
-char	*ft_b_slash(char *str, int *i)
+char	*ft_b_slash(char *str, int *i, t_cmd *cmd)
 {
 	int		j;
 	char	*tmp = NULL;
@@ -120,10 +153,11 @@ char	*ft_b_slash(char *str, int *i)
 	//free(str); //ВЫДЕЛИТЬ ПАМЯТЬ ПОД СТРОКУ С АРГУМЕНТАМИ И ДЕЛАТЬ FREE
 	(*i)++;
 	free(tmp2);
+	ft_lstadd_back(&(cmd->lst_args), ft_lstnew(tmp));
 	return (tmp);
 }
 
-char	*ft_db_quote(char *str, int *i, t_env *env_list, int *count)
+char	*ft_db_quote(char *str, int *i, int *count, t_cmd *cmd)
 {
 	int		j;
 	char	*tmp = NULL;
@@ -134,9 +168,9 @@ char	*ft_db_quote(char *str, int *i, t_env *env_list, int *count)
 	while (str[++*i])
 	{
 		if (str[*i] == '\\' && (str[*i + 1] == '\"' || str[*i + 1] == '$'))
-			str = ft_b_slash(str, i);
+			str = ft_b_slash(str, i, cmd);
 		if (str[*i] == '$')
-			str = ft_dollar(str, i, env_list);
+			str = ft_dollar(str, i, cmd->sets->enpv, cmd);
 		if (str[*i] == '\"')
 			break ;
 
@@ -144,9 +178,12 @@ char	*ft_db_quote(char *str, int *i, t_env *env_list, int *count)
 	tmp = ft_substr(str, 0, j);
 	*count = *i - j - 1;
 	tmp1 = ft_substr(str, j + 1, *count);
-	tmp2 = ft_strdup(str + *i + 1);
-	tmp = ft_strjoin(tmp, tmp1);
-	tmp = ft_strjoin(tmp, tmp2);
+	tmp2 = ft_strjoin(tmp, tmp1);
+	free(tmp); 
+	free(tmp1);
+	
+	tmp1 = ft_strdup(str + *i + 1);
+	tmp = ft_strjoin(tmp2, tmp1);
 	//free(str);
 	free(tmp1);
 	free(tmp2);
@@ -198,7 +235,7 @@ char	*ft_word_after_quotes(t_cmd *cmd, char **str, int *i)
 	if (*str[*i] == '\'')		
 		*str = ft_quote(*str, i, &count);
 	else if (*str[*i] == '\"')
-		*str = ft_db_quote(*str, i, cmd->sets->enpv, &count);
+		*str = ft_db_quote(*str, i, &count, cmd);
 	word = malloc(sizeof(char) * (count + 1));
 	if (!word)
 		return (NULL);//Сделат освобождение памяти!!!!!!!!
@@ -207,20 +244,7 @@ char	*ft_word_after_quotes(t_cmd *cmd, char **str, int *i)
 	return (word);
 }
 
-char	*ft_word(char *str, int *i)
-{
-	int		j;
-	char	*word;
 
-	j = *i;
-	while (str[*i] && !is_space(str[*i]))
-		(*i)++;
-	word = malloc(sizeof(char) * (*i - j + 1));
-	if (!word)
-		return (NULL);////Сделат освобождение памяти!!!!!!!!
-	word = ft_substr(str, j, *i - j);
-	return (word);
-}
 
 char	*ft_redirect_read(t_cmd *cmd, char *str, int *i)
 {	
@@ -311,23 +335,25 @@ t_cmd	*ft_parse(char *str1,  t_set *sets)
 			if (str[i] && str[i] == '>')
 				str = ft_redirect_write(cmd, str, &i);
 			if (str[i] && is_space(str[i]))
-				skip_spaces(str, &i);							
-			if (str[i] && !ft_strchr("<>|$\"\'", str[i]))
+				skip_spaces(str, &i);
+//КАК ОТЛИЧИТЬ ФАЙЛ ОТ ФЛАГОВ КОМАНДЫ???после команды должен быть файл или флаги команды							
+			if (str[i] && !ft_strchr("<>|$\"\'?", str[i]))
 			{
 				if (!(arg_name = ft_word(str, &i)))
 					return (NULL);
-				lst = ft_lstnew(arg_name);
+				lst = NULL;
+				lst = ft_lstnew((void *)arg_name);
 				free(arg_name);
 				ft_lstadd_back(&(cmd->lst_args), lst);
 			}
 			if (str[i] == '\'')
 				str = ft_quote(str, &i, &count);	
 			// if (str[i] == '\\')
-			// 	str = ft_b_slash(str, &i);
+			// 	str = ft_b_slash(str, &i, cmd);
 			if (str[i] == '\"')
-				str = ft_db_quote(str, &i, sets->enpv, &count);
+				str = ft_db_quote(str, &i, &count, cmd);
 			if (str[i] == '$')
-				str = ft_dollar(str, &i, sets->enpv);
+				str = ft_dollar(str, &i, sets->enpv, cmd);
 			i++;
 		}
 		ft_cmd_lst_add_back(&lst_cmds, cmd);
@@ -337,6 +363,7 @@ t_cmd	*ft_parse(char *str1,  t_set *sets)
 			//lst_cmds
 		}
 	}
+
 	return (NULL);
 }
 
