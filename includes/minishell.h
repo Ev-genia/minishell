@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/22 14:40:26 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/23 17:09:56 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_cmd
 	char				*file_write;
 	char				*limiter;
 	struct s_cmd		*next;
+	// int					fds_pipe[2];
 }	t_cmd;	
 
 enum e_func_name	
@@ -80,6 +81,8 @@ typedef struct s_set
 	int				start_fd_out;
 	t_func			func[8];
 	t_arr_f			choice_func;
+	int				*fds_pipe[2];
+	pid_t			*pids;
 	// struct termios	new_term;
 	// struct termios	orig_term;
 }	t_set;
@@ -145,6 +148,7 @@ int		ft_dollar_question(t_list *lst_args, t_env **export, t_env **env);
 
 //ft_command.c
 int		ft_command(t_cmd cmd);
+// int		ft_command(t_cmd cmd, int i);
 int		ft_find_buitins(char *command, t_func *func);
 
 //ft_execve.c
@@ -184,6 +188,7 @@ void	ft_signal_init(void);
 void	ft_signal_ctrl_d(int sig);
 void	ft_signal_ctrl_c(int sig);
 void	ft_signal_handler(int sig);
+void	ft_signal_ctrl_c_child(int sig);
 
 // ft_handler.c
 void	ft_handler(int status);

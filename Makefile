@@ -6,7 +6,7 @@
 #    By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/30 13:01:49 by mlarra            #+#    #+#              #
-#    Updated: 2022/08/19 12:44:39 by mlarra           ###   ########.fr        #
+#    Updated: 2022/08/23 12:46:07 by mlarra           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,7 @@ SRC_PARSER	=	${addprefix ${DIR_PARSER}, parser.c lst_cmd_operations.c del_spaces
 
 # SRC_TERM	=	${addprefix ${DIR_TERM}, ft_term_caps.c}
 
-SRC_SIGNALS	=	${addprefix ${DIR_SIGNALS}, ft_signal_init.c ft_handler.c}
+SRC_SIGNALS	=	${addprefix ${DIR_SIGNALS}, ft_signal_init.c}# ft_handler.c}
 
 SRC		=	${DIR}main.c\
 			${SRC_PWD}\

@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 10:27:07 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/22 15:15:26 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/23 17:09:20 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,12 +110,12 @@ int	ft_child_process(t_cmd cmd, t_func *func, t_arr_f choice_func,
 {
 // ft_putstr_fd("\nchild_cat\n", 1);
 // dup2(cmd.sets->start_fd_in, 0);
-		signal(SIGINT, SIG_DFL);
+		// signal(SIGINT, ft_signal_ctrl_c_child);
 		ft_execve(cmd, cmd.sets->enpv);
 }
 	return (-1);
 }
-
+// /*
 int	ft_command(t_cmd cmd)
 {
 	pid_t	pid1;
@@ -129,6 +129,7 @@ int	ft_command(t_cmd cmd)
 	if (cmd.flag_pipe == 1)
 		pipe(fd_pipe);
 	pid1 = fork();
+	signal(SIGINT, SIG_IGN);
 	// signal(SIGINT, SIG_DFL);
 	if (pid1 == 0)
 	{
@@ -136,7 +137,10 @@ int	ft_command(t_cmd cmd)
 // ft_putstr_fd("\npid1_child: ", 1);
 // ft_putnbr_fd(pid1, 1);
 // ft_putstr_fd("\n", 1);	
-		// signal(SIGINT, SIG_DFL);
+		signal(SIGINT, SIG_DFL);
+		signal(SIGTSTP, SIG_DFL);
+		signal(SIGQUIT, ft_signal_ctrl_d);
+		// signal(SIGINT, ft_signal_ctrl_c_child);
 		// signal(SIGQUIT, ft_signal_quit);
 		rez = ft_child_process(cmd, cmd.sets->func, cmd.sets->choice_func, fd_pipe);
 	}
@@ -152,3 +156,37 @@ int	ft_command(t_cmd cmd)
 	}
 	return (rez);
 }
+// */
+/*
+void	ft_set_fds(t_cmd cmd, int i)
+{
+	if (cmd.flag_redir_read)
+	{
+		dup2(cmd.sets->start_fd_in, STDIN_FILENO);
+		close(cmd.sets->start_fd_in);
+	}
+
+}
+
+int	ft_command(t_cmd cmd, int i)
+{
+	// pid_t	pid1;
+	// int		fd_pipe[2];
+	int		rez;
+
+	if (cmd.flag_pipe == 1)
+		pipe(cmd.sets->fds_pipe[i]);
+	cmd.sets->pids[i] = fork();
+	if (cmd.sets->pids[i] == -1)
+	{
+		ft_putstr_fd("(→_→)$: fork() error\n", 2);
+		return (1);
+	}
+	else if (cmd.sets->pids[i] == 0)
+	{
+		ft_set_fds(cmd, i);
+		ft_close_fds();
+		execve();
+	}
+}
+*/
