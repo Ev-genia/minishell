@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 11:47:33 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/19 10:31:33 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/22 15:02:15 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_handler(int sign)
 			ft_signal_ctrl_c(2);
 	}
 	else if (sign == SIGQUIT && pid != -1)
-		ft_signal_quit(3);
+		ft_signal_ctrl_d(3);
 	else
 		ft_replace_line(128 + 3);
 }

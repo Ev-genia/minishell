@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/19 17:32:00 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/22 15:17:49 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void	ft_wait()
 		i++;
 }
 
+// ctrl-C -> "\n" -> parser -> signal(SIGINT, SIGIGN) -> signal(SIGINT, SIG_DFL)
+
 int	main(int argc, char **argv, char **env)
 {
 	t_set	set;
@@ -65,7 +67,8 @@ int	main(int argc, char **argv, char **env)
 	ft_init_set(&set, env);
 	ft_init_func(set.func);
 	ft_init_arr(set.choice_func);
-	ft_signal_init();
+	// ft_signal_init();
+
 
 set.lst_cmds = malloc(sizeof(t_cmd));
 set.lst_cmds->lst_args = ft_lstnew("cat");
@@ -91,23 +94,39 @@ set.lst_cmds->next->flag_redir_read = 0;
 set.lst_cmds->next->flag_redir_write = 0;
 set.lst_cmds->next->limiter = NULL;
 set.lst_cmds->next->sets = &set;
-set.lst_cmds->next->next = NULL;
+// set.lst_cmds->next->next = NULL;
+
+set.lst_cmds->next->next = malloc(sizeof(t_cmd));
+set.lst_cmds->next->next->lst_args = ft_lstnew("$?");
+set.lst_cmds->next->next->file_read = NULL;
+set.lst_cmds->next->next->file_write = NULL;
+set.lst_cmds->next->next->flag_heredoc_read = 0;
+set.lst_cmds->next->next->flag_heredoc_write = 0;
+set.lst_cmds->next->next->flag_pipe = 0;
+set.lst_cmds->next->next->flag_redir_read = 0;
+set.lst_cmds->next->next->flag_redir_write = 0;
+set.lst_cmds->next->next->limiter = NULL;
+set.lst_cmds->next->next->sets = &set;
+set.lst_cmds->next->next->next = NULL;
 
 	// while (status == 0)
 	// while (g_exit_code == 0)
 	while (1)
 	{
-		// str = ft_readline("\033[36m(→_→)$\033[0m ");
-str = NULL;
+		signal(SIGINT, ft_signal_ctrl_c);
+		str = ft_readline("\033[36m(→_→)$\033[0m ");
+// str = NULL;
 		// add_history(str);
 		// if (!str)
 		// 	exit(0);
 		// dup2(set.start_fd_in, 0);
+		signal(SIGINT, SIG_IGN);
 		while (set.lst_cmds)
 		{
 			g_exit_code = ft_command(*(set.lst_cmds));
 			set.lst_cmds = set.lst_cmds->next;
 		}
+
 		// set.lst_cmds = ft_parse(str, &set);
 
 		// if (!set.lst_cmds)

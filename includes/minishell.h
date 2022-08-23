@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/19 17:25:18 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/22 14:40:26 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,7 @@ void	ft_term_caps(t_set *set);
 
 //ft_signal_init.c
 void	ft_signal_init(void);
-void	ft_signal_quit(int sig);
+void	ft_signal_ctrl_d(int sig);
 void	ft_signal_ctrl_c(int sig);
 void	ft_signal_handler(int sig);
 
