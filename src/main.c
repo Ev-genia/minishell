@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/24 12:55:04 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/24 16:06:13 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,19 @@ set.lst_cmds->next = NULL;
 	while (1)
 	{
 		signal(SIGINT, ft_signal_ctrl_c);
+		str = "cat \"d12\" | ls";//ft_readline("\033[36m(→_→)$\033[0m ");
+		set.lst_cmds = ft_parse(str, &set);
+
+		while(set.lst_cmds)
+		{
+			while(set.lst_cmds->lst_args)
+			{
+				printf("%s\n", (char *)set.lst_cmds->lst_args->content);
+				set.lst_cmds->lst_args = set.lst_cmds->lst_args->next;
+			}
+			set.lst_cmds = set.lst_cmds->next;
+		}
+
 		signal(SIGTSTP, SIG_DFL);
 		dup2(set.start_fd_in, 0);
 		// signal(SIGQUIT, SIG_IGN);
@@ -138,7 +151,7 @@ set.lst_cmds->next = NULL;
 			i++;
 		}
 
-		// set.lst_cmds = ft_parse(str, &set);
+		// 
 
 		// if (!set.lst_cmds)
 		// {

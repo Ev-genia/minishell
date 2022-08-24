@@ -6,7 +6,7 @@
 /*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 10:17:58 by wcollen           #+#    #+#             */
-/*   Updated: 2022/08/19 18:08:31 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/08/23 16:23:06 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,7 @@ char	*ft_db_quote(char *str, int *i, int *count, t_cmd *cmd)
 	//free(str);
 	free(tmp1);
 	free(tmp2);
+	*i = j ;//i на позиции бывшей кавычки - символа сразу после первой кавычки
 	return (tmp);
 }
 
@@ -342,7 +343,7 @@ t_cmd	*ft_parse(char *str1,  t_set *sets)
 				if (!(arg_name = ft_word(str, &i)))
 					return (NULL);
 				lst = NULL;
-				lst = ft_lstnew((void *)arg_name);
+				lst = ft_lstnew(arg_name);
 				free(arg_name);
 				ft_lstadd_back(&(cmd->lst_args), lst);
 			}
@@ -360,10 +361,12 @@ t_cmd	*ft_parse(char *str1,  t_set *sets)
 		if (str[i] == '|')
 		{
 			lst_cmds->flag_pipe = 1;
+			//if (str[i + 1])
+				i++;
 			//lst_cmds
 		}
 	}
 
-	return (NULL);
+	return (lst_cmds);
 }
 
