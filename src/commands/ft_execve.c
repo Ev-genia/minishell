@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 16:11:57 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/28 18:22:19 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/24 15:58:26 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,14 @@ void	ft_execve(t_cmd cmd, t_env *env)
 	cmd.cmd_arr = ft_convert_to_arr_list(cmd.lst_args);
 	if (execve(path, cmd.cmd_arr, cmd.sets->env_arr) == -1)
 	{
+// ft_putstr_fd("\nTEST3 ft_execve\n", 2);		
 		perror(cmd.cmd_arr[0]);
 		free(path);
 		if (cmd.cmd_arr != NULL)
 			ft_free_arr(cmd.cmd_arr);
 		if (cmd.sets->env_arr != NULL)
 			ft_free_arr(cmd.sets->env_arr);
+		g_exit_code = 1;
 		exit(1);
 	}
 }

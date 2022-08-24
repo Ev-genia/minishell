@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/23 17:10:50 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/24 12:55:04 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ int	main(int argc, char **argv, char **env)
 
 
 set.lst_cmds = malloc(sizeof(t_cmd));
-set.lst_cmds->lst_args = ft_lstnew("cat");
-set.lst_cmds->lst_args->next = ft_lstnew("f1");
+set.lst_cmds->lst_args = ft_lstnew("car");
+set.lst_cmds->lst_args->next = ft_lstnew("f2");
 set.lst_cmds->file_read = NULL;
 set.lst_cmds->file_write = NULL;
 set.lst_cmds->flag_heredoc_read = 0;

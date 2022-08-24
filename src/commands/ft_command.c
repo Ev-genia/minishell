@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 10:27:07 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/23 17:09:20 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/24 15:43:57 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,35 +158,5 @@ int	ft_command(t_cmd cmd)
 }
 // */
 /*
-void	ft_set_fds(t_cmd cmd, int i)
-{
-	if (cmd.flag_redir_read)
-	{
-		dup2(cmd.sets->start_fd_in, STDIN_FILENO);
-		close(cmd.sets->start_fd_in);
-	}
 
-}
-
-int	ft_command(t_cmd cmd, int i)
-{
-	// pid_t	pid1;
-	// int		fd_pipe[2];
-	int		rez;
-
-	if (cmd.flag_pipe == 1)
-		pipe(cmd.sets->fds_pipe[i]);
-	cmd.sets->pids[i] = fork();
-	if (cmd.sets->pids[i] == -1)
-	{
-		ft_putstr_fd("(→_→)$: fork() error\n", 2);
-		return (1);
-	}
-	else if (cmd.sets->pids[i] == 0)
-	{
-		ft_set_fds(cmd, i);
-		ft_close_fds();
-		execve();
-	}
-}
 */

@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 14:32:43 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/23 14:21:34 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/24 12:50:49 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,9 +137,9 @@ int	ft_dup_parent_data(int *fd_pipe, t_cmd cmd, pid_t pid1)
 	if (cmd.next == NULL || ft_lstsize_cmd(cmd.sets->lst_cmds) == 1)
 	{
 		signal(SIGTSTP, SIG_DFL);
-ft_putstr_fd("\nlast command: ", 1);
-ft_putstr_fd(cmd.lst_args->content, 1);
-ft_putstr_fd("\n", 1);
+// ft_putstr_fd("\nlast command: ", 1);
+// ft_putstr_fd(cmd.lst_args->content, 1);
+// ft_putstr_fd("\n", 1);
 // ft_putstr_fd("\nft_dup_parent_data, 1 if\n", 1);
 		(void)pid1;
 
@@ -160,8 +160,9 @@ ft_putstr_fd("\n", 1);
 		{
 // ft_putstr_fd("\nft_dup_parent_data, ft_execve\n", 1);
 			ft_execve(cmd, cmd.sets->enpv);
+ft_putstr_fd("\nTEST ft_execve\n", 1);			
+			return (-1);
 		}
-		return (-1);
 	}
 	dup2(fd_pipe[0], 0);
 	close(fd_pipe[0]);
