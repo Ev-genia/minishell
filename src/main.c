@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/22 15:17:49 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/24 14:36:43 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,20 @@ set.lst_cmds->next->next->next = NULL;
 	while (1)
 	{
 		signal(SIGINT, ft_signal_ctrl_c);
-		str = ft_readline("\033[36m(→_→)$\033[0m ");
+		str = "cat \"d12\" | ls";//ft_readline("\033[36m(→_→)$\033[0m ");
+		set.lst_cmds = ft_parse(str, &set);
+
+		while(set.lst_cmds)
+		{
+			while(set.lst_cmds->lst_args)
+			{
+				printf("%s\n", (char *)set.lst_cmds->lst_args->content);
+				set.lst_cmds->lst_args = set.lst_cmds->lst_args->next;
+			}
+			set.lst_cmds = set.lst_cmds->next;
+		}
+
+
 // str = NULL;
 		// add_history(str);
 		// if (!str)
@@ -127,7 +140,7 @@ set.lst_cmds->next->next->next = NULL;
 			set.lst_cmds = set.lst_cmds->next;
 		}
 
-		// set.lst_cmds = ft_parse(str, &set);
+		// 
 
 		// if (!set.lst_cmds)
 		// {
