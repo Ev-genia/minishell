@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/23 17:09:56 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/24 18:35:54 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,26 @@ typedef struct s_env
 	struct s_env		*next;
 }	t_env;	
 
+// enum e_type
+// {
+// 	EMPTY,
+// 	CMD,
+// 	ARG,
+// 	TRUNC,
+// 	APPEND,
+// 	INPUT,
+// 	PIPE,
+// 	END
+// };
+
+// typedef struct s_token
+// {
+// 	char			*str;
+// 	enum e_type		type;
+// 	struct s_token	*next;
+// 	struct s_token	*prev;
+// }
+
 struct		s_set;	
 
 typedef struct s_cmd
@@ -41,9 +61,14 @@ typedef struct s_cmd
 	t_list				*lst_args;
 	char				**cmd_arr;
 	int					flag_pipe;
+	int					fd_pipin;
+	int					fd_pipout;
+	int					pid;
 	int					flag_redir_read;
+	int					fd_in;
 	int					flag_heredoc_read;
 	int					flag_redir_write;
+	int					fd_out;
 	int					flag_heredoc_write;
 	char				*file_read;
 	char				*file_write;
@@ -81,19 +106,20 @@ typedef struct s_set
 	int				start_fd_out;
 	t_func			func[8];
 	t_arr_f			choice_func;
-	int				*fds_pipe[2];
-	pid_t			*pids;
+	// int				*fds_pipe[2];
+	// pid_t			*pids;
 	// struct termios	new_term;
 	// struct termios	orig_term;
+	int				exit;
 }	t_set;
 
-typedef struct s_term
-{
-	char	buf[2048];
-	char	*term_name;
-	// int		iter;
-	// char	line[2048];
-}	t_term;
+// typedef struct s_term
+// {
+// 	char	buf[2048];
+// 	char	*term_name;
+// 	// int		iter;
+// 	// char	line[2048];
+// }	t_term;
 
 //lst_env.c
 t_env	*ft_lstnew_env(char *content1, char *content2, int flag);
@@ -147,7 +173,7 @@ int		ft_exit(t_list *lst_args, t_env **export, t_env **env);
 int		ft_dollar_question(t_list *lst_args, t_env **export, t_env **env);
 
 //ft_command.c
-int		ft_command(t_cmd cmd);
+int		ft_command(t_cmd *cmd);
 // int		ft_command(t_cmd cmd, int i);
 int		ft_find_buitins(char *command, t_func *func);
 
@@ -180,8 +206,16 @@ int		ft_lstsize_cmd(t_cmd *lst);
 //ft_init_set.c
 void	ft_init_set(t_set *set, char **env);
 
-//ft_term_caps.c
-void	ft_term_caps(t_set *set);
+// //ft_term_caps.c
+// void	ft_term_caps(t_set *set);
+
+//ft_shell.c
+void	ft_shell(t_cmd *cmds);
+
+//ft_fds.c
+void	ft_reset_std(t_set *set);
+void	ft_close_fds(t_cmd *cmd);
+void	ft_reset_fds(t_cmd *cmd);
 
 //ft_signal_init.c
 void	ft_signal_init(void);

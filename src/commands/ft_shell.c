@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_init_set.c                                      :+:      :+:    :+:   */
+/*   ft_shell.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/26 12:02:51 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/24 16:14:20 by mlarra           ###   ########.fr       */
+/*   Created: 2022/08/24 16:17:28 by mlarra            #+#    #+#             */
+/*   Updated: 2022/08/24 18:35:29 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // #include <minishell.h>
 #include "../../includes/minishell.h"
 
-void	ft_init_set(t_set *set, char **env)
+// Tools → Options → Text Editor → [язык] → Tabs → Keep tabs
+// Edit->Advanced->View White Space
+
+void	ft_shell(t_cmd *cmds)
 {
-	g_exit_code = 0;
-	set->enpv = ft_env_struct(env);
-	set->export = ft_copy_env(set->enpv);
-	set->export = ft_sorted_export(set->export);
-	set->env_arr = NULL;
-	set->lst_cmds = NULL;
-	set->start_fd_in = dup(STDIN_FILENO);
-	set->start_fd_out = dup(STDOUT_FILENO);
-	set->exit = 0;
-	// ft_signal_parent_process();
+	int	status;
+
+	ft_command(cmds);
+	ft_reset_std(cmds->sets);
+	ft_close_fds(cmds);
+	ft_reset_fds(cmds);
+	waitpid(-1, &status, 0);
+	status = WEXITSTATUS(status);
 }

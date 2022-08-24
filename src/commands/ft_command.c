@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 10:27:07 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/24 15:43:57 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/24 18:46:09 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	ft_child_process(t_cmd cmd, t_func *func, t_arr_f choice_func,
 }
 	return (-1);
 }
-// /*
+/*
 int	ft_command(t_cmd cmd)
 {
 	pid_t	pid1;
@@ -156,7 +156,26 @@ int	ft_command(t_cmd cmd)
 	}
 	return (rez);
 }
-// */
-/*
-
 */
+// /*
+int	ft_command(t_cmd *cmd)
+{
+	int	pipe;
+
+	pipe = 0;
+	if (cmd->flag_redir_write)
+		ft_redir();
+	else if (cmd->flag_heredoc_write)
+		ft_redir();
+	else if (cmd->flag_redir_read)
+		ft_redir();
+	else if (cmd->flag_heredoc_read)
+		ft_redir();
+	else if (cmd->flag_pipe)
+		pipe = ft_minipipe();
+	if (cmd->next && pipe != 1)
+		ft_command(cmd->next);
+	if (pipe != 1)
+		ft_exec_cmd();
+}
+// */
