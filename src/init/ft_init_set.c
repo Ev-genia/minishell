@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 12:02:51 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/19 17:25:50 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/23 12:18:50 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 void	ft_init_set(t_set *set, char **env)
 {
+	g_exit_code = 0;
 	set->enpv = ft_env_struct(env);
 	set->export = ft_copy_env(set->enpv);
 	set->export = ft_sorted_export(set->export);

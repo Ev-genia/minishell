@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 14:32:43 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/19 17:30:29 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/23 14:21:34 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,8 @@ void	ft_dup_read_write(t_cmd cmd)
 		dup2(fd_out, 1);
 		close(fd_out);
 	}
+	// else
+	// 	dup2(cmd.sets->start_fd_out, 1);
 }
 
 void	ft_ctrl_c_parent(int sign)
@@ -134,8 +136,13 @@ int	ft_dup_parent_data(int *fd_pipe, t_cmd cmd, pid_t pid1)
 // ft_putstr_fd("\n", 1);
 	if (cmd.next == NULL || ft_lstsize_cmd(cmd.sets->lst_cmds) == 1)
 	{
+		signal(SIGTSTP, SIG_DFL);
+ft_putstr_fd("\nlast command: ", 1);
+ft_putstr_fd(cmd.lst_args->content, 1);
+ft_putstr_fd("\n", 1);
 // ft_putstr_fd("\nft_dup_parent_data, 1 if\n", 1);
 		(void)pid1;
+
 		// waitpid(pid1, NULL, 0);
 		ft_dup_read_write(cmd);
 		poz = ft_find_buitins((char *)cmd.lst_args->content, cmd.sets->func);

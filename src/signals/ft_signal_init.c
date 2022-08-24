@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 15:48:57 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/22 15:08:20 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/23 14:15:25 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,27 @@ void	ft_signal_ctrl_c(int sig)
 	rl_redisplay();
 	ft_putstr_fd("  \n", 2);
 	rl_on_new_line();
-	// rl_replace_line("", 0);
+	rl_replace_line("", 0);
 	rl_redisplay();
 }
 
-void	ft_signal_init(void)
+void	ft_signal_ctrl_c_child(int sig)
 {
-	// signal(SIGINT, ft_signal_handler);
-	signal(SIGINT, ft_handler);
-	// signal(SIGTSTP, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
+ft_putstr_fd("\nft_signal_ctrl_c_child\n", 1);	
+	// ft_signal_ctrl_c(sig);
+	rl_on_new_line();
+	rl_redisplay();
+	ft_putstr_fd("  \n", 2);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+	exit(sig);
 }
+
+// void	ft_signal_init(void)
+// {
+// 	// signal(SIGINT, ft_signal_handler);
+// 	signal(SIGINT, ft_handler);
+// 	// signal(SIGTSTP, SIG_IGN);
+// 	signal(SIGQUIT, SIG_IGN);
+// }
