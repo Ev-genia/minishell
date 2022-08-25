@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_command.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 10:27:07 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/24 18:46:09 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/25 11:33:01 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,22 +160,23 @@ int	ft_command(t_cmd cmd)
 // /*
 int	ft_command(t_cmd *cmd)
 {
-	int	pipe;
-
-	pipe = 0;
-	if (cmd->flag_redir_write)
-		ft_redir();
-	else if (cmd->flag_heredoc_write)
-		ft_redir();
-	else if (cmd->flag_redir_read)
-		ft_redir();
-	else if (cmd->flag_heredoc_read)
-		ft_redir();
-	else if (cmd->flag_pipe)
-		pipe = ft_minipipe();
-	if (cmd->next && pipe != 1)
-		ft_command(cmd->next);
-	if (pipe != 1)
-		ft_exec_cmd();
+	// int	pipe;
+	(void)cmd;
+	// pipe = 0;
+	// if (cmd->flag_redir_write)
+	// 	ft_redir();
+	// else if (cmd->flag_heredoc_write)
+	// 	ft_redir();
+	// else if (cmd->flag_redir_read)
+	// 	ft_redir();
+	// else if (cmd->flag_heredoc_read)
+	// 	ft_redir();
+	// else if (cmd->flag_pipe)
+	// 	pipe = ft_minipipe();
+	// if (cmd->next && pipe != 1)
+	// 	ft_command(cmd->next);
+	// if (pipe != 1)
+	// 	ft_exec_cmd();
+	return (0);
 }
 // */

@@ -6,7 +6,7 @@
 /*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 10:17:58 by wcollen           #+#    #+#             */
-/*   Updated: 2022/08/23 16:23:06 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/08/25 23:19:49 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,13 +121,15 @@ char	*ft_dollar(char *str, int *i, t_env *env_list, t_cmd *cmd)
 		{
 			free(tmp);
 			tmp = ft_substr(str, 0, j);
-			tmp1 = strdup(env_list->value);			
+			tmp1 = strdup(env_list->value);
+			ft_lstadd_back(&(cmd->lst_args), ft_lstnew(env_list->value));
+			*i = j + ft_strlen(env_list->value);
 			tmp2 = ft_strjoin(tmp, tmp1);
 			free(tmp);
 			free(tmp1);
 			tmp1 = ft_strdup(str + *i);
 			tmp = ft_strjoin(tmp2, tmp1);
-		 ft_lstadd_back(&(cmd->lst_args), ft_lstnew(tmp));
+		 	
 
 			free(tmp1);
 			free(tmp2);
@@ -187,7 +189,7 @@ char	*ft_db_quote(char *str, int *i, int *count, t_cmd *cmd)
 	//free(str);
 	free(tmp1);
 	free(tmp2);
-	*i = j ;//i на позиции бывшей кавычки - символа сразу после первой кавычки
+	*i = j - 1 ;//i на позиции до первой  кавычки
 	return (tmp);
 }
 
@@ -220,6 +222,7 @@ char	*ft_quote(char *str, int *i, int *count)
 		//free(str);
 		free(tmp1);
 		free(tmp2);
+		*i = j - 1;
 		return (tmp);
 	}
 	return (str);
@@ -324,7 +327,7 @@ t_cmd	*ft_parse(char *str1,  t_set *sets)
 	str = ft_del_spaces(str1);
 	//free(str1); //почему-то ошибка маллока при освобождении строки
 
-	while (str[i])
+	while (str[i] != '\0')
 	{
 		cmd = ft_cmd_lst_new(sets);
 			if (!cmd)
@@ -348,22 +351,29 @@ t_cmd	*ft_parse(char *str1,  t_set *sets)
 				ft_lstadd_back(&(cmd->lst_args), lst);
 			}
 			if (str[i] == '\'')
-				str = ft_quote(str, &i, &count);	
+			{
+				str = ft_quote(str, &i, &count);
+				continue;
+			}		
 			// if (str[i] == '\\')
 			// 	str = ft_b_slash(str, &i, cmd);
 			if (str[i] == '\"')
+			{
 				str = ft_db_quote(str, &i, &count, cmd);
+				continue;
+			}
 			if (str[i] == '$')
+			{
 				str = ft_dollar(str, &i, sets->enpv, cmd);
+				continue;
+			}
 			i++;
 		}
 		ft_cmd_lst_add_back(&lst_cmds, cmd);
 		if (str[i] == '|')
 		{
 			lst_cmds->flag_pipe = 1;
-			//if (str[i + 1])
-				i++;
-			//lst_cmds
+			i++;
 		}
 	}
 
