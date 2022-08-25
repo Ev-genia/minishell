@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/24 18:35:54 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/25 13:30:40 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_cmd
 	char				*file_write;
 	char				*limiter;
 	struct s_cmd		*next;
+	int					charge;
 	// int					fds_pipe[2];
 }	t_cmd;	
 
@@ -173,7 +174,7 @@ int		ft_exit(t_list *lst_args, t_env **export, t_env **env);
 int		ft_dollar_question(t_list *lst_args, t_env **export, t_env **env);
 
 //ft_command.c
-int		ft_command(t_cmd *cmd);
+void	ft_command(t_cmd *cmd);
 // int		ft_command(t_cmd cmd, int i);
 int		ft_find_buitins(char *command, t_func *func);
 
@@ -181,12 +182,13 @@ int		ft_find_buitins(char *command, t_func *func);
 void	ft_execve(t_cmd cmd, t_env *env);
 
 //ft_herdoc.c
-void	ft_herdoc(t_cmd cmd);
+void	ft_herdoc(t_cmd *cmd);
 void	ft_perror(char *str);
 
 //ft_dup_data.c
-void	ft_dup_child_data(t_cmd cmd, int *fd_pipe);
-int		ft_dup_parent_data(int *fd_pipe, t_cmd cmd, pid_t pid1);
+// void	ft_dup_child_data(t_cmd cmd, int *fd_pipe);
+// int		ft_dup_parent_data(int *fd_pipe, t_cmd cmd, pid_t pid1);
+void	ft_open_outfile(t_cmd *cmd);
 
 //ft_convert_to_arr.c
 char	**ft_convert_to_arr_env(t_env *list);
@@ -213,9 +215,17 @@ void	ft_init_set(t_set *set, char **env);
 void	ft_shell(t_cmd *cmds);
 
 //ft_fds.c
+void	ft_close(int fd);
 void	ft_reset_std(t_set *set);
 void	ft_close_fds(t_cmd *cmd);
 void	ft_reset_fds(t_cmd *cmd);
+
+//ft_minipipe.c
+void	ft_input(t_cmd *cmd);
+int		ft_minipipe(t_cmd *cmd);
+
+//ft_exec.c
+void	ft_exec_cmd(t_cmd *cmd);
 
 //ft_signal_init.c
 void	ft_signal_init(void);

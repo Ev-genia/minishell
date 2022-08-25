@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 15:48:57 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/23 14:15:25 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/25 21:18:10 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_signal_ctrl_c(int sig)
 	rl_redisplay();
 	ft_putstr_fd("  \n", 2);
 	rl_on_new_line();
-	rl_replace_line("", 0);
+	// rl_replace_line("", 0);
 	rl_redisplay();
 }
 
@@ -59,7 +59,7 @@ ft_putstr_fd("\nft_signal_ctrl_c_child\n", 1);
 	rl_redisplay();
 	ft_putstr_fd("  \n", 2);
 	rl_on_new_line();
-	rl_replace_line("", 0);
+	// rl_replace_line("", 0);
 	rl_redisplay();
 	exit(sig);
 }
