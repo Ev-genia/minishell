@@ -47,7 +47,7 @@ void	ft_signal_ctrl_c(int sig)
 	rl_redisplay();
 	ft_putstr_fd("  \n", 2);
 	rl_on_new_line();
-	//rl_replace_line("", 0);
+	// rl_replace_line("", 0);
 	rl_redisplay();
 }
 
@@ -59,7 +59,7 @@ ft_putstr_fd("\nft_signal_ctrl_c_child\n", 1);
 	rl_redisplay();
 	ft_putstr_fd("  \n", 2);
 	rl_on_new_line();
-	//rl_replace_line("", 0);
+	// rl_replace_line("", 0);
 	rl_redisplay();
 	exit(sig);
 }

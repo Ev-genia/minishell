@@ -6,7 +6,7 @@
 /*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 10:27:07 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/25 11:33:01 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/08/25 16:02:20 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,39 +46,16 @@ int	ft_find_buitins(char *command, t_func *func)
 
 	i = 0;
 	command = ft_tolower_str(command);
-// ft_putstr_fd("\ncommand: ", 1);
-// ft_putstr_fd(command, 1);
-// ft_putstr_fd("\n", 1);
 	len = ft_arr_func_len(func);
-// ft_putstr_fd("\nlen: ", 1);
-// ft_putnbr_fd(len, 1);
-// ft_putstr_fd("\n", 1);
 	while (i < len)
-		// && ft_strncmp(command, func[i].name_func, ft_strlen(command)) != 0)
 	{
-// ft_putstr_fd("\n", 1);
-// ft_putstr_fd(func[i].name_func, 1);
-// ft_putstr_fd("\n", 1);
 		if (ft_strncmp(command, func[i].name_func, ft_strlen(command)) == 0)
 			return (i);
 		i++;
 	}
 	return (-1);
 }
-
-// void	pipex(t_pipe pipe_struct, int num)
-// {
-// 	pid_t	pid1;
-// 	int		fd_pipe[2];
-
-// 	pipe(fd_pipe);
-// 	pid1 = fork();
-// 	if (pid1 == 0)
-// 		ft_first_child(num, fd_pipe, pipe_struct);
-// 	else
-// 		ft_parent_proc(num, fd_pipe, pid1, pipe_struct);
-// }
-
+/*
 int	ft_child_process(t_cmd cmd, t_func *func, t_arr_f choice_func,
 	int *fd_pipe)
 {
@@ -115,6 +92,7 @@ int	ft_child_process(t_cmd cmd, t_func *func, t_arr_f choice_func,
 }
 	return (-1);
 }
+*/
 /*
 int	ft_command(t_cmd cmd)
 {
@@ -158,25 +136,20 @@ int	ft_command(t_cmd cmd)
 }
 */
 // /*
-int	ft_command(t_cmd *cmd)
+void	ft_command(t_cmd *cmd)
 {
-	// int	pipe;
-	(void)cmd;
-	// pipe = 0;
-	// if (cmd->flag_redir_write)
-	// 	ft_redir();
-	// else if (cmd->flag_heredoc_write)
-	// 	ft_redir();
-	// else if (cmd->flag_redir_read)
-	// 	ft_redir();
-	// else if (cmd->flag_heredoc_read)
-	// 	ft_redir();
-	// else if (cmd->flag_pipe)
-	// 	pipe = ft_minipipe();
-	// if (cmd->next && pipe != 1)
+	int	pipe;
+
+	pipe = 0;
+	if (cmd->flag_redir_write || cmd->flag_heredoc_write)
+		ft_open_outfile(cmd);
+	if (cmd->flag_redir_read || cmd->flag_heredoc_read)
+		ft_input(cmd);
+	if (cmd->flag_pipe)
+		pipe = ft_minipipe(cmd);
+	// if (cmd->flag_pipe && cmd->next && pipe != 1)
 	// 	ft_command(cmd->next);
-	// if (pipe != 1)
-	// 	ft_exec_cmd();
-	return (0);
+	if (pipe != 1)
+		ft_exec_cmd(cmd);
 }
 // */

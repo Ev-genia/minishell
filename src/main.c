@@ -132,7 +132,9 @@ while(temp)
 		// signal(SIGTSTP, SIG_DFL);
 		// dup2(set.start_fd_in, 0);
 		// signal(SIGQUIT, SIG_IGN);
+
 		str = ft_readline("\033[36m(→_→)$\033[0m ");
+
 // str = NULL;
 		// add_history(str);
 		// if (!str)
@@ -141,12 +143,14 @@ while(temp)
 		// signal(SIGINT, SIG_IGN);
 		// while (set.lst_cmds)
 
-		// while(set.exit == 0 && set.lst_cmds->next != NULL)
-		// {
+		while(set.lst_cmds)
+		{
 			if (set.lst_cmds != NULL)
+			{
 				ft_shell(set.lst_cmds);
-			// set.lst_cmds = set.lst_cmds->next;
-		// }
+				set.lst_cmds = set.lst_cmds->next;
+			}
+		}
 
 		// 
 

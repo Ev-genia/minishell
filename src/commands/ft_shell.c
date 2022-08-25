@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 16:17:28 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/24 18:35:29 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/25 21:17:38 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void	ft_shell(t_cmd *cmds)
 	int	status;
 
 	ft_command(cmds);
+	waitpid(-1, &status, 0);
+	status = WEXITSTATUS(status);
 	ft_reset_std(cmds->sets);
 	ft_close_fds(cmds);
 	ft_reset_fds(cmds);
-	waitpid(-1, &status, 0);
-	status = WEXITSTATUS(status);
 }

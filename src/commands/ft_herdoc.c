@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 09:42:25 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/28 17:36:12 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/25 11:42:19 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,15 @@ void	ft_perror(char *str)
 // 	exit(0);
 // }
 
-void	ft_child_h_d(int *fd_pipe, t_cmd cmd)
+void	ft_child_h_d(int *fd_pipe, t_cmd *cmd)
 {
 	char	*str;
 
-	dup2(cmd.sets->start_fd_in, 0);
+	dup2(cmd->sets->start_fd_in, 0);
 	close(fd_pipe[0]);
 	str = readline("\033[36m>\033[0m ");
 	while (str != NULL
-		&& ft_strncmp(str, cmd.limiter, ft_strlen(cmd.limiter)) != 0)
+		&& ft_strncmp(str, cmd->limiter, ft_strlen(cmd->limiter)) != 0)
 	{
 		ft_putstr_fd(str, fd_pipe[1]);
 		ft_putstr_fd("\n", fd_pipe[1]);
@@ -83,7 +83,7 @@ void	ft_child_h_d(int *fd_pipe, t_cmd cmd)
 	exit(0);
 }
 
-void	ft_herdoc(t_cmd cmd)
+void	ft_herdoc(t_cmd *cmd)
 {
 	pid_t	pid;
 	int		fd_pipe[2];
