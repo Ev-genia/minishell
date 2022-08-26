@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 16:11:57 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/24 15:58:26 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/26 16:37:29 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,40 @@ void	ft_execve(t_cmd cmd, t_env *env)
 		g_exit_code = 1;
 		exit(1);
 	}
+}
+
+int	ft_magic_exec(t_cmd *cmd)
+{
+	int	rez;
+
+	rez = 0;
+	cmd->pid = fork();
+	if (cmd->pid == 0)
+	{
+
+		execve();
+	}
+	else
+		waitpid(cmd->pid, &rez, 0);
+	
+	return (rez);
+}
+
+int	ft_exec_bin(t_cmd *cmd)
+{
+	int		rez;
+	char	**bin;
+
+	rez = 127;
+	while (cmd->sets->enpv && cmd->sets->enpv->value 
+		&& ft_strncmp(cmd->sets->enpv->value, "PATH=", 5) != 0)
+		cmd->sets->enpv = cmd->sets->enpv->next;
+	if (cmd->sets->enpv == NULL || cmd->sets->enpv->next == NULL)
+		return (ft_magic_exec(cmd));
+	cmd->cmd_arr = ft_convert_to_arr_env(cmd->lst_args);
+	bin = ft_split(cmd->sets->enpv->value, ':');
+	if (!cmd->cmd_arr[0] || !bin[0])
+		return (1);
+
+	return (rez);
 }

@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/25 13:30:40 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/26 11:09:09 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,14 @@ int		ft_find_buitins(char *command, t_func *func);
 
 //ft_execve.c
 void	ft_execve(t_cmd cmd, t_env *env);
+int		ft_exec_bin(t_cmd *cmd);
+
+//ft_exec.c
+void	ft_exec_cmd(t_cmd *cmd);
+
+//ft_execve_utils.c
+void	ft_write(char *s);
+void	ft_free_arr(char **arr);
 
 //ft_herdoc.c
 void	ft_herdoc(t_cmd *cmd);
@@ -197,10 +205,6 @@ char	**ft_convert_to_arr_list(t_list *list);
 //ft_init_arr_func.c
 void	ft_init_func(t_func *func);
 void	ft_init_arr(t_arr_f ft_choice_func);
-
-//ft_execve_utils.c
-void	ft_write(char *s);
-void	ft_free_arr(char **arr);
 
 //ft_t_cmd_utils.c
 int		ft_lstsize_cmd(t_cmd *lst);
@@ -223,9 +227,6 @@ void	ft_reset_fds(t_cmd *cmd);
 //ft_minipipe.c
 void	ft_input(t_cmd *cmd);
 int		ft_minipipe(t_cmd *cmd);
-
-//ft_exec.c
-void	ft_exec_cmd(t_cmd *cmd);
 
 //ft_signal_init.c
 void	ft_signal_init(void);
