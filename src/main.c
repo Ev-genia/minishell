@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/25 21:26:46 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/08/25 23:28:59 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,18 +116,18 @@ set.lst_cmds->next = NULL;
 	while (1)
 	{
 		// signal(SIGINT, ft_signal_ctrl_c);
-		str = "cat \"d12\" | ls";//ft_readline("\033[36m(→_→)$\033[0m ");
+		str = "<   \"d12\"  cat | ls | echo $USER";//ft_readline("\033[36m(→_→)$\033[0m ");
 		set.lst_cmds = ft_parse(str, &set);
 temp = set.lst_cmds;
-		while(temp)
-		{
-			while(temp->lst_args)
-			{
-				printf("%s\n", (char *)temp->lst_args->content);
-				temp->lst_args = temp->lst_args->next;
-			}
-			temp = temp->next;
-		}
+while(temp)
+{
+	while(temp->lst_args)
+	{
+		printf("%s\n", (char *)temp->lst_args->content);
+		temp->lst_args = temp->lst_args->next;
+	}
+	temp = temp->next;
+}
 
 		// signal(SIGTSTP, SIG_DFL);
 		// dup2(set.start_fd_in, 0);
