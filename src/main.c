@@ -6,7 +6,7 @@
 /*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/25 23:28:59 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/08/31 17:14:22 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	main(int argc, char **argv, char **env)
 {
 	t_set	set;
 	char	*str;
-t_cmd	*temp;	
+	
 
 	(void)argc;
 	(void)argv;
@@ -72,68 +72,19 @@ t_cmd	*temp;
 	// ft_signal_init();
 
 
-set.lst_cmds = malloc(sizeof(t_cmd));
-set.lst_cmds->lst_args = ft_lstnew("car");
-set.lst_cmds->lst_args->next = ft_lstnew("f2");
-set.lst_cmds->file_read = NULL;
-set.lst_cmds->file_write = NULL;
-set.lst_cmds->flag_heredoc_read = 0;
-set.lst_cmds->flag_heredoc_write = 0;
-set.lst_cmds->flag_pipe = 0;
-set.lst_cmds->flag_redir_read = 0;
-set.lst_cmds->flag_redir_write = 0;
-set.lst_cmds->limiter = NULL;
-set.lst_cmds->sets = &set;
-set.lst_cmds->next = NULL;
 
-// set.lst_cmds->next = malloc(sizeof(t_cmd));
-// set.lst_cmds->next->lst_args = ft_lstnew("ls");
-// set.lst_cmds->next->file_read = NULL;
-// set.lst_cmds->next->file_write = NULL;
-// set.lst_cmds->next->flag_heredoc_read = 0;
-// set.lst_cmds->next->flag_heredoc_write = 0;
-// set.lst_cmds->next->flag_pipe = 1;
-// set.lst_cmds->next->flag_redir_read = 0;
-// set.lst_cmds->next->flag_redir_write = 0;
-// set.lst_cmds->next->limiter = NULL;
-// set.lst_cmds->next->sets = &set;
-// // set.lst_cmds->next->next = NULL;
-
-// set.lst_cmds->next->next = malloc(sizeof(t_cmd));
-// set.lst_cmds->next->next->lst_args = ft_lstnew("$?");
-// set.lst_cmds->next->next->file_read = NULL;
-// set.lst_cmds->next->next->file_write = NULL;
-// set.lst_cmds->next->next->flag_heredoc_read = 0;
-// set.lst_cmds->next->next->flag_heredoc_write = 0;
-// set.lst_cmds->next->next->flag_pipe = 0;
-// set.lst_cmds->next->next->flag_redir_read = 0;
-// set.lst_cmds->next->next->flag_redir_write = 0;
-// set.lst_cmds->next->next->limiter = NULL;
-// set.lst_cmds->next->next->sets = &set;
-// set.lst_cmds->next->next->next = NULL;
 
 	// while (g_exit_code == 0)
 	while (1)
 	{
 		// signal(SIGINT, ft_signal_ctrl_c);
-		str = "<   \"d12\"  cat | ls | echo $USER";//ft_readline("\033[36m(→_→)$\033[0m ");
+		str = ft_readline("\033[36m(→_→)$\033[0m ");
 		set.lst_cmds = ft_parse(str, &set);
-temp = set.lst_cmds;
-while(temp)
-{
-	while(temp->lst_args)
-	{
-		printf("%s\n", (char *)temp->lst_args->content);
-		temp->lst_args = temp->lst_args->next;
-	}
-	temp = temp->next;
-}
-
+		
 		// signal(SIGTSTP, SIG_DFL);
 		// dup2(set.start_fd_in, 0);
 		// signal(SIGQUIT, SIG_IGN);
 
-		str = ft_readline("\033[36m(→_→)$\033[0m ");
 
 // str = NULL;
 		// add_history(str);
@@ -151,26 +102,17 @@ while(temp)
 				set.lst_cmds = set.lst_cmds->next;
 			}
 		}
-
-		// 
-
-		// if (!set.lst_cmds)
-		// {
-		// 	         //сначала функция очистки листов!!!!!!!
-		//  	ft_putstr_fd("\nArguments error\n", 2);
-		// }
-		
+	
 		// if (ft_parse(argv, set.enpv))
 		// 	return (ft_error());
 		// status = ft_shell();	
 
 		free(str);
 	}
-	// ft_wait();
 
+	// ft_wait();
 	// ft_lstclear_env(&set.enpv);
 	// ft_lstclear_env(&set.export);
-
 	// rl_clear_history();
 
 	return (0);

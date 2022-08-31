@@ -6,7 +6,7 @@
 /*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 10:17:58 by wcollen           #+#    #+#             */
-/*   Updated: 2022/08/25 23:19:49 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/08/31 16:55:28 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,43 +18,90 @@ void	skip_spaces(char *str, int *i)
 		(*i)++;
 }
 
+int	ft_check_dbl_symbols(char *str, int i)
+{
+	char	*ptrn;
+
+	ptrn = ft_substr(str, i, 2);
+	if (str[i] && str[i + 1] && ft_strnstr("||&&", ptrn, 4))
+	{
+		ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
+		ft_putstr_fd(ptrn, 2);
+		ft_putendl_fd("'", 2);
+		free(ptrn);
+		return(1);
+	}
+	return (0);
+}
+
 int	ft_preparse(char *str)
 {
-	int	quote;
-	int	dbl_quote;
-	int	i;
+	int		quote;
+	int		dbl_quote;
+	int		i;
 
 	i = 0;
 	quote = 0;
 	dbl_quote = 0;
-	if (str[i] == '|')//не может быть пайпа в начале (чего еще не может быть в начале строки??)
-		return (1);
+	// if (str[i] == '|')//не может быть пайпа в начале (чего еще не может быть в начале строки??)
+	// 	return (1);
 	while (str[i])
 	{
 		if (str[i] == '\'')
 			quote++;
 		if (str[i] == '\"')
 			dbl_quote++;
+		if (ft_check_dbl_symbols(str, i))
+			return (1);
 		if (str[i] == '<')
 		{
 			i++;
-			skip_spaces(str, &i);
-			if (str[i] && (str[i] == '>' || str[i] == '|'))
+			if ((str[i] == '>' && !str[i + 1]) || !str[i])
+			{
+				ft_putendl_fd("minishell: syntax error near unexpected token `newline'", 2);
 				return(1);
+			}	
+			skip_spaces(str, &i);
+			if (ft_check_dbl_symbols(str, i))
+				return (1);
+			// ptrn = ft_substr(str, i, 2);
+			// if (str[i] && str[i + 1] && ft_strnstr("||&&", ptrn, 4))
+			// {
+			// 	ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
+			// 	ft_putendl_fd(ptrn, 2);
+			// 	free(ptrn);
+			// 	return(1);
+			// }
+			if (str[i] && ft_strchr(">|", str[i]))//WRONG!!!
+			{
+				ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
+				ft_putchar_fd(str[i], 2);
+				ft_putstr_fd("\n", 2);
+				return(1);
+			}	
 		}
 		if (str[i] == '>')
 		{
 			i++;
 			skip_spaces(str, &i);
 			if (str[i] && (str[i] == '<' || str[i] == '|'))
+			{
+				ft_putendl_fd("minishell: syntax error near unexpected token `|'", 2);
 				return(1);
+			}	
 		}
 		i++;
 	}
 	if (str[i - 1] == '|')
-		return (1);	
-	if (quote % 2 != 0 && dbl_quote % 2 != 0)
+	{
+		ft_putendl_fd("minishell: syntax error near unexpected token `|'", 2);
 		return (1);
+	}
+	if (quote % 2 != 0 && dbl_quote % 2 != 0)
+	{
+		ft_putendl_fd("minishell: syntax error with open quotes", 2);
+		return (1);
+	}
 	return (0);
 }
 
@@ -149,7 +196,6 @@ char	*ft_b_slash(char *str, int *i, t_cmd *cmd)
 
 	j = *i;
 	tmp = ft_substr(str, 0, j);
-	//printf("tmp=%s\n", tmp2);
 	tmp2 = ft_strdup(str + *i + 1);
 	tmp = ft_strjoin(tmp, tmp2);
 	//free(str); //ВЫДЕЛИТЬ ПАМЯТЬ ПОД СТРОКУ С АРГУМЕНТАМИ И ДЕЛАТЬ FREE
@@ -304,9 +350,6 @@ char	*ft_redirect_write(t_cmd *cmd, char *str, int *i)
 		if (!(cmd->file_write = ft_word(str, i)))
 			return (NULL);
 	}
-ft_putstr_fd("file write name: |", 1);
-ft_putstr_fd(cmd->file_write, 1);
-ft_putstr_fd("|\n", 1);
 		return (str);
 }
 
@@ -339,8 +382,7 @@ t_cmd	*ft_parse(char *str1,  t_set *sets)
 			if (str[i] && str[i] == '>')
 				str = ft_redirect_write(cmd, str, &i);
 			if (str[i] && is_space(str[i]))
-				skip_spaces(str, &i);
-//КАК ОТЛИЧИТЬ ФАЙЛ ОТ ФЛАГОВ КОМАНДЫ???после команды должен быть файл или флаги команды							
+				skip_spaces(str, &i);							
 			if (str[i] && !ft_strchr("<>|$\"\'?", str[i]))
 			{
 				if (!(arg_name = ft_word(str, &i)))
