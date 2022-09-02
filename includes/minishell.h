@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/29 14:12:36 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/09/02 10:06:45 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,10 +180,11 @@ int		ft_find_buitins(char *command, t_func *func);
 
 //ft_execve.c
 void	ft_execve(t_cmd cmd, t_env *env);
-//int		ft_exec_bin(t_cmd *cmd);
+char	*ft_get_path(char *command, t_env *env);
 
 //ft_exec.c
 void	ft_exec_cmd(t_cmd *cmd);
+int		ft_exec_bin(t_cmd *cmd);
 
 //ft_execve_utils.c
 void	ft_write(char *s);
