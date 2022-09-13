@@ -6,114 +6,11 @@
 /*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 10:17:58 by wcollen           #+#    #+#             */
-/*   Updated: 2022/08/31 16:55:28 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/09/13 22:12:58 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	skip_spaces(char *str, int *i)
-{
-	while (str[*i] && is_space(str[*i]))
-		(*i)++;
-}
-
-int	ft_check_dbl_symbols(char *str, int i)
-{
-	char	*ptrn;
-
-	ptrn = ft_substr(str, i, 2);
-	if (str[i] && str[i + 1] && ft_strnstr("||&&", ptrn, 4))
-	{
-		ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
-		ft_putstr_fd(ptrn, 2);
-		ft_putendl_fd("'", 2);
-		free(ptrn);
-		return(1);
-	}
-	return (0);
-}
-
-int	ft_preparse(char *str)
-{
-	int		quote;
-	int		dbl_quote;
-	int		i;
-
-	i = 0;
-	quote = 0;
-	dbl_quote = 0;
-	// if (str[i] == '|')//не может быть пайпа в начале (чего еще не может быть в начале строки??)
-	// 	return (1);
-	while (str[i])
-	{
-		if (str[i] == '\'')
-			quote++;
-		if (str[i] == '\"')
-			dbl_quote++;
-		if (ft_check_dbl_symbols(str, i))
-			return (1);
-		if (str[i] == '<')
-		{
-			i++;
-			if ((str[i] == '>' && !str[i + 1]) || !str[i])
-			{
-				ft_putendl_fd("minishell: syntax error near unexpected token `newline'", 2);
-				return(1);
-			}	
-			skip_spaces(str, &i);
-			if (ft_check_dbl_symbols(str, i))
-				return (1);
-			// ptrn = ft_substr(str, i, 2);
-			// if (str[i] && str[i + 1] && ft_strnstr("||&&", ptrn, 4))
-			// {
-			// 	ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
-			// 	ft_putendl_fd(ptrn, 2);
-			// 	free(ptrn);
-			// 	return(1);
-			// }
-			if (str[i] && ft_strchr(">|", str[i]))//WRONG!!!
-			{
-				ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
-				ft_putchar_fd(str[i], 2);
-				ft_putstr_fd("\n", 2);
-				return(1);
-			}	
-		}
-		if (str[i] == '>')
-		{
-			i++;
-			skip_spaces(str, &i);
-			if (str[i] && (str[i] == '<' || str[i] == '|'))
-			{
-				ft_putendl_fd("minishell: syntax error near unexpected token `|'", 2);
-				return(1);
-			}	
-		}
-		i++;
-	}
-	if (str[i - 1] == '|')
-	{
-		ft_putendl_fd("minishell: syntax error near unexpected token `|'", 2);
-		return (1);
-	}
-	if (quote % 2 != 0 && dbl_quote % 2 != 0)
-	{
-		ft_putendl_fd("minishell: syntax error with open quotes", 2);
-		return (1);
-	}
-	return (0);
-}
-
-int	is_key(char c, int i)
-{
-	if (i == 0 && (c == '_' || ft_isalpha(c)))
-	 return (1);
-	if (i != 0 && (c == '_' || ft_isalnum(c)))
-		return (1);
-	return (0);
-
-}
 
 char	*ft_word(char *str, int *i)
 {
@@ -130,7 +27,6 @@ char	*ft_word(char *str, int *i)
 	return (word);
 }
 
-
 char	*ft_dollar(char *str, int *i, t_env *env_list, t_cmd *cmd)
 {
 	int		j;
@@ -142,7 +38,7 @@ char	*ft_dollar(char *str, int *i, t_env *env_list, t_cmd *cmd)
 	if (str[*i + 1] == '?')
 	{
 		if (!(tmp = ft_word(str, i)))
-				return (NULL);
+			return (NULL);
 		ft_lstadd_back(&(cmd->lst_args), ft_lstnew(tmp));
 		free(tmp);
 		return (str);
@@ -154,9 +50,8 @@ char	*ft_dollar(char *str, int *i, t_env *env_list, t_cmd *cmd)
 	}
 	if (*i == j + 1)
 	{
-
 		if (!(tmp = ft_word(str, i)))
-				return (NULL);
+			return (NULL);
 		ft_lstadd_back(&(cmd->lst_args), ft_lstnew(tmp));
 		free(tmp);
 		return (str);
@@ -176,33 +71,13 @@ char	*ft_dollar(char *str, int *i, t_env *env_list, t_cmd *cmd)
 			free(tmp1);
 			tmp1 = ft_strdup(str + *i);
 			tmp = ft_strjoin(tmp2, tmp1);
-		 	
-
 			free(tmp1);
 			free(tmp2);
 			return (tmp);
 		}
 		env_list = env_list->next;
 	}
-	//free(str); //ВЫДЕЛИТЬ ПАМЯТЬ ПОД СТРОКУ С АРГУМЕНТАМИ И ДЕЛАТЬ FREE
 	return (str);
-}
-
-char	*ft_b_slash(char *str, int *i, t_cmd *cmd)
-{
-	int		j;
-	char	*tmp = NULL;
-	char	*tmp2 = NULL;
-
-	j = *i;
-	tmp = ft_substr(str, 0, j);
-	tmp2 = ft_strdup(str + *i + 1);
-	tmp = ft_strjoin(tmp, tmp2);
-	//free(str); //ВЫДЕЛИТЬ ПАМЯТЬ ПОД СТРОКУ С АРГУМЕНТАМИ И ДЕЛАТЬ FREE
-	(*i)++;
-	free(tmp2);
-	ft_lstadd_back(&(cmd->lst_args), ft_lstnew(tmp));
-	return (tmp);
 }
 
 char	*ft_db_quote(char *str, int *i, int *count, t_cmd *cmd)
@@ -215,8 +90,6 @@ char	*ft_db_quote(char *str, int *i, int *count, t_cmd *cmd)
 	j = *i;
 	while (str[++*i])
 	{
-		if (str[*i] == '\\' && (str[*i + 1] == '\"' || str[*i + 1] == '$'))
-			str = ft_b_slash(str, i, cmd);
 		if (str[*i] == '$')
 			str = ft_dollar(str, i, cmd->sets->enpv, cmd);
 		if (str[*i] == '\"')
@@ -268,7 +141,8 @@ char	*ft_quote(char *str, int *i, int *count)
 		//free(str);
 		free(tmp1);
 		free(tmp2);
-		*i = j - 1;
+		*i = j - 1; // i = j - 2 (а не j - 1)чтобы не делать continue в осн. цикле
+		//и увеличиваем i++
 		return (tmp);
 	}
 	return (str);
@@ -281,20 +155,17 @@ char	*ft_word_after_quotes(t_cmd *cmd, char **str, int *i)
 	char	*word;
 
 	count = 0;
-	j = *i; //j на позиции следующей на редиректом после всех пробелов
+	j = *i;
 	if (*str[*i] == '\'')		
 		*str = ft_quote(*str, i, &count);
 	else if (*str[*i] == '\"')
 		*str = ft_db_quote(*str, i, &count, cmd);
 	word = malloc(sizeof(char) * (count + 1));
 	if (!word)
-		return (NULL);//Сделат освобождение памяти!!!!!!!!
+		return (NULL);
 	word = ft_substr(*str, j, count);
-	
 	return (word);
 }
-
-
 
 char	*ft_redirect_read(t_cmd *cmd, char *str, int *i)
 {	
@@ -304,7 +175,10 @@ char	*ft_redirect_read(t_cmd *cmd, char *str, int *i)
 	{
 		cmd->flag_redir_read = 1;
 		if (!(cmd->file_read = ft_word_after_quotes(cmd, &str, i)))
+		{
+			ft_putendl_fd("minishell: malloc error for read file", 2);
 			return (NULL);//Освободить память всю!!!!!
+		}	
 	}
 	else if (str[*i] && str[*i] != '<')
 	{
@@ -322,7 +196,7 @@ char	*ft_redirect_read(t_cmd *cmd, char *str, int *i)
 			if (!(cmd->limiter = ft_word_after_quotes(cmd, &str, i)))
 				return (NULL);////Сделат освобождение памяти!!!!!!!!
 		}
-		else if (str[*i]) //(str[*i] == '_' || ft_isalnum(str[*i]))
+		else if (str[*i])
 		{
 			if (!(cmd->limiter = ft_word(str, i)))
 				return (NULL);//Освободить память всю!!!!!
@@ -347,6 +221,7 @@ char	*ft_redirect_write(t_cmd *cmd, char *str, int *i)
 			cmd->flag_redir_write = 1;
 		else if (str[*i] == '>')
 			cmd->flag_heredoc_write = 1;
+		(*i)++;
 		if (!(cmd->file_write = ft_word(str, i)))
 			return (NULL);
 	}
@@ -365,10 +240,10 @@ t_cmd	*ft_parse(char *str1,  t_set *sets)
 
 	i = 0;
 	lst_cmds = NULL;
-	if (ft_preparse(str1) == 1)
+	if (ft_preparse(str1, i) == 1)
 		return (NULL);
 	str = ft_del_spaces(str1);
-	//free(str1); //почему-то ошибка маллока при освобождении строки
+	free(str1);
 
 	while (str[i] != '\0')
 	{
@@ -396,9 +271,7 @@ t_cmd	*ft_parse(char *str1,  t_set *sets)
 			{
 				str = ft_quote(str, &i, &count);
 				continue;
-			}		
-			// if (str[i] == '\\')
-			// 	str = ft_b_slash(str, &i, cmd);
+			}
 			if (str[i] == '\"')
 			{
 				str = ft_db_quote(str, &i, &count, cmd);

@@ -6,7 +6,7 @@
 /*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/29 14:12:36 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/09/13 22:14:59 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ typedef struct s_env
 // 	CMD,
 // 	ARG,
 // 	TRUNC,
+// 	HEREDOC,
 // 	APPEND,
 // 	INPUT,
-// 	PIPE,
-// 	END
+// 	PIPE
 // };
 
 // typedef struct s_token
@@ -51,7 +51,7 @@ typedef struct s_env
 // 	enum e_type		type;
 // 	struct s_token	*next;
 // 	struct s_token	*prev;
-// }
+// }t_token;
 
 struct		s_set;	
 
@@ -240,11 +240,18 @@ void	ft_handler(int status);
 
 //=================parser.c========================//
 t_cmd	*ft_parse(char *str, t_set *sets);
+void	skip_spaces(char *str, int *i);
 
-//=================del_spaces.c====================//
+//=================pars_utils.c====================//
 char	*ft_del_spaces(char *str);
+void	skip_spaces(char *str, int *i);
+int		is_key(char c, int i);
 
 //=================lst_cmd_operations.c============//
 t_cmd	*ft_cmd_lst_new(t_set	*sets);
 void	ft_cmd_lst_add_back(t_cmd	**cmd_lst, t_cmd *new);
+
+//================preparser.c=====================//
+int	ft_preparse(char *str, int i);
+
 #endif
