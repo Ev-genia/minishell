@@ -6,7 +6,7 @@
 /*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/09/13 22:16:44 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/09/14 14:30:29 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,13 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		// signal(SIGINT, ft_signal_ctrl_c);
-		str = ft_readline("\033[36m(→_→)$\033[0m ");
+		str = ft_strdup("cat");//
+		//ft_readline("\033[36m(→_→)$\033[0m ");
 		set.lst_cmds = ft_parse(str, &set);
 		
+printf("|%s|\n", (char *)set.lst_cmds->lst_args->content);
+// printf("|%s|\n", (char *)set.lst_cmds->lst_args->next->content);
+// printf("|%s|\n", (char *)set.lst_cmds->next->lst_args->content);
 		// signal(SIGTSTP, SIG_DFL);
 		// dup2(set.start_fd_in, 0);
 		// signal(SIGQUIT, SIG_IGN);
@@ -102,9 +106,8 @@ int	main(int argc, char **argv, char **env)
 				set.lst_cmds = set.lst_cmds->next;
 			}
 		}
-	
-		// if (ft_parse(argv, set.enpv))
-		// 	return (ft_error());
+		ft_cmd_lst_clear(&(set.lst_cmds));
+		
 		// status = ft_shell();	
 
 		free(str);

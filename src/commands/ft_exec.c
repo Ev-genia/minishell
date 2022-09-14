@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 12:08:08 by mlarra            #+#    #+#             */
-/*   Updated: 2022/09/02 10:05:52 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/09/14 13:50:15 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	ft_exec_cmd(t_cmd *cmd)
 {
 	int	poz;
 
-	if (cmd->charge == 0)
-		return ;
+	// if (cmd->charge == 0)
+	// 	return ;
 	cmd->cmd_arr = ft_convert_to_arr_list(cmd->lst_args);
 	poz = ft_find_buitins((char *)cmd->lst_args->content, cmd->sets->func);
 	if (cmd->cmd_arr
@@ -61,6 +61,10 @@ int	ft_exec_bin(t_cmd *cmd)
 	char	*path;
 
 	rez = 127;
+
+ft_putstr_fd("command_ft_exec_bin: ", 1);
+ft_putstr_fd((char *)cmd->lst_args->content, 1);
+ft_putstr_fd("\n", 1);
 	path = ft_get_path((char *)cmd->lst_args->content, cmd->sets->enpv);
 	if (!path)
 	{
