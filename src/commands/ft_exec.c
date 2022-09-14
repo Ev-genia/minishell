@@ -6,37 +6,12 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 12:08:08 by mlarra            #+#    #+#             */
-/*   Updated: 2022/09/02 10:05:52 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/09/14 14:04:02 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // #include <minishell.h>
 #include "../../includes/minishell.h"
-
-void	ft_exec_cmd(t_cmd *cmd)
-{
-	int	poz;
-
-	if (cmd->charge == 0)
-		return ;
-	cmd->cmd_arr = ft_convert_to_arr_list(cmd->lst_args);
-	poz = ft_find_buitins((char *)cmd->lst_args->content, cmd->sets->func);
-	if (cmd->cmd_arr
-		&& ft_strncmp(cmd->cmd_arr[0], "exit", ft_strlen("exit")) == 0
-		&& cmd->flag_pipe == 0)
-		ft_exit(cmd->lst_args, &cmd->sets->export, &cmd->sets->enpv);
-	else if (cmd->cmd_arr && poz > -1)
-		g_exit_code = cmd->sets->choice_func[cmd->sets->func[poz].type](cmd->lst_args,
-				&cmd->sets->enpv, &cmd->sets->export);
-	else if (cmd->cmd_arr)
-		g_exit_code = ft_exec_bin(cmd);
-	ft_free_arr(cmd->cmd_arr);
-	ft_close(cmd->fd_pipin);
-	ft_close(cmd->fd_pipout);
-	cmd->fd_pipin = -1;
-	cmd->fd_pipout = -1;
-	cmd->charge = 0;
-}
 
 int	ft_magic_exec(t_cmd *cmd, char *path)
 {
@@ -61,12 +36,22 @@ int	ft_exec_bin(t_cmd *cmd)
 	char	*path;
 
 	rez = 127;
+ft_putstr_fd("command_ft_exec_bin: ", 1);
+ft_putstr_fd((char *)cmd->lst_args->content, 1);
+ft_putstr_fd("\n", 1);
 	path = ft_get_path((char *)cmd->lst_args->content, cmd->sets->enpv);
+// printf("path_ft_exec_bin: %s for command: |%s|\n", path, (char *)cmd->lst_args->content);
+
 	if (!path)
 	{
 		ft_write((char *)cmd->lst_args->content);
+// printf("enter_to_!path_ft_exec_bin for command: |%s|\n", (char *)cmd->lst_args->content);
+ft_putstr_fd("enter_to_!path_ft_exec_bin for command: ", 1);
+ft_putstr_fd(cmd->lst_args->content, 1);
+ft_putstr_fd("\n", 1);
 		// free(lst?);
-		exit(1);
+		// exit(rez);
+		return (rez);
 	}
 	while (cmd->sets->enpv && cmd->sets->enpv->value 
 		&& ft_strncmp(cmd->sets->enpv->value, "PATH=", 5) != 0)
@@ -82,4 +67,32 @@ int	ft_exec_bin(t_cmd *cmd)
 
 
 	return (rez);
+}
+
+void	ft_exec_cmd(t_cmd *cmd)
+{
+	int	poz;
+
+	// if (cmd->charge == 0)
+	// 	return ;
+ft_putstr_fd("command_ft_exec_cmd: ", 1);
+ft_putstr_fd((char *)cmd->lst_args->content, 1);
+ft_putstr_fd("\n", 1);
+	cmd->cmd_arr = ft_convert_to_arr_list(cmd->lst_args);
+	poz = ft_find_buitins((char *)cmd->lst_args->content, cmd->sets->func);
+	if (cmd->cmd_arr
+		&& ft_strncmp(cmd->cmd_arr[0], "exit", ft_strlen("exit")) == 0
+		&& cmd->flag_pipe == 0)
+		ft_exit(cmd->lst_args, &cmd->sets->export, &cmd->sets->enpv);
+	else if (cmd->cmd_arr && poz > -1)
+		g_exit_code = cmd->sets->choice_func[cmd->sets->func[poz].type](cmd->lst_args,
+				&cmd->sets->enpv, &cmd->sets->export);
+	else if (cmd->cmd_arr)
+		g_exit_code = ft_exec_bin(cmd);
+	ft_free_arr(cmd->cmd_arr);
+	ft_close(cmd->fd_pipin);
+	ft_close(cmd->fd_pipout);
+	cmd->fd_pipin = -1;
+	cmd->fd_pipout = -1;
+	cmd->charge = 0;
 }

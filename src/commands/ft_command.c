@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_command.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 10:27:07 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/25 16:02:20 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/09/14 12:51:48 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,9 @@ void	ft_command(t_cmd *cmd)
 	int	pipe;
 
 	pipe = 0;
+ft_putstr_fd("command_ft_command: ", 1);
+ft_putstr_fd(cmd->lst_args->content, 1);
+ft_putstr_fd("\n", 1);
 	if (cmd->flag_redir_write || cmd->flag_heredoc_write)
 		ft_open_outfile(cmd);
 	if (cmd->flag_redir_read || cmd->flag_heredoc_read)

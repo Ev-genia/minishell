@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 10:17:58 by wcollen           #+#    #+#             */
-/*   Updated: 2022/09/13 22:12:58 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/09/14 11:32:14 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,8 +248,8 @@ t_cmd	*ft_parse(char *str1,  t_set *sets)
 	while (str[i] != '\0')
 	{
 		cmd = ft_cmd_lst_new(sets);
-			if (!cmd)
-				return (NULL);
+		if (!cmd)
+			return (NULL);
 		while (str[i] && str[i] != '|')
 		{
 			if (str[i] && str[i] == '<')
@@ -257,15 +257,19 @@ t_cmd	*ft_parse(char *str1,  t_set *sets)
 			if (str[i] && str[i] == '>')
 				str = ft_redirect_write(cmd, str, &i);
 			if (str[i] && is_space(str[i]))
-				skip_spaces(str, &i);							
+				skip_spaces(str, &i);
 			if (str[i] && !ft_strchr("<>|$\"\'?", str[i]))
 			{
+// printf("command_str_<>|$\"\'?_parser: %s\n", &str[i]);
 				if (!(arg_name = ft_word(str, &i)))
 					return (NULL);
 				lst = NULL;
+// printf("command_arg_name: %s\n", arg_name);
 				lst = ft_lstnew(arg_name);
+// printf("command_lst: %s\n", (char *)lst->content);
 				free(arg_name);
 				ft_lstadd_back(&(cmd->lst_args), lst);
+// printf("command_lst_args: %s\n", (char *)cmd->lst_args->content);
 			}
 			if (str[i] == '\'')
 			{
@@ -284,14 +288,17 @@ t_cmd	*ft_parse(char *str1,  t_set *sets)
 			}
 			i++;
 		}
+// printf("command_str_parser: %s\n", str);
+
+// printf("command_parser: %s\n", (char *)cmd->lst_args->content);
 		ft_cmd_lst_add_back(&lst_cmds, cmd);
+
 		if (str[i] == '|')
 		{
 			lst_cmds->flag_pipe = 1;
 			i++;
 		}
 	}
-
 	return (lst_cmds);
 }
 

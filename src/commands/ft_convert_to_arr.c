@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:20:58 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/28 18:19:53 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/09/14 14:05:19 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,14 @@ char	**ft_convert_to_arr_list(t_list *list)
 	char	**arr;
 	int		size_lst;
 	int		i;
-	t_list	*lst;
 
-	lst = list;
-	size_lst = ft_lstsize(lst);
+	size_lst = ft_lstsize(list);
 	arr = malloc(sizeof(char *) * (size_lst + 1));
 	i = -1;
 	while (++i < size_lst)
 	{
-		arr[i] = ft_strdup((char *)lst->content);
-		lst = lst->next;
+		arr[i] = ft_strdup((char *)list->content);
+		list = list->next;
 	}
 	arr[i] = NULL;
 	return (arr);
