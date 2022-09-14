@@ -82,6 +82,9 @@ t_list	*tmp;
 		// str = ft_strdup("ls -a | cat");
 		set.lst_cmds = ft_parse(str, &set);
 
+printf("|%s|\n", (char *)set.lst_cmds->lst_args->content);
+// printf("|%s|\n", (char *)set.lst_cmds->lst_args->next->content);
+// printf("|%s|\n", (char *)set.lst_cmds->next->lst_args->content);
 		// signal(SIGTSTP, SIG_DFL);
 		// dup2(set.start_fd_in, 0);
 		// signal(SIGQUIT, SIG_IGN);
@@ -109,9 +112,8 @@ while (tmp)
 				set.lst_cmds = set.lst_cmds->next;
 			}
 		}
-	
-		// if (ft_parse(argv, set.enpv))
-		// 	return (ft_error());
+		ft_cmd_lst_clear(&(set.lst_cmds));
+
 		// status = ft_shell();	
 
 		free(str);

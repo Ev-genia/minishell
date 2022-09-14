@@ -6,7 +6,7 @@
 /*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 17:00:53 by wcollen           #+#    #+#             */
-/*   Updated: 2022/08/12 12:12:58 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/09/14 14:28:43 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_cmd	*ft_cmd_lst_last(t_cmd *lst)
 	return ((t_cmd *)0);
 }
 
-void	ft_cmd_lst_add_back(t_cmd	**cmd_lst, t_cmd *new)
+void	ft_cmd_lst_add_back(t_cmd **cmd_lst, t_cmd *new)
 {
 	t_cmd	*last_elem;
 	
@@ -59,4 +59,29 @@ void	ft_cmd_lst_add_back(t_cmd	**cmd_lst, t_cmd *new)
 	{
 		*cmd_lst = new;
 	}
+}
+
+void	ft_cmd_lst_clear(t_cmd **cmd_lst)
+{
+	t_cmd	*temp;
+	t_cmd	*list;
+
+	list = *cmd_lst;
+	while (list)
+	{
+		temp = list->next;
+		if (list->lst_args)
+			ft_lstclear(&(list->lst_args), free);
+		if (list->cmd_arr)
+			ft_free_arr(list->cmd_arr);
+		if (list->file_read)
+			free(list->file_read);
+		if (list->file_write)
+			free(list->file_write);
+		if (list->limiter)
+			free(list->limiter);
+		free(list);
+		list = temp;
+	}
+	*cmd_lst = (void *)0;
 }
