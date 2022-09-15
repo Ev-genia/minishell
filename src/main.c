@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/09/14 14:30:29 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/09/14 16:34:41 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	main(int argc, char **argv, char **env)
 {
 	t_set	set;
 	char	*str;
-	
+t_list	*tmp;
 
 	(void)argc;
 	(void)argv;
@@ -78,13 +78,9 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		// signal(SIGINT, ft_signal_ctrl_c);
-		str = ft_strdup("cat");//
-		//ft_readline("\033[36m(→_→)$\033[0m ");
+		str = ft_readline("\033[36m(→_→)$\033[0m ");
+		// str = ft_strdup("ls -a | cat");
 		set.lst_cmds = ft_parse(str, &set);
-		
-printf("|%s|\n", (char *)set.lst_cmds->lst_args->content);
-// printf("|%s|\n", (char *)set.lst_cmds->lst_args->next->content);
-// printf("|%s|\n", (char *)set.lst_cmds->next->lst_args->content);
 		// signal(SIGTSTP, SIG_DFL);
 		// dup2(set.start_fd_in, 0);
 		// signal(SIGQUIT, SIG_IGN);
@@ -102,20 +98,26 @@ printf("|%s|\n", (char *)set.lst_cmds->lst_args->content);
 		{
 			if (set.lst_cmds != NULL)
 			{
+tmp = set.lst_cmds->lst_args;
+while (tmp)
+{
+	printf("command_main: |%s|\n", (char *)tmp->content);
+	tmp = tmp->next;
+}
 				ft_shell(set.lst_cmds);
 				set.lst_cmds = set.lst_cmds->next;
 			}
 		}
 		ft_cmd_lst_clear(&(set.lst_cmds));
-		
+
 		// status = ft_shell();	
 
 		free(str);
 	}
 
 	// ft_wait();
-	// ft_lstclear_env(&set.enpv);
-	// ft_lstclear_env(&set.export);
+	ft_lstclear_env(&set.enpv);
+	ft_lstclear_env(&set.export);
 	// rl_clear_history();
 
 	return (0);

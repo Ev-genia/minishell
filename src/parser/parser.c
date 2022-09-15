@@ -232,11 +232,11 @@ char	*ft_redirect_write(t_cmd *cmd, char *str, int *i)
 // {
 // 	char	*arg_name;
 // 	t_list	*lst;
-	
+
 // 	//lst = NULL;
 // 	if (!(arg_name = ft_word(str, i)))
 // 	return (NULL);
-	
+
 // 	lst = ft_lstnew(arg_name);
 // 	free(arg_name);
 // 	ft_lstadd_back(&(cmd->lst_args), lst);
@@ -308,16 +308,7 @@ t_cmd	*ft_parse(char *str1,  t_set *sets)
 			i++;
 		}
 	}
-// t_cmd	*cmd_list = lst_cmds;
-// while(cmd_list)
-// {
-// 	while(cmd_list->lst_args)
-// 	{
-// 		printf("|%s|\n", (char *)cmd_list->lst_args->content);
-// 		cmd_list->lst_args = cmd_list->lst_args->next;
-// 	}
-// 	cmd_list = cmd_list->next;
-// }
+
 	return (lst_cmds);
 }
 
