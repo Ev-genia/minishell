@@ -6,7 +6,7 @@
 /*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 10:17:58 by wcollen           #+#    #+#             */
-/*   Updated: 2022/09/14 10:31:17 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/09/14 23:14:37 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_word(char *str, int *i)
 	char	*word;
 
 	j = *i;
-	while (str[*i] && !is_space(str[*i]))
+	while (str[*i] && !is_space(str[*i]) && str[*i] != '|')
 		(*i)++;
 	word = malloc(sizeof(char) * (*i - j + 1));
 	if (!word)
@@ -308,6 +308,16 @@ t_cmd	*ft_parse(char *str1,  t_set *sets)
 			i++;
 		}
 	}
+// t_cmd	*cmd_list = lst_cmds;
+// while(cmd_list)
+// {
+// 	while(cmd_list->lst_args)
+// 	{
+// 		printf("|%s|\n", (char *)cmd_list->lst_args->content);
+// 		cmd_list->lst_args = cmd_list->lst_args->next;
+// 	}
+// 	cmd_list = cmd_list->next;
+// }
 	return (lst_cmds);
 }
 
