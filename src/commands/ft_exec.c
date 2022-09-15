@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 12:08:08 by mlarra            #+#    #+#             */
-/*   Updated: 2022/09/14 14:04:02 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/09/14 16:17:40 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,18 @@ int	ft_exec_bin(t_cmd *cmd)
 	int		rez;
 	// char	**bin;
 	char	*path;
+int	i;
+int	len;
+
+i = -1;
+len = ft_arr_len(cmd->cmd_arr);
+ft_putstr_fd("cmd_arr:\n", 1);
+while (++i < len)
+{
+	ft_putstr_fd(cmd->cmd_arr[i], 1);
+	ft_putstr_fd("\n", 1);
+}
+
 
 	rez = 127;
 ft_putstr_fd("command_ft_exec_bin: ", 1);

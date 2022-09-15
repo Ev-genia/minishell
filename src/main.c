@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/09/14 12:34:54 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/09/14 16:34:41 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,6 @@ t_list	*tmp;
 		str = ft_readline("\033[36m(→_→)$\033[0m ");
 		// str = ft_strdup("ls -a | cat");
 		set.lst_cmds = ft_parse(str, &set);
-
-printf("|%s|\n", (char *)set.lst_cmds->lst_args->content);
-// printf("|%s|\n", (char *)set.lst_cmds->lst_args->next->content);
-// printf("|%s|\n", (char *)set.lst_cmds->next->lst_args->content);
 		// signal(SIGTSTP, SIG_DFL);
 		// dup2(set.start_fd_in, 0);
 		// signal(SIGQUIT, SIG_IGN);

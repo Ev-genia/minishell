@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:20:58 by mlarra            #+#    #+#             */
-/*   Updated: 2022/09/14 14:05:19 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/09/14 16:47:50 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,33 @@ char	**ft_convert_to_arr_list(t_list *list)
 	int		size_lst;
 	int		i;
 
+t_list	*tmp;
+tmp = list;
+while (tmp)
+{
+	printf("lst_arg: |%s|\n", (char *)tmp->content);
+	tmp = tmp->next;
+}
+
 	size_lst = ft_lstsize(list);
 	arr = malloc(sizeof(char *) * (size_lst + 1));
-	i = -1;
-	while (++i < size_lst)
+	i = 0;
+
+	while (i < size_lst)
 	{
 		arr[i] = ft_strdup((char *)list->content);
 		list = list->next;
+		i++;
 	}
 	arr[i] = NULL;
+
+ft_putendl_fd("arr:", 1);
+i = 0;
+while (i < size_lst)
+{
+	ft_putendl_fd(arr[i], 1);
+	i++;
+}
+
 	return (arr);
 }
