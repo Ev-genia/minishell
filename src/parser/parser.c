@@ -6,7 +6,7 @@
 /*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 10:17:58 by wcollen           #+#    #+#             */
-/*   Updated: 2022/09/14 23:14:37 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/09/16 13:35:00 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_word(char *str, int *i)
 	char	*word;
 
 	j = *i;
-	while (str[*i] && !is_space(str[*i]) && str[*i] != '|')
+	while (str[*i] && !is_space(str[*i]) && !ft_strchr("|<>", str[*i]))
 		(*i)++;
 	word = malloc(sizeof(char) * (*i - j + 1));
 	if (!word)
@@ -228,19 +228,19 @@ char	*ft_redirect_write(t_cmd *cmd, char *str, int *i)
 		return (str);
 }
 
-// void	ft_add_arg_to_cmd(char *str, int *i, t_cmd *cmd)
-// {
-// 	char	*arg_name;
-// 	t_list	*lst;
+void	ft_add_arg_to_cmd(char *str, int *i, t_cmd *cmd)
+{
+	char	*arg_name;
+	t_list	*lst;
 
-// 	//lst = NULL;
-// 	if (!(arg_name = ft_word(str, i)))
-// 	return (NULL);
+	lst = NULL;
+	if (!(arg_name = ft_word(str, i)))
+		return ;
 
-// 	lst = ft_lstnew(arg_name);
-// 	free(arg_name);
-// 	ft_lstadd_back(&(cmd->lst_args), lst);
-// }
+	lst = ft_lstnew(arg_name);
+	free(arg_name);
+	ft_lstadd_back(&(cmd->lst_args), lst);
+}
 
 t_cmd	*ft_parse(char *str1,  t_set *sets)
 {
@@ -248,8 +248,6 @@ t_cmd	*ft_parse(char *str1,  t_set *sets)
 	char	*str;
 	t_cmd	*lst_cmds;
 	t_cmd	*cmd;
-	char	*arg_name;
-	t_list	*lst;
 	int		count;
 
 	i = 0;
@@ -258,7 +256,6 @@ t_cmd	*ft_parse(char *str1,  t_set *sets)
 		return (NULL);
 	str = ft_del_spaces(str1);
 	free(str1);
-
 	while (str[i] != '\0')
 	{
 		cmd = ft_cmd_lst_new(sets);
@@ -273,17 +270,7 @@ t_cmd	*ft_parse(char *str1,  t_set *sets)
 			if (str[i] && is_space(str[i]))
 				skip_spaces(str, &i);							
 			if (str[i] && !ft_strchr("<>|$\"\'?", str[i]))
-			{
-				//ft_add_arg_to_cmd(str, &i, cmd);
-
-
-				if (!(arg_name = ft_word(str, &i)))
-					return (NULL);
-				lst = NULL;
-				lst = ft_lstnew(arg_name);
-				free(arg_name);
-				ft_lstadd_back(&(cmd->lst_args), lst);
-			}
+				ft_add_arg_to_cmd(str, &i, cmd);
 			if (str[i] == '\'')
 			{
 				str = ft_quote(str, &i, &count);
@@ -308,7 +295,5 @@ t_cmd	*ft_parse(char *str1,  t_set *sets)
 			i++;
 		}
 	}
-
 	return (lst_cmds);
 }
-

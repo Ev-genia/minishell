@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/09/14 16:34:41 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/09/16 13:38:47 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ t_list	*tmp;
 	while (1)
 	{
 		// signal(SIGINT, ft_signal_ctrl_c);
-		str = ft_readline("\033[36m(→_→)$\033[0m ");
-		// str = ft_strdup("ls -a | cat");
+		str = ft_strdup("<d1 cat");
+		//ft_readline("\033[36m(→_→)$\033[0m ");
 		set.lst_cmds = ft_parse(str, &set);
 		// signal(SIGTSTP, SIG_DFL);
 		// dup2(set.start_fd_in, 0);
@@ -93,6 +93,20 @@ t_list	*tmp;
 		// dup2(set.start_fd_in, 0);
 		// signal(SIGINT, SIG_IGN);
 		// while (set.lst_cmds)
+
+t_cmd	*cmd_list = set.lst_cmds;
+while(cmd_list)
+{
+	while(cmd_list->lst_args)
+	{
+		printf("|%s|\n", (char *)cmd_list->lst_args->content);
+		printf("|%s|\n", (char *)set.lst_cmds->lst_args->content);
+		cmd_list->lst_args = cmd_list->lst_args->next;
+	}
+	cmd_list = cmd_list->next;
+}
+
+
 
 		while(set.lst_cmds)
 		{
