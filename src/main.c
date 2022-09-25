@@ -6,7 +6,7 @@
 /*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/09/16 13:38:47 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/09/25 22:53:58 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	main(int argc, char **argv, char **env)
 {
 	t_set	set;
 	char	*str;
-t_list	*tmp;
+//t_list	*tmp;
 
 	(void)argc;
 	(void)argv;
@@ -78,7 +78,7 @@ t_list	*tmp;
 	while (1)
 	{
 		// signal(SIGINT, ft_signal_ctrl_c);
-		str = ft_strdup("<d1 cat");
+		str = ft_strdup("cat d1 d2");//("echo \"$USER\"");
 		//ft_readline("\033[36m(→_→)$\033[0m ");
 		set.lst_cmds = ft_parse(str, &set);
 		// signal(SIGTSTP, SIG_DFL);
@@ -94,41 +94,18 @@ t_list	*tmp;
 		// signal(SIGINT, SIG_IGN);
 		// while (set.lst_cmds)
 
-t_cmd	*cmd_list = set.lst_cmds;
-while(cmd_list)
-{
-	while(cmd_list->lst_args)
-	{
-		printf("|%s|\n", (char *)cmd_list->lst_args->content);
-		printf("|%s|\n", (char *)set.lst_cmds->lst_args->content);
-		cmd_list->lst_args = cmd_list->lst_args->next;
-	}
-	cmd_list = cmd_list->next;
-}
-
-
-
 		while(set.lst_cmds)
 		{
 			if (set.lst_cmds != NULL)
 			{
-tmp = set.lst_cmds->lst_args;
-while (tmp)
-{
-	printf("command_main: |%s|\n", (char *)tmp->content);
-	tmp = tmp->next;
-}
 				ft_shell(set.lst_cmds);
 				set.lst_cmds = set.lst_cmds->next;
 			}
 		}
 		ft_cmd_lst_clear(&(set.lst_cmds));
-
 		// status = ft_shell();	
-
 		free(str);
 	}
-
 	// ft_wait();
 	ft_lstclear_env(&set.enpv);
 	ft_lstclear_env(&set.export);
