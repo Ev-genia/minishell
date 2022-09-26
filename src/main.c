@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/09/26 13:49:45 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/09/26 13:07:36 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ int	main(int argc, char **argv, char **env)
 	set->lst_cmds->next->next = NULL;
 
 
-
 	// while (g_exit_code == 0)
 	while (1)
 	{
@@ -117,17 +116,6 @@ int	main(int argc, char **argv, char **env)
 		// dup2(set.start_fd_in, 0);
 		// signal(SIGINT, SIG_IGN);
 		// while (set.lst_cmds)
-t_list *tmp = set->lst_cmds->lst_args;
-while(tmp)
-{
-	// while(tmp)
-	// {
-		printf("ARG %s\n", (char *)tmp->content);
-		tmp = tmp->next;
-	// }
-	// tmp = tmp->next;
-}
- printf("ARG_OLD %s\n", (char *)set->lst_cmds->lst_args->content);
 
 // /*
 		while(set->lst_cmds)
