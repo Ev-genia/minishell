@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/09/22 17:25:22 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/09/21 15:17:33 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,7 +201,7 @@ void	ft_open_outfile(t_cmd *cmd);
 
 //ft_convert_to_arr.c
 char	**ft_convert_to_arr_env(t_env *list);
-char	**ft_convert_to_arr_list(t_list **list);
+char	**ft_convert_to_arr_list(t_list *list);
 
 //ft_init_arr_func.c
 void	ft_init_func(t_func *func);
@@ -211,7 +211,7 @@ void	ft_init_arr(t_arr_f ft_choice_func);
 int		ft_lstsize_cmd(t_cmd *lst);
 
 //ft_init_set.c
-void	ft_init_set(t_set **set, char **env);
+void	ft_init_set(t_set *set, char **env);
 
 // //ft_term_caps.c
 // void	ft_term_caps(t_set *set);
@@ -239,14 +239,16 @@ void	ft_signal_ctrl_c_child(int sig);
 // ft_handler.c
 void	ft_handler(int status);
 
-//=================parser.c========================//
+//=================parser.c=======================//
 t_cmd	*ft_parse(char *str, t_set *sets);
 void	skip_spaces(char *str, int *i);
 
-//=================pars_utils.c====================//
+//=================pars_utils.c===================//
 char	*ft_del_spaces(char *str);
 void	skip_spaces(char *str, int *i);
 int		is_key(char c, int i);
+void	malloc_error_exit(char *str);
+void	*cmd_error_return(t_cmd	*lst_cmds);
 
 //=================lst_cmd_operations.c============//
 t_cmd	*ft_cmd_lst_new(t_set	*sets);
@@ -256,4 +258,18 @@ void	ft_cmd_lst_clear(t_cmd **cmd_lst);
 //================preparser.c=====================//
 int	ft_preparse(char *str, int i);
 
+//=================pars_word.c====================//
+char	*ft_word(char *str, int *i);
+char	*ft_word_after_quotes(t_cmd *cmd, char **str, int *i);
+
+//===============pars_redirect.c==================//
+char	*ft_redirect_read(t_cmd *cmd, char *str, int *i);
+char	*ft_redirect_write(t_cmd *cmd, char *str, int *i);
+
+//===============pars_quotes.c====================//
+char	*ft_db_quote(char *str, int *i, int *count, t_cmd *cmd);
+char	*ft_quote(char *str, int *i, int *count);
+
+//===============pars_dollar======================//
+char	*ft_dollar(char *str, int *i, t_env *env_list, t_cmd *cmd);
 #endif

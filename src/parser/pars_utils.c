@@ -6,7 +6,7 @@
 /*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 14:47:20 by wcollen           #+#    #+#             */
-/*   Updated: 2022/09/13 19:16:38 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/09/21 13:32:15 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ char	*ft_del_spaces(char *str)
 	char	*new_str;
 
 	new_str = ft_strtrim(str, " ");
+	free(str);
 	return (new_str);
 }
 
@@ -34,4 +35,18 @@ int	is_key(char c, int i)
 		return (1);
 	return (0);
 
+}
+
+void	malloc_error_exit(char *str)
+{
+	ft_putendl_fd(str, 2);
+	exit(1);
+}
+
+void	*cmd_error_return(t_cmd	*lst_cmds)
+{
+	ft_putendl_fd("minishell: list of commands malloc error", 2);
+	if (lst_cmds)
+		ft_cmd_lst_clear(&lst_cmds);
+	return (NULL);
 }

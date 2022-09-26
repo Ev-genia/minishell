@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/09/23 15:37:40 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/09/26 13:07:36 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,30 +96,37 @@ int	main(int argc, char **argv, char **env)
 	set->lst_cmds->next->sets = set;
 	set->lst_cmds->next->next = NULL;
 
-/*
-t_list	*test = set->lst_cmds->lst_args;
-char	**arr_test;
-int		j;
-int		len;
 
-len = ft_lstsize(test);
-arr_test = malloc(sizeof(char *) * (len + 1));
-arr_test[len] = NULL;
-j = 0;
-while (j < len)
-{
-	arr_test[j] = strdup((char *)test->content);
-	test = test->next;
-	j++;
-}
-// arr_test[j] = NULL;
-j = 0;
-while (j < len)
-{
-	printf("arr_test[%d]: %s\n", j, arr_test[j]);
-	j++;
-}
-*/
+	// while (g_exit_code == 0)
+	while (1)
+	{
+		// signal(SIGINT, ft_signal_ctrl_c);
+		str = //ft_strdup("cat d1 d2");//("echo \"$USER\"");
+		ft_readline("\033[36m(→_→)$\033[0m ");
+		set.lst_cmds = ft_parse(str, &set);
+		// signal(SIGTSTP, SIG_DFL);
+		// dup2(set.start_fd_in, 0);
+		// signal(SIGQUIT, SIG_IGN);
+
+
+// str = NULL;
+		// add_history(str);
+		// if (!str)
+		// 	exit(0);
+		// dup2(set.start_fd_in, 0);
+		// signal(SIGINT, SIG_IGN);
+		// while (set.lst_cmds)
+//t_cmd *tmp = set.lst_cmds;
+// while(tmp)
+// {
+// 	while(tmp->lst_args)
+// 	{
+// 		printf("ARG %s\n", (char *)tmp->lst_args->content);
+// 		tmp->lst_args = tmp->lst_args->next;
+// 	}
+// 	tmp = tmp->next;
+// }
+ printf("ARG_OLD %s\n", (char *)set.lst_cmds->lst_args->content);
 
 // /*
 		while(set->lst_cmds)
