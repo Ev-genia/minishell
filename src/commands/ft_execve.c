@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 16:11:57 by mlarra            #+#    #+#             */
-/*   Updated: 2022/09/14 12:47:41 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/09/23 12:14:55 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,10 @@ char	*ft_get_path(char *command, t_env *env)
 	path_env = ft_get_path_from_env(env, num_str);
 	tracks = ft_split(path_env, ':');
 	str = ft_check_path(command, tracks);
-// printf("str_ft_get_path: %s for command: %s\n", str, command);
-ft_putstr_fd("command_ft_get_path: ", 1);
-ft_putstr_fd(command, 1);
-ft_putstr_fd("\n", 1);
+printf("ft_get_path str: %s for command: %s\n", str, command);
+// ft_putstr_fd("command_ft_get_path: ", 1);
+// ft_putstr_fd(command, 1);
+// ft_putstr_fd("\n", 1);
 	return (str);
 }
 
@@ -93,7 +93,7 @@ void	ft_execve(t_cmd cmd, t_env *env)
 	cmd.sets->env_arr = ft_convert_to_arr_env(env);
 	if (cmd.cmd_arr != NULL)
 		ft_free_arr(cmd.cmd_arr);
-	cmd.cmd_arr = ft_convert_to_arr_list(cmd.lst_args);
+	// cmd.cmd_arr = ft_convert_to_arr_list(&cmd.lst_args);
 	if (execve(path, cmd.cmd_arr, cmd.sets->env_arr) == -1)
 	{
 // ft_putstr_fd("\nTEST3 ft_execve\n", 2);		

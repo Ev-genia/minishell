@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:20:58 by mlarra            #+#    #+#             */
-/*   Updated: 2022/09/14 16:47:50 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/09/23 11:37:43 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,39 +39,38 @@ char	**ft_convert_to_arr_env(t_env *list)
 	return (arr);
 }
 
-char	**ft_convert_to_arr_list(t_list *list)
+char	**ft_convert_to_arr_list(t_list **list)
 {
 	char	**arr;
 	int		size_lst;
 	int		i;
 
-t_list	*tmp;
-tmp = list;
-while (tmp)
-{
-	printf("lst_arg: |%s|\n", (char *)tmp->content);
-	tmp = tmp->next;
-}
+t_list	*tmp = *list;
+// while (tmp)
+// {
+// 	printf("tmp->content: %s\n", (char *)tmp->content);
+// 	tmp = tmp->next;
+// }
 
-	size_lst = ft_lstsize(list);
-	arr = malloc(sizeof(char *) * (size_lst + 1));
+	size_lst = ft_lstsize(*list);
+// printf("size_lst: %d\n", size_lst);
+// size_lst = 2;
+	arr = (char **) malloc(sizeof(char *) * (size_lst + 1));
+	tmp = *list;
 	i = 0;
-
 	while (i < size_lst)
 	{
-		arr[i] = ft_strdup((char *)list->content);
-		list = list->next;
+		arr[i] = ft_strdup((char *)tmp->content);
+// 		arr[i] = strdup((char *)tmp->content);
+printf("ft_convert_to_arr_list arr[%d]: %s\n", i, arr[i]);
+		// arr[i] = (char *)malloc(sizeof(char) * (strlen(arr[i]) + 1));
+// printf("test2\n");
+		// strcpy(arr[i], (char *)tmp->content);
+// printf("arr[%d]: %s\n", i, arr[i]);
+		tmp = tmp->next;
 		i++;
 	}
 	arr[i] = NULL;
-
-ft_putendl_fd("arr:", 1);
-i = 0;
-while (i < size_lst)
-{
-	ft_putendl_fd(arr[i], 1);
-	i++;
-}
-
+printf("----------\n");
 	return (arr);
 }

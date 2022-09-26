@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/09/14 14:28:09 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/09/22 17:25:22 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,7 +201,7 @@ void	ft_open_outfile(t_cmd *cmd);
 
 //ft_convert_to_arr.c
 char	**ft_convert_to_arr_env(t_env *list);
-char	**ft_convert_to_arr_list(t_list *list);
+char	**ft_convert_to_arr_list(t_list **list);
 
 //ft_init_arr_func.c
 void	ft_init_func(t_func *func);
@@ -211,7 +211,7 @@ void	ft_init_arr(t_arr_f ft_choice_func);
 int		ft_lstsize_cmd(t_cmd *lst);
 
 //ft_init_set.c
-void	ft_init_set(t_set *set, char **env);
+void	ft_init_set(t_set **set, char **env);
 
 // //ft_term_caps.c
 // void	ft_term_caps(t_set *set);
