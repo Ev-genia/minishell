@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/09/26 13:41:06 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/09/26 17:49:31 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef struct s_cmd
 	struct s_cmd		*next;
 	int					charge;
 	// int					fds_pipe[2];
+	int					flag_prev_pipe;
 }	t_cmd;	
 
 enum e_func_name	

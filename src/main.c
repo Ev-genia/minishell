@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/09/26 13:07:36 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/09/26 17:50:10 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,19 +81,21 @@ int	main(int argc, char **argv, char **env)
 	set->lst_cmds->flag_redir_write = 0;
 	set->lst_cmds->limiter = NULL;
 	set->lst_cmds->sets = set;
+	set->lst_cmds->flag_prev_pipe = 0;
 	// set->lst_cmds->next = NULL;
 
 	set->lst_cmds->next = malloc(sizeof(t_cmd));
 	set->lst_cmds->next->lst_args = ft_lstnew("cat");
 	set->lst_cmds->next->file_read = NULL;
-	set->lst_cmds->next->file_write = "f1";
+	set->lst_cmds->next->file_write = NULL;
 	set->lst_cmds->next->flag_heredoc_read = 0;
-	set->lst_cmds->next->flag_heredoc_write = 0;
+	set->lst_cmds->next->flag_heredoc_write = 1;
 	set->lst_cmds->next->flag_pipe = 0;
 	set->lst_cmds->next->flag_redir_read = 0;
-	set->lst_cmds->next->flag_redir_write = 1;
+	set->lst_cmds->next->flag_redir_write = 0;
 	set->lst_cmds->next->limiter = NULL;
 	set->lst_cmds->next->sets = set;
+	set->lst_cmds->flag_prev_pipe = 1;
 	set->lst_cmds->next->next = NULL;
 
 
@@ -103,7 +105,7 @@ int	main(int argc, char **argv, char **env)
 		// signal(SIGINT, ft_signal_ctrl_c);
 		//str = ft_strdup("cat d1 d2");//("echo \"$USER\"");
 		str = ft_readline("\033[36m(→_→)$\033[0m ");
-		// set->lst_cmds = ft_parse(str, set);
+		set->lst_cmds = ft_parse(str, set);
 		// signal(SIGTSTP, SIG_DFL);
 		// dup2(set.start_fd_in, 0);
 		// signal(SIGQUIT, SIG_IGN);

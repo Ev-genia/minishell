@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 16:11:57 by mlarra            #+#    #+#             */
-/*   Updated: 2022/09/23 12:14:55 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/09/26 15:34:47 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*ft_get_path(char *command, t_env *env)
 	path_env = ft_get_path_from_env(env, num_str);
 	tracks = ft_split(path_env, ':');
 	str = ft_check_path(command, tracks);
-printf("ft_get_path str: %s for command: %s\n", str, command);
+// printf("ft_get_path str: %s for command: %s\n", str, command);
 // ft_putstr_fd("command_ft_get_path: ", 1);
 // ft_putstr_fd(command, 1);
 // ft_putstr_fd("\n", 1);

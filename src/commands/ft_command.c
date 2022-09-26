@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 10:27:07 by mlarra            #+#    #+#             */
-/*   Updated: 2022/09/23 15:37:04 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/09/26 17:53:41 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	ft_find_buitins(char *command, t_func *func)
 void	ft_command(t_cmd *cmd)
 {
 	int	pipe;
-	int	status;
+	// int	status;
 
 	pipe = 0;
 	if (cmd->flag_redir_write || cmd->flag_heredoc_write)
@@ -70,9 +70,16 @@ void	ft_command(t_cmd *cmd)
 		pipe = ft_minipipe(cmd);
 	// if (cmd->flag_pipe && cmd->next && pipe != 1)
 	// 	ft_command(cmd->next);
-printf("ft_command pipe = %d\n", pipe);
 	if (pipe != 1)
+	{
+		if (cmd->flag_prev_pipe == 1)
+		{
+			dup2(cmd->fd_pipin, STDIN_FILENO);
+			ft_close(cmd->fd_pipin);
+			ft_close(cmd->fd_pipout);
+		}
 		ft_exec_cmd(cmd);
-	waitpid(-1, &status, 0);
-	status = WEXITSTATUS(status);
+	}
+	
+	ft_reset_std(cmd->sets);
 }

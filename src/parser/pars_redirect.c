@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_redirect.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 14:55:50 by wcollen           #+#    #+#             */
-/*   Updated: 2022/09/21 15:06:49 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/09/26 17:01:07 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*ft_redirect_write(t_cmd *cmd, char *str, int *i)
 			cmd->flag_redir_write = 1;
 		else if (str[*i] == '>')
 			cmd->flag_heredoc_write = 1;
-		(*i)++;
+		//(*i)++;
 		if (!(cmd->file_write = ft_word(str, i)))
 			return (NULL);
 	}

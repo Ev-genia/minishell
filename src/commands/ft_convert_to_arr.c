@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:20:58 by mlarra            #+#    #+#             */
-/*   Updated: 2022/09/23 11:37:43 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/09/26 15:33:44 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_list	*tmp = *list;
 	{
 		arr[i] = ft_strdup((char *)tmp->content);
 // 		arr[i] = strdup((char *)tmp->content);
-printf("ft_convert_to_arr_list arr[%d]: %s\n", i, arr[i]);
+// printf("ft_convert_to_arr_list arr[%d]: %s\n", i, arr[i]);
 		// arr[i] = (char *)malloc(sizeof(char) * (strlen(arr[i]) + 1));
 // printf("test2\n");
 		// strcpy(arr[i], (char *)tmp->content);
@@ -71,6 +71,6 @@ printf("ft_convert_to_arr_list arr[%d]: %s\n", i, arr[i]);
 		i++;
 	}
 	arr[i] = NULL;
-printf("----------\n");
+// printf("----------\n");
 	return (arr);
 }

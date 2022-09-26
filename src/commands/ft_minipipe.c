@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 10:19:56 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/25 17:32:12 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/09/26 17:59:49 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,25 +42,21 @@ int	ft_minipipe(t_cmd *cmd)
 	pid = fork();
 	if (pid == 0)
 	{
-		// ft_close(fds[1]);
-		// dup2(fds[0], STDIN_FILENO);
-		// cmd->fd_pipin = fds[0];
 		ft_close(fds[0]);
 		dup2(fds[1], STDOUT_FILENO);
-		cmd->fd_pipout = fds[1];
 		
+		cmd->fd_pipout = fds[1];
+		ft_close(fds[1]);
 		cmd->pid = -1;
 		return (2);
 	}
 	else
 	{
-		ft_close(fds[1]);
 		dup2(fds[0], STDIN_FILENO);
 		cmd->fd_pipin = fds[0];
-
-		// ft_close(fds[0]);
-		// dup2(fds[1], STDOUT_FILENO);
-		// cmd->fd_pipout = fds[1];
+		ft_close(fds[0]);
+		ft_close(fds[1]);
+		
 		cmd->pid = pid;
 		return (1);
 	}
