@@ -6,7 +6,7 @@
 /*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 10:17:58 by wcollen           #+#    #+#             */
-/*   Updated: 2022/09/25 15:51:02 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/09/26 13:11:07 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_add_arg_to_cmd(char *str, int *i, t_cmd *cmd)
 		return ;
 
 	lst = ft_lstnew(arg_name);
-	free(arg_name);
+	//free(arg_name);
 	ft_lstadd_back(&(cmd->lst_args), lst);
 }
 
