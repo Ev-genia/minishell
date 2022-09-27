@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/09/26 17:50:10 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/09/27 15:39:36 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	main(int argc, char **argv, char **env)
 {
 	t_set	*set;
 	char	*str;
+	int		status;
 
 	(void)argc;
 	(void)argv;
@@ -61,77 +62,21 @@ int	main(int argc, char **argv, char **env)
 	ft_init_set(&set, env);
 	ft_init_func(set->func);
 	ft_init_arr(set->choice_func);
-	// while (1)
-	// {
-	// 	// str = ft_strdup("<d1 cat");
-		// str = ft_readline("\033[36m(→_→)$\033[0m ");
-	// 	set->lst_cmds = ft_parse(str, set);
-
-	set->lst_cmds = malloc(sizeof(t_cmd));
-	set->lst_cmds->lst_args = ft_lstnew("grep");
-	set->lst_cmds->lst_args->next = ft_lstnew("src");
-	set->lst_cmds->lst_args->next->next = ft_lstnew("norm");
-	set->lst_cmds->file_read = NULL;
-	set->lst_cmds->file_write = NULL;
-	set->lst_cmds->flag_heredoc_read = 0;
-	set->lst_cmds->flag_heredoc_write = 0;
-	set->lst_cmds->flag_pipe = 1;
-	// set->lst_cmds->flag_pipe = 0;
-	set->lst_cmds->flag_redir_read = 0;
-	set->lst_cmds->flag_redir_write = 0;
-	set->lst_cmds->limiter = NULL;
-	set->lst_cmds->sets = set;
-	set->lst_cmds->flag_prev_pipe = 0;
-	// set->lst_cmds->next = NULL;
-
-	set->lst_cmds->next = malloc(sizeof(t_cmd));
-	set->lst_cmds->next->lst_args = ft_lstnew("cat");
-	set->lst_cmds->next->file_read = NULL;
-	set->lst_cmds->next->file_write = NULL;
-	set->lst_cmds->next->flag_heredoc_read = 0;
-	set->lst_cmds->next->flag_heredoc_write = 1;
-	set->lst_cmds->next->flag_pipe = 0;
-	set->lst_cmds->next->flag_redir_read = 0;
-	set->lst_cmds->next->flag_redir_write = 0;
-	set->lst_cmds->next->limiter = NULL;
-	set->lst_cmds->next->sets = set;
-	set->lst_cmds->flag_prev_pipe = 1;
-	set->lst_cmds->next->next = NULL;
-
-
-	// while (g_exit_code == 0)
 	while (1)
 	{
-		// signal(SIGINT, ft_signal_ctrl_c);
-		//str = ft_strdup("cat d1 d2");//("echo \"$USER\"");
+		ft_reset_std(set);
 		str = ft_readline("\033[36m(→_→)$\033[0m ");
 		set->lst_cmds = ft_parse(str, set);
-		// signal(SIGTSTP, SIG_DFL);
-		// dup2(set.start_fd_in, 0);
-		// signal(SIGQUIT, SIG_IGN);
-
-
-// str = NULL;
-		// add_history(str);
-		// if (!str)
-		// 	exit(0);
-		// dup2(set.start_fd_in, 0);
-		// signal(SIGINT, SIG_IGN);
-		// while (set.lst_cmds)
-
-// /*
+		// free(str);
 		while(set->lst_cmds)
 		{
-			if (set->lst_cmds != NULL)
-			{
-
-				ft_shell(set->lst_cmds);
-				set->lst_cmds = set->lst_cmds->next;
-				// set->enpv = ft_env_struct(env);
-			}
-		}// */
+			ft_command(set->lst_cmds);
+			set->lst_cmds = set->lst_cmds->next;
+		}
+		while(waitpid(-1, &status, 0) > 0)
+			continue;
+		g_exit_code = WEXITSTATUS(status);
 		ft_cmd_lst_clear(&set->lst_cmds);
-		// free(str);
 	}
 	// ft_wait();
 	// ft_lstclear_env(&set->enpv);
