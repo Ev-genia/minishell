@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 12:16:32 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/26 12:20:38 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/09/27 16:41:56 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,13 @@ void	ft_free_arr(char **arr)
 	while (arr[++i])
 		free(arr[i]);
 	free(arr);
+}
+
+void	print_error_exit(char *str)
+{
+	write(2, "Bash: ", 6);
+	write(2, str, ft_strlen(str));
+	write (2, ": ", 2);
+	write(2, "command not found\n", 18);
+	exit (127);
 }

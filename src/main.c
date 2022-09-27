@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/09/27 15:39:36 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/09/27 17:30:05 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,133 @@ void	ft_wait()
 
 // ctrl-C -> "\n" -> parser -> signal(SIGINT, SIGIGN) -> signal(SIGINT, SIG_DFL)
 
+void	exe_pipe_util(int *fd, t_cmd *cmd, char *path,  t_env *env)
+{
+	int	poz;
+
+	cmd->sets->env_arr = ft_convert_to_arr_env(env);
+	cmd->cmd_arr = ft_convert_to_arr_list(&cmd->lst_args);
+	close(fd[0]);
+	dup2(fd[1], STDOUT_FILENO);
+	close(fd[1]);
+	poz = ft_find_buitins(cmd->cmd_arr[0], cmd->sets->func);
+	if (cmd->cmd_arr && poz > -1)
+	{
+		g_exit_code = cmd->sets->choice_func[cmd->sets->func[poz].type](cmd->lst_args,
+				&cmd->sets->enpv, &cmd->sets->export);
+		exit(g_exit_code);
+	}
+	if (!path)
+		print_error_exit(cmd->cmd_arr[0]);
+	if (execve(path, cmd->cmd_arr, cmd->sets->env_arr) == -1)
+		perror("Bash: ");
+	exit(1);
+}
+
+void	exe_pipe(t_cmd *cmd)
+{
+	char	*path;
+	int		fd[2];
+	int		pid;
+
+	path = ft_get_path((char *)cmd->lst_args->content, cmd->sets->enpv);
+	pipe(fd);
+	pid = fork();
+	if (pid == 0)
+		exe_pipe_util(fd, cmd, path, cmd->sets->enpv);
+	if (!path)
+		g_exit_code = 1;
+	free(path);
+	dup2(fd[0], STDIN_FILENO);
+	close(fd[0]);
+	close(fd[1]);
+}
+
+void	get_data(t_cmd *cmd)
+{
+	cmd->fd_in = open(cmd->file_read, O_RDONLY, 0700);
+	dup2(cmd->fd_in, STDIN_FILENO);
+	close(cmd->fd_in);
+}
+
+void	start_process(t_cmd *cmd)
+{
+	int		pid;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		if (execve(cmd->cmd_arr[0], cmd->cmd_arr, cmd->sets->env_arr) == -1)
+			perror("Bash: ");
+		exit(1);
+	}
+}
+
+void	check_next_command(t_cmd *cmd)
+{
+	t_cmd	*temp;
+	int		fd[2];
+
+	temp = cmd;
+	dup2(cmd->sets->start_fd_out, STDOUT_FILENO);
+	if (temp->next)
+	{
+		pipe(fd);
+		dup2(fd[0], STDIN_FILENO);
+		close(fd[0]);
+		close(fd[1]);
+	}
+}
+
+void	exe(t_cmd *cmd)
+{
+	char	*path;
+	int		pid;
+	int		poz;
+
+	cmd->sets->env_arr = ft_convert_to_arr_env(cmd->sets->enpv);
+	cmd->cmd_arr = ft_convert_to_arr_list(&cmd->lst_args);
+	poz =  ft_find_buitins(cmd->cmd_arr[0], cmd->sets->func);
+	if (!ft_strncmp("./", (char *)cmd->lst_args->content, 2) || !ft_strncmp("/", (char *)cmd->lst_args->content, 1))
+		start_process(cmd);
+	else if (cmd->cmd_arr && poz > -1)
+		g_exit_code = cmd->sets->choice_func[cmd->sets->func[poz].type](cmd->lst_args,
+				&cmd->sets->enpv, &cmd->sets->export);
+	else
+	{
+		path = ft_get_path((char *)cmd->lst_args->content, cmd->sets->enpv);
+		pid = fork();
+		if (pid == 0)
+		{
+			if (!path)
+				print_error_exit(cmd->cmd_arr[0]);
+			if (execve(path, cmd->cmd_arr, cmd->sets->env_arr) == -1)
+				perror("Bash: ");
+			exit(1);
+		}
+		free(path);
+	}
+	dup2(cmd->sets->start_fd_in, STDIN_FILENO);
+	check_next_command(cmd);
+}
+
+void	ft_execve_util(t_cmd *command)
+{
+	if (command->flag_pipe == 1)
+		exe_pipe(command);
+	else if (command->flag_redir_read || command->flag_heredoc_read)
+	{
+		if (command->flag_redir_read)
+			get_data(command);
+		else
+			ft_herdoc(command);
+	}
+	else if (command->flag_heredoc_write || command->flag_redir_write)
+		ft_open_outfile(command);
+	else
+		exe(command);
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	t_set	*set;
@@ -70,7 +197,8 @@ int	main(int argc, char **argv, char **env)
 		// free(str);
 		while(set->lst_cmds)
 		{
-			ft_command(set->lst_cmds);
+			// ft_command(set->lst_cmds);
+			ft_execve_util(set->lst_cmds);
 			set->lst_cmds = set->lst_cmds->next;
 		}
 		while(waitpid(-1, &status, 0) > 0)
