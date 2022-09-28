@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 10:27:07 by mlarra            #+#    #+#             */
-/*   Updated: 2022/09/26 17:53:41 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/09/27 11:03:18 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,24 +62,26 @@ void	ft_command(t_cmd *cmd)
 	// int	status;
 
 	pipe = 0;
+	if (cmd->flag_pipe)
+		pipe = ft_minipipe(cmd);
 	if (cmd->flag_redir_write || cmd->flag_heredoc_write)
 		ft_open_outfile(cmd);
 	if (cmd->flag_redir_read || cmd->flag_heredoc_read)
 		ft_input(cmd);
-	if (cmd->flag_pipe)
-		pipe = ft_minipipe(cmd);
+
+	// if (cmd->flag_pipe)
+	// 	pipe = ft_minipipe(cmd);
 	// if (cmd->flag_pipe && cmd->next && pipe != 1)
 	// 	ft_command(cmd->next);
 	if (pipe != 1)
 	{
-		if (cmd->flag_prev_pipe == 1)
-		{
-			dup2(cmd->fd_pipin, STDIN_FILENO);
-			ft_close(cmd->fd_pipin);
-			ft_close(cmd->fd_pipout);
-		}
+		// if (cmd->flag_prev_pipe == 1)
+		// {
+		// 	dup2(cmd->fd_pipin, STDIN_FILENO);
+		// 	ft_close(cmd->fd_pipin);
+		// 	ft_close(cmd->fd_pipout);
+		// }
 		ft_exec_cmd(cmd);
 	}
-	
-	ft_reset_std(cmd->sets);
+	// ft_reset_std(cmd->sets);
 }

@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 14:32:43 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/25 11:49:24 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/09/27 15:58:47 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	ft_open_outfile(t_cmd *cmd)
 {
-	ft_close(cmd->fd_out);
+	// ft_close(cmd->fd_out);
 	if (cmd->flag_heredoc_write == 1)
 		cmd->fd_out = open(cmd->file_write, O_WRONLY + O_APPEND + O_CREAT, 0700);
 	else
@@ -29,6 +29,7 @@ void	ft_open_outfile(t_cmd *cmd)
 		return ;
 	}
 	dup2(cmd->fd_out, STDOUT_FILENO);
+	ft_close(cmd->fd_out);
 }
 
 /*

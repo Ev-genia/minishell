@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/09/26 17:50:10 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/09/28 19:37:21 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,226 @@ void	ft_wait()
 
 // ctrl-C -> "\n" -> parser -> signal(SIGINT, SIGIGN) -> signal(SIGINT, SIG_DFL)
 
+void	sigquit(int sig)
+{
+	(void)sig;
+	write(1, "\n", 1);
+	g_exit_code = 130;
+}
+
+static void	ft_signal_quit(int sig)
+{
+	// write(1, "\b\b  \b\b", 6);
+	// write(1, "^\\Quit: ", 8);
+	// ft_putnbr_fd(sig, 1);
+	// write(1, "\n", 1);
+	// g_exit_code = 131;
+
+	write(2, "\b\b  \b\b", 6);
+	write(2, "^\\Quit: ", 8);
+	ft_putnbr_fd(sig, 1);
+	write(2, "\n", 1);
+	g_exit_code = 128 + sig;
+	exit(g_exit_code);
+}
+
+void	init_signal_child(void)
+{
+	signal(SIGQUIT, ft_signal_quit);
+	signal(SIGINT, sigquit);
+}
+
+void	exe_pipe_util(int *fd, t_cmd *cmd, char *path,  t_env *env)
+{
+	int	poz;
+
+	init_signal_child();
+	cmd->sets->env_arr = ft_convert_to_arr_env(env);
+	cmd->cmd_arr = ft_convert_to_arr_list(&cmd->lst_args);
+	close(fd[0]);
+	dup2(fd[1], STDOUT_FILENO);
+	close(fd[1]);
+	poz = ft_find_buitins(cmd->cmd_arr[0], cmd->sets->func);
+	if (cmd->cmd_arr && poz > -1)
+	{
+		g_exit_code = cmd->sets->choice_func[cmd->sets->func[poz].type](cmd->lst_args,
+				&cmd->sets->enpv, &cmd->sets->export);
+		exit(g_exit_code);
+	}
+	if (!path)
+		print_error_exit(cmd->cmd_arr[0]);
+	if (execve(path, cmd->cmd_arr, cmd->sets->env_arr) == -1)
+		perror("Bash: ");
+	exit(1);
+}
+
+void	exe_pipe(t_cmd *cmd)
+{
+	char	*path;
+	int		fd[2];
+	int		pid;
+
+	path = ft_get_path((char *)cmd->lst_args->content, cmd->sets->enpv);
+	pipe(fd);
+	pid = fork();
+	if (pid == 0)
+		exe_pipe_util(fd, cmd, path, cmd->sets->enpv);
+	if (!path)
+		g_exit_code = 1;
+	free(path);
+	close(STDIN_FILENO);
+	dup2(fd[0], STDIN_FILENO);
+	close(fd[0]);
+	close(fd[1]);
+}
+
+void	get_data(t_cmd *cmd)
+{
+	cmd->fd_in = open(cmd->file_read, O_RDONLY, 0700);
+	close(STDIN_FILENO);
+	dup2(cmd->fd_in, STDIN_FILENO);
+	close(cmd->fd_in);
+}
+
+void	start_process(t_cmd *cmd)
+{
+	int		pid;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		if (execve(cmd->cmd_arr[0], cmd->cmd_arr, cmd->sets->env_arr) == -1)
+			perror("Bash: ");
+		exit(1);
+	}
+}
+
+void	check_next_command(t_cmd *cmd)
+{
+	t_cmd	*temp;
+	int		fd[2];
+
+	temp = cmd;
+	dup2(cmd->sets->start_fd_out, STDOUT_FILENO);
+	if (temp->next)
+	{
+		pipe(fd);
+		dup2(fd[0], STDIN_FILENO);
+		close(fd[0]);
+		close(fd[1]);
+	}
+}
+
+void	exe(t_cmd *cmd)
+{
+	char	*path;
+	int		pid;
+	int		poz;
+
+	cmd->sets->env_arr = ft_convert_to_arr_env(cmd->sets->enpv);
+	cmd->cmd_arr = ft_convert_to_arr_list(&cmd->lst_args);
+	poz =  ft_find_buitins(cmd->cmd_arr[0], cmd->sets->func);
+	if (!ft_strncmp("./", (char *)cmd->lst_args->content, 2) || !ft_strncmp("/", (char *)cmd->lst_args->content, 1))
+		start_process(cmd);
+	else if (cmd->cmd_arr && poz > -1)
+		g_exit_code = cmd->sets->choice_func[cmd->sets->func[poz].type](cmd->lst_args,
+				&cmd->sets->enpv, &cmd->sets->export);
+	else
+	{
+		path = ft_get_path((char *)cmd->lst_args->content, cmd->sets->enpv);
+		pid = fork();
+		if (pid == 0)
+		{
+			init_signal_child();
+			if (!path)
+				print_error_exit(cmd->cmd_arr[0]);
+			if (execve(path, cmd->cmd_arr, cmd->sets->env_arr) == -1)
+				perror("Bash: ");
+			exit(1);
+		}
+		free(path);
+	}
+	close(STDIN_FILENO);
+	dup2(cmd->sets->start_fd_in, STDIN_FILENO);
+	check_next_command(cmd);
+}
+
+void	ft_execve_util(t_cmd *command)
+{
+	if (command->flag_pipe == 1)
+		exe_pipe(command);
+	else if (command->flag_redir_read || command->flag_heredoc_read)
+	{
+		if (command->flag_redir_read)
+			get_data(command);
+		else
+			ft_herdoc(command);
+	}
+	else if (command->flag_heredoc_write || command->flag_redir_write)
+		ft_open_outfile(command);
+	else
+		exe(command);
+}
+
+void	sigint_func(int sig)
+{
+	if (sig == SIGINT)
+	{
+		rl_on_new_line();
+		rl_redisplay();
+		write(2, "  \n", 3);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
+}
+
+void	init_signal_h(void)
+{
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, sigint_func);
+}
+
+// int	replace_value_envp(char *key, char *value)
+// {
+// 	t_env	*temp;
+
+// 	temp = g_data->env;
+// 	while (temp && temp->next)
+// 	{
+// 		if (ft_strnstr(temp->key, key, ft_strlen(key)))
+// 		{
+// 			free(temp->value);
+// 			temp->value = value;
+// 		}
+// 		temp = temp->next;
+// 	}
+// 	free(key);
+// 	return (0);
+// }
+
+// void	replace_shell_lvl(void)
+// {
+// 	char	*key;
+// 	char	*value;
+// 	int		old_sh_lvl;
+
+// 	key = ft_strdup("SHLVL");
+// 	value = get_value(key);
+// 	old_sh_lvl = ft_atoi(value);
+// 	old_sh_lvl++;
+// 	free(value);
+// 	value = ft_itoa(old_sh_lvl);
+// 	replace_value_envp(key, value);
+// 	if (!check_key("PATH="))
+// 		g_data->check_path = 1;
+// }
+
 int	main(int argc, char **argv, char **env)
 {
 	t_set	*set;
 	char	*str;
+	int		status;
 
 	(void)argc;
 	(void)argv;
@@ -61,77 +277,29 @@ int	main(int argc, char **argv, char **env)
 	ft_init_set(&set, env);
 	ft_init_func(set->func);
 	ft_init_arr(set->choice_func);
-	// while (1)
-	// {
-	// 	// str = ft_strdup("<d1 cat");
-		// str = ft_readline("\033[36m(→_→)$\033[0m ");
-	// 	set->lst_cmds = ft_parse(str, set);
-
-	set->lst_cmds = malloc(sizeof(t_cmd));
-	set->lst_cmds->lst_args = ft_lstnew("grep");
-	set->lst_cmds->lst_args->next = ft_lstnew("src");
-	set->lst_cmds->lst_args->next->next = ft_lstnew("norm");
-	set->lst_cmds->file_read = NULL;
-	set->lst_cmds->file_write = NULL;
-	set->lst_cmds->flag_heredoc_read = 0;
-	set->lst_cmds->flag_heredoc_write = 0;
-	set->lst_cmds->flag_pipe = 1;
-	// set->lst_cmds->flag_pipe = 0;
-	set->lst_cmds->flag_redir_read = 0;
-	set->lst_cmds->flag_redir_write = 0;
-	set->lst_cmds->limiter = NULL;
-	set->lst_cmds->sets = set;
-	set->lst_cmds->flag_prev_pipe = 0;
-	// set->lst_cmds->next = NULL;
-
-	set->lst_cmds->next = malloc(sizeof(t_cmd));
-	set->lst_cmds->next->lst_args = ft_lstnew("cat");
-	set->lst_cmds->next->file_read = NULL;
-	set->lst_cmds->next->file_write = NULL;
-	set->lst_cmds->next->flag_heredoc_read = 0;
-	set->lst_cmds->next->flag_heredoc_write = 1;
-	set->lst_cmds->next->flag_pipe = 0;
-	set->lst_cmds->next->flag_redir_read = 0;
-	set->lst_cmds->next->flag_redir_write = 0;
-	set->lst_cmds->next->limiter = NULL;
-	set->lst_cmds->next->sets = set;
-	set->lst_cmds->flag_prev_pipe = 1;
-	set->lst_cmds->next->next = NULL;
-
-
-	// while (g_exit_code == 0)
+	// replace_shell_lvl();
 	while (1)
 	{
-		// signal(SIGINT, ft_signal_ctrl_c);
-		//str = ft_strdup("cat d1 d2");//("echo \"$USER\"");
+		init_signal_h();
+		ft_reset_std(set);
 		str = ft_readline("\033[36m(→_→)$\033[0m ");
+		if (!str)
+		{
+			printf("\x1B[1A\x1B[7C" "exit\n");
+			exit(0);
+		}
 		set->lst_cmds = ft_parse(str, set);
-		// signal(SIGTSTP, SIG_DFL);
-		// dup2(set.start_fd_in, 0);
-		// signal(SIGQUIT, SIG_IGN);
-
-
-// str = NULL;
-		// add_history(str);
-		// if (!str)
-		// 	exit(0);
-		// dup2(set.start_fd_in, 0);
-		// signal(SIGINT, SIG_IGN);
-		// while (set.lst_cmds)
-
-// /*
+		// free(str);
 		while(set->lst_cmds)
 		{
-			if (set->lst_cmds != NULL)
-			{
-
-				ft_shell(set->lst_cmds);
-				set->lst_cmds = set->lst_cmds->next;
-				// set->enpv = ft_env_struct(env);
-			}
-		}// */
+			// ft_command(set->lst_cmds);
+			ft_execve_util(set->lst_cmds);
+			set->lst_cmds = set->lst_cmds->next;
+		}
+		while(waitpid(-1, &status, 0) > 0)
+			continue;
+		g_exit_code = WEXITSTATUS(status);
 		ft_cmd_lst_clear(&set->lst_cmds);
-		// free(str);
 	}
 	// ft_wait();
 	// ft_lstclear_env(&set->enpv);

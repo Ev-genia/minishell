@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/09/26 17:49:31 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/09/27 16:41:54 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,7 @@ int		ft_exec_bin(t_cmd *cmd);
 //ft_execve_utils.c
 void	ft_write(char *s);
 void	ft_free_arr(char **arr);
+void	print_error_exit(char *str);
 
 //ft_herdoc.c
 void	ft_herdoc(t_cmd *cmd);
