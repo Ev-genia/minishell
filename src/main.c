@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/09/28 16:10:41 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/09/28 16:22:35 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,6 +220,41 @@ void	init_signal_h(void)
 	signal(SIGINT, sigint_func);
 }
 
+int	replace_value_envp(char *key, char *value)
+{
+	t_env	*temp;
+
+	temp = g_data->env;
+	while (temp && temp->next)
+	{
+		if (ft_strnstr(temp->key, key, ft_strlen(key)))
+		{
+			free(temp->value);
+			temp->value = value;
+		}
+		temp = temp->next;
+	}
+	free(key);
+	return (0);
+}
+
+void	replace_shell_lvl(void)
+{
+	char	*key;
+	char	*value;
+	int		old_sh_lvl;
+
+	key = ft_strdup("SHLVL");
+	value = get_value(key);
+	old_sh_lvl = ft_atoi(value);
+	old_sh_lvl++;
+	free(value);
+	value = ft_itoa(old_sh_lvl);
+	replace_value_envp(key, value);
+	if (!check_key("PATH="))
+		g_data->check_path = 1;
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	t_set	*set;
@@ -232,6 +267,7 @@ int	main(int argc, char **argv, char **env)
 	ft_init_set(&set, env);
 	ft_init_func(set->func);
 	ft_init_arr(set->choice_func);
+	replace_shell_lvl();
 	while (1)
 	{
 		init_signal_h();
