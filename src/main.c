@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/09/28 16:16:08 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/09/28 16:10:41 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,33 @@ void	ft_wait()
 
 // ctrl-C -> "\n" -> parser -> signal(SIGINT, SIGIGN) -> signal(SIGINT, SIG_DFL)
 
+void	sigquit(int sig)
+{
+	(void)sig;
+	write(1, "\n", 1);
+	g_exit_code = 130;
+}
+
+static void	ft_signal_quit(int sig)
+{
+	write(1, "\b\b  \b\b", 6);
+	write(1, "^\\Quit: ", 8);
+	ft_putnbr_fd(sig, 1);
+	write(1, "\n", 1);
+	g_exit_code = 131;
+}
+
+void	init_signal_child(void)
+{
+	signal(SIGQUIT, ft_signal_quit);
+	signal(SIGINT, sigquit);
+}
+
 void	exe_pipe_util(int *fd, t_cmd *cmd, char *path,  t_env *env)
 {
 	int	poz;
 
+	init_signal_child();
 	cmd->sets->env_arr = ft_convert_to_arr_env(env);
 	cmd->cmd_arr = ft_convert_to_arr_list(&cmd->lst_args);
 	close(fd[0]);
@@ -150,6 +173,7 @@ void	exe(t_cmd *cmd)
 		pid = fork();
 		if (pid == 0)
 		{
+			init_signal_child();
 			if (!path)
 				print_error_exit(cmd->cmd_arr[0]);
 			if (execve(path, cmd->cmd_arr, cmd->sets->env_arr) == -1)
@@ -180,6 +204,25 @@ void	ft_execve_util(t_cmd *command)
 		exe(command);
 }
 
+void	sigint_func(int sig)
+{
+	if (sig == SIGINT)
+	{
+		rl_on_new_line();
+		rl_redisplay();
+		write(2, "  \n", 3);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
+}
+
+void	init_signal_h(void)
+{
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, sigint_func);
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	t_set	*set;
@@ -194,6 +237,7 @@ int	main(int argc, char **argv, char **env)
 	ft_init_arr(set->choice_func);
 	while (1)
 	{
+		init_signal_h();
 		ft_reset_std(set);
 		str = ft_readline("\033[36m(→_→)$\033[0m ");
 		set->lst_cmds = ft_parse(str, set);
