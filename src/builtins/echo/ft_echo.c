@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 10:16:58 by mlarra            #+#    #+#             */
-/*   Updated: 2022/08/10 11:33:14 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/09/29 00:56:03 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_echo(t_list *lst_args, t_env **export, t_env **env)
 	list = lst_args;
 	enter = 1;
 	list = list->next;
-	if (ft_strncmp((char *)list->content, "-n", 2) == 0)
+	if (list && ft_strncmp((char *)list->content, "-n", 2) == 0)
 	{
 		enter = 0;
 		list = list->next;

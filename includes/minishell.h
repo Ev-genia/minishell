@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:45:26 by mlarra            #+#    #+#             */
-/*   Updated: 2022/09/27 16:41:54 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/09/29 00:17:53 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,4 +274,7 @@ char	*ft_quote(char *str, int *i, int *count);
 
 //===============pars_dollar======================//
 char	*ft_dollar(char *str, int *i, t_env *env_list, t_cmd *cmd);
+
+//================pars_strjoin.c==================//
+char	*ft_pars_strjoin(char const *s1, char const *s2);
 #endif

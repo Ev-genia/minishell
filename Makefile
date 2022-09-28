@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+         #
+#    By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/30 13:01:49 by mlarra            #+#    #+#              #
-#    Updated: 2022/09/28 15:55:58 by mlarra           ###   ########.fr        #
+#    Updated: 2022/09/29 00:18:09 by wcollen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,7 @@ SRC_INIT	=	${addprefix ${DIR_INIT}, ft_init_arr_func.c ft_init_set.c}
 
 SRC_PARSER	=	${addprefix ${DIR_PARSER}, parser.c preparser.c pars_word.c\
 		pars_redirect.c pars_dollar.c pars_quotes.c\
-		lst_cmd_operations.c pars_utils.c}
+		lst_cmd_operations.c pars_utils.c pars_strjoin.c}
 
 # SRC_TERM	=	${addprefix ${DIR_TERM}, ft_term_caps.c}
 
