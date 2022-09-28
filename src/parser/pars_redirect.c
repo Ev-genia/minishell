@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_redirect.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 14:55:50 by wcollen           #+#    #+#             */
-/*   Updated: 2022/09/26 17:01:07 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/09/26 22:12:16 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*ft_redirect_write(t_cmd *cmd, char *str, int *i)
 	{
 		cmd->flag_redir_write = 1;
 		if (!(cmd->file_write = ft_word_after_quotes(cmd, &str, i)))
-			return (NULL);//Освободить память всю!!!!!
+			return (NULL);
 	}
 	else if (str[*i])
 	{
@@ -66,7 +66,6 @@ char	*ft_redirect_write(t_cmd *cmd, char *str, int *i)
 			cmd->flag_redir_write = 1;
 		else if (str[*i] == '>')
 			cmd->flag_heredoc_write = 1;
-		//(*i)++;
 		if (!(cmd->file_write = ft_word(str, i)))
 			return (NULL);
 	}

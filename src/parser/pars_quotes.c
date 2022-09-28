@@ -6,7 +6,7 @@
 /*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 15:09:07 by wcollen           #+#    #+#             */
-/*   Updated: 2022/09/23 14:14:30 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/09/26 22:49:17 by wcollen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,14 @@ char	*ft_db_quote(char *str, int *i, int *count, t_cmd *cmd)
 	*count = *i - j - 1;
 	tmp1 = ft_substr(str, j + 1, *count);
 	tmp2 = ft_strjoin(tmp, tmp1);
+	*i = ft_strlen(tmp2);
 	free(tmp); 
 	free(tmp1);
-	
 	tmp1 = ft_strdup(str + *i + 1);
 	tmp = ft_strjoin(tmp2, tmp1);
 	free(str);
 	free(tmp1);
 	free(tmp2);
-	*i = j - 1 ;//i на позиции до первой  кавычки
 	return (tmp);
 }
 
