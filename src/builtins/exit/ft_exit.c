@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 13:10:08 by mlarra            #+#    #+#             */
-/*   Updated: 2022/07/23 00:01:48 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/09/28 16:52:55 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	ft_exit(t_list *lst_args, t_env **export, t_env **env)
 	(void)env;
 	list = lst_args;
 	len = ft_lstsize(list);
+	ft_putendl_fd("exit", 2);
 	if (len == 1)
 		exit(0);
 	if (len > 2)

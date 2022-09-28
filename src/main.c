@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/09/28 16:22:35 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/09/28 17:54:55 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,18 @@ void	sigquit(int sig)
 
 static void	ft_signal_quit(int sig)
 {
-	write(1, "\b\b  \b\b", 6);
-	write(1, "^\\Quit: ", 8);
+	// write(1, "\b\b  \b\b", 6);
+	// write(1, "^\\Quit: ", 8);
+	// ft_putnbr_fd(sig, 1);
+	// write(1, "\n", 1);
+	// g_exit_code = 131;
+
+	write(2, "\b\b  \b\b", 6);
+	write(2, "^\\Quit: ", 8);
 	ft_putnbr_fd(sig, 1);
-	write(1, "\n", 1);
-	g_exit_code = 131;
+	write(2, "\n", 1);
+	g_exit_code = 128 + sig;
+	exit(g_exit_code);
 }
 
 void	init_signal_child(void)
@@ -223,40 +230,40 @@ void	init_signal_h(void)
 	signal(SIGINT, sigint_func);
 }
 
-int	replace_value_envp(char *key, char *value)
-{
-	t_env	*temp;
+// int	replace_value_envp(char *key, char *value)
+// {
+// 	t_env	*temp;
 
-	temp = g_data->env;
-	while (temp && temp->next)
-	{
-		if (ft_strnstr(temp->key, key, ft_strlen(key)))
-		{
-			free(temp->value);
-			temp->value = value;
-		}
-		temp = temp->next;
-	}
-	free(key);
-	return (0);
-}
+// 	temp = g_data->env;
+// 	while (temp && temp->next)
+// 	{
+// 		if (ft_strnstr(temp->key, key, ft_strlen(key)))
+// 		{
+// 			free(temp->value);
+// 			temp->value = value;
+// 		}
+// 		temp = temp->next;
+// 	}
+// 	free(key);
+// 	return (0);
+// }
 
-void	replace_shell_lvl(void)
-{
-	char	*key;
-	char	*value;
-	int		old_sh_lvl;
+// void	replace_shell_lvl(void)
+// {
+// 	char	*key;
+// 	char	*value;
+// 	int		old_sh_lvl;
 
-	key = ft_strdup("SHLVL");
-	value = get_value(key);
-	old_sh_lvl = ft_atoi(value);
-	old_sh_lvl++;
-	free(value);
-	value = ft_itoa(old_sh_lvl);
-	replace_value_envp(key, value);
-	if (!check_key("PATH="))
-		g_data->check_path = 1;
-}
+// 	key = ft_strdup("SHLVL");
+// 	value = get_value(key);
+// 	old_sh_lvl = ft_atoi(value);
+// 	old_sh_lvl++;
+// 	free(value);
+// 	value = ft_itoa(old_sh_lvl);
+// 	replace_value_envp(key, value);
+// 	if (!check_key("PATH="))
+// 		g_data->check_path = 1;
+// }
 
 int	main(int argc, char **argv, char **env)
 {
@@ -270,12 +277,17 @@ int	main(int argc, char **argv, char **env)
 	ft_init_set(&set, env);
 	ft_init_func(set->func);
 	ft_init_arr(set->choice_func);
-	replace_shell_lvl();
+	// replace_shell_lvl();
 	while (1)
 	{
 		init_signal_h();
 		ft_reset_std(set);
 		str = ft_readline("\033[36m(→_→)$\033[0m ");
+		if (!str)
+		{
+			printf("\x1B[1A\x1B[7C" "exit\n");
+			exit(0);
+		}
 		set->lst_cmds = ft_parse(str, set);
 		// free(str);
 		while(set->lst_cmds)
