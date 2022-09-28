@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_dollar.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcollen <wcollen@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 15:14:32 by wcollen           #+#    #+#             */
-/*   Updated: 2022/09/23 14:10:22 by wcollen          ###   ########.fr       */
+/*   Updated: 2022/09/28 16:17:27 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,32 @@ char	*ft_dollar(char *str, int *i, t_env *env_list, t_cmd *cmd)
 	char	*tmp;
 	char	*tmp1;
 	char	*tmp2;
+	char    *tt;
+	int		flag;
 
 	j = *i;
+	flag = 0;
 	if (str[*i + 1] == '?')
 	{
-		if (!(tmp = ft_word(str, i)))
+		if (!(tt = ft_word(str, i)))
 			return (NULL);
-		ft_lstadd_back(&(cmd->lst_args), ft_lstnew(tmp));
-		free(tmp);
+		ft_lstadd_back(&(cmd->lst_args), ft_lstnew(tt));
+		//free(tmp);
 		return (str);
 	}
-	while (str[++*i])
+	while (!is_space(str[++*i]))
 	{
 		if (!is_key(str[*i], *i))
+		{
+			flag = 1;
 			break;
+		}
 	}
-	if (*i == j + 1)
+	if (flag == 1)//не найдена такая переменная
 	{
 		if (!(tmp = ft_word(str, i)))
 			return (NULL);
-		ft_lstadd_back(&(cmd->lst_args), ft_lstnew(tmp));
+		ft_lstadd_back(&(cmd->lst_args), ft_lstnew(""));
 		free(tmp);
 		return (str);
 	}
@@ -46,7 +52,7 @@ char	*ft_dollar(char *str, int *i, t_env *env_list, t_cmd *cmd)
 	int t = ft_strlen(str + *i);
 	char *ttt;
 	if (t > 0)
-		ttt = ft_strdup(str + *i);;
+		ttt = ft_strdup(str + *i);
 
 	while (env_list)
 	{
@@ -62,7 +68,8 @@ char	*ft_dollar(char *str, int *i, t_env *env_list, t_cmd *cmd)
 			free(tmp1);
 			//tmp1 = ttt;//ft_strdup(str + *i);
 			tmp = ft_strjoin(tmp2, ttt);
-			free(ttt);
+			if (t > 0)
+				free(ttt);
 			free(tmp2);
 			return (tmp);
 		}

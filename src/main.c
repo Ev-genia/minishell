@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/09/27 17:30:05 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/09/28 16:16:08 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	exe_pipe(t_cmd *cmd)
 	if (!path)
 		g_exit_code = 1;
 	free(path);
+	close(STDIN_FILENO);
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);
 	close(fd[1]);
@@ -95,6 +96,7 @@ void	exe_pipe(t_cmd *cmd)
 void	get_data(t_cmd *cmd)
 {
 	cmd->fd_in = open(cmd->file_read, O_RDONLY, 0700);
+	close(STDIN_FILENO);
 	dup2(cmd->fd_in, STDIN_FILENO);
 	close(cmd->fd_in);
 }
@@ -156,6 +158,7 @@ void	exe(t_cmd *cmd)
 		}
 		free(path);
 	}
+	close(STDIN_FILENO);
 	dup2(cmd->sets->start_fd_in, STDIN_FILENO);
 	check_next_command(cmd);
 }
