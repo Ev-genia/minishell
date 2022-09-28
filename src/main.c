@@ -6,7 +6,7 @@
 /*   By: mlarra <mlarra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:44:48 by mlarra            #+#    #+#             */
-/*   Updated: 2022/09/28 16:08:27 by mlarra           ###   ########.fr       */
+/*   Updated: 2022/09/28 16:10:41 by mlarra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ void	exe(t_cmd *cmd)
 		pid = fork();
 		if (pid == 0)
 		{
+			init_signal_child();
 			if (!path)
 				print_error_exit(cmd->cmd_arr[0]);
 			if (execve(path, cmd->cmd_arr, cmd->sets->env_arr) == -1)
